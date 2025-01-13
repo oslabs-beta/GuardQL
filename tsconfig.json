@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src", 
+    "jsx": "react-jsx", 
+    "target": "ES6", 
+    "module": "NodeNext", 
+    "strict": true, 
+    "removeComments": true,
+    "sourceMap": true, 
+    "esModuleInterop": true, 
+    "noImplicitAny": true, 
+  },
+"include": ["./src/**/*"],
+"exclude": ["node_modules", "dist"], 
+}
+
+
+// {
+//   "compilerOptions": {
+//     "outDir": "./dist",
+//     // We typically aren't supposed to use bundler for the server
+//     // nodenext is usually for the backend
+//     "moduleResolution": "bundler",
+//     "jsx": "react-jsx", //& indicates that React's JSX syntax should be recognized
+//     "target": "ES6", //& this is ES6
+//     "module": "ES2022", //& Olivia suggests to use "NodeNext" as CommonJS is outdated
+//     "noImplicitAny": true, //&requires that variables/params have explicit types
+//     "removeComments": true, //& removes all comments from compiled JS
+//     "sourceMap": true, //& generates .map files; maps compiled JS to TS (for debugging)
+//     "esModuleInterop": true, //& becuase ES6 modules and CommonJS modules work diff under the hood, modules imported via the 'require' keyword will ....
+//     "typeRoots": ["./node_modules/@types", "./types", "./server/types"] ,
+//   },
+//   "include": ["./src/**/*", "./server/**/*", "./public/**/*", "./types/*.d.ts"], //& recursively includes all TS files within 'src', 'server', 'public' & subdirectories
+//   "exclude": ["node_modules", "dist"], 
+// }
