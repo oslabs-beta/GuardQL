@@ -11,7 +11,7 @@ const __dirname = dirname(__filename);
 export default {
     mode: 'development',
     entry: {
-        main: path.resolve(__dirname, './src/client/App.jsx'),
+        main: path.resolve(__dirname, './src/client/index.jsx'),
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -49,22 +49,22 @@ export default {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/client/index.html',
+            template: './src/public/index.html',
             filename: './index.html',
         }),
         new CopyPlugin({
-            patterns: [{ from: './src/client/style.css' }],
+            patterns: [{ from: './src/public/style.css' }],
         }),
     ],
     devServer: {
-        proxy: [
-            {
-              context: ['/'],
-              target: 'http://localhost:8080',
-              changeOrigin: true,
-              secure: false,
-            },
-        ],
-        port: 5001,
+        // proxy: [
+        //     {
+        //       context: ['/'],
+        //       target: 'http://localhost:8080',
+        //       changeOrigin: true,
+        //       secure: false,
+        //     },
+        // ],
+        port: 8081,
     },
 };
