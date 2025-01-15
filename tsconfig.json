@@ -4,14 +4,15 @@
     "rootDir": "./src",
     "jsx": "react-jsx",
     "target": "ES6",
-    "module": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "strict": true,
     "removeComments": true,
     "sourceMap": true,
     "esModuleInterop": true,
     "noImplicitAny": true,
   },
-"include": ["./src/**/*"],
+"include": ["src/**/*.ts", "src/**/*.tsx"],
 "exclude": ["node_modules", "dist"],
 }
 

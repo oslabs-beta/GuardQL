@@ -2,10 +2,10 @@
   "name": "guardql",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/client/components/index.jsx",
   "type": "module",
   "scripts": {
-    "start": "nodemon src/server/server.js & webpack serve --mode development --open",
+    "start": "nodemon --exec 'node --loader ts-node/esm' src/server/server.ts & webpack serve --mode development --open",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --mode development",
     "build": "webpack --mode production"
@@ -24,6 +24,7 @@
     "@babel/plugin-transform-typescript": "^7.26.5",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.26.3",
+    "@types/node": "^22.10.6",
     "babel-loader": "^9.2.1",
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^7.1.2",
@@ -33,6 +34,7 @@
     "path": "^0.12.7",
     "style-loader": "^4.0.0",
     "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5.7.3",
     "webpack": "^5.97.1",
     "webpack-cli": "^6.0.1",
