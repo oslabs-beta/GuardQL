@@ -11,7 +11,7 @@ const __dirname = dirname(__filename);
 export default {
     mode: 'development',
     entry: {
-        main: path.resolve(__dirname, './src/client/index.jsx'),
+        main: path.resolve(__dirname, './src/client/index.tsx'),
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
