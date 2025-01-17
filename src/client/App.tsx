@@ -9,6 +9,7 @@ const App = () => {
     <div>
       <h1>Hello App</h1>
       {/* <insert other components> */}
+    <Navbar />
     <Home />
     </div>
   );
