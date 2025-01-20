@@ -1,9 +1,14 @@
 import React from 'react';
-import ReactDOM from "react-dom/client";
+import ReactDOM from 'react-dom/client';
+import { ChakraProvider, defaultSystem } from "@chakra-ui/react"
 import App from './App'; // Check this path is correct
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
-root.render(<App />);
+root.render(
+  <ChakraProvider value={defaultSystem}>
+    <App />
+  </ChakraProvider>
+);
 // the ! is called the Non-Null Assertion Operator
 // it will tell TypeScript compiler that the value is not null
 // It can be risky because it can lead to runtime errors if the assumption is wrong. Can lead to error if the root is missing.
