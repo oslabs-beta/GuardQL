@@ -5,14 +5,17 @@
     "jsx": "react-jsx",
     "target": "ES6",
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "strict": true,
     "removeComments": true,
     "sourceMap": true,
     "esModuleInterop": true,
     "noImplicitAny": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
 "include": ["src/**/*.ts", "src/**/*.tsx"],
 "exclude": ["node_modules", "dist"],
 }
-
