@@ -15,6 +15,7 @@ const App = () => {
     // </div>
     <div>
       <Dashboard />
+      <h1>Hi</h1>
     </div>
   );
 };
