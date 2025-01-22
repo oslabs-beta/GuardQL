@@ -15,6 +15,7 @@ const App = () => {
     // <Home />
     // </div>
     <div>
+      <Login/>
       {/* <Dashboard /> */}
       <SignUp />
       <h1>Hi</h1>
