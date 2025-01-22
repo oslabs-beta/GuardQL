@@ -1,0 +1,51 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  width: 100%;
+  padding: 1rem; /* Matches theme.spacing(4) */
+  gap: 1rem; /* Matches theme.spacing(2) */
+  margin: auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05), 0 15px 35px rgba(0, 0, 0, 0.05);
+}
+
+.card--dark {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), 0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+.signUpContainer {
+  height: calc((1 - var(--template-frame-height, 0)) * 100vh);
+  min-height: 100%;
+  padding: 1rem; /* Matches theme.spacing(2) */
+}
+
+.signUpContainer-sm {
+  padding: 2rem; /* Matches theme.spacing(4) */
+}
+
+.signUpContainer::before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    hsl(210, 100%, 97%),
+    hsl(0, 0%, 100%)
+  );
+}
+
+.signUpContainer--dark::before {
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    hsla(210, 100%, 16%, 0.5),
+    hsl(220, 30%, 5%)
+  );
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Matches theme.spacing(2) */
+}
