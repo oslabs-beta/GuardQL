@@ -1,7 +1,8 @@
-import Login from './Login';
 import * as styles from './styles/signup.module.css'
-
 import * as React from 'react';
+import Login from './Login';
+
+// MUI
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -11,7 +12,6 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
-import Card from '@mui/material/Card';
 
 const SignUp = () => {
   const [emailError, setEmailError] = React.useState(false);
@@ -73,14 +73,19 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <div className={styles.card}>
-        <div>
+    <div className={styles.background}>
+      <div className={styles.container}>
+      <div className='leftContainer'>
+        <h1>This is the Sign Up page!</h1>
+      <img src ='./GuardQL_Logo_R_-_Title2-w_2048px.png'
+          style={{ width: '400px', height: 'auto' }} />
+      </div>
+
+        <div className={styles.rightContainer}>
+        <Stack className={styles.formContainer}>
           <Typography
-            component='h1'
-            variant='h4'
-            sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
-          >
+            component='h3'
+            variant='h4'>
             Sign up
           </Typography>
           <Box
@@ -89,7 +94,7 @@ const SignUp = () => {
             sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
           >
             <FormControl>
-              <FormLabel htmlFor='userName'>Username</FormLabel>
+              <FormLabel htmlFor='userName' sx={{color: 'white'}}>Username</FormLabel>
               <TextField
                 autoComplete='userName'
                 name='userName'
@@ -101,10 +106,22 @@ const SignUp = () => {
                 error={nameError}
                 helperText={nameErrorMessage}
                 color={nameError ? 'error' : 'primary'}
+                sx={{
+                  '& .MuiInputBase-root': {
+                    color: 'white',
+                  },
+                  '& .MuiInput-underline:before': {
+                    borderBottomColor: 'white', // Underline color
+                  },
+                  '& .MuiInput-underline:hover:before': {
+                    borderBottomColor: 'white',
+                  },
+                  marginBottom: '15px',
+                }}
               />
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor='email'>Email</FormLabel>
+              <FormLabel htmlFor='email' sx={{color: 'white'}}>Email</FormLabel>
               <TextField
                 required
                 fullWidth
@@ -116,10 +133,22 @@ const SignUp = () => {
                 error={emailError}
                 helperText={emailErrorMessage}
                 color={passwordError ? 'error' : 'primary'}
+                sx={{
+                  '& .MuiInputBase-root': {
+                    color: 'white',
+                  },
+                  '& .MuiInput-underline:before': {
+                    borderBottomColor: 'white', // Underline color
+                  },
+                  '& .MuiInput-underline:hover:before': {
+                    borderBottomColor: 'white',
+                  },
+                  marginBottom: '15px',
+                }}
               />
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor='password'>Password</FormLabel>
+              <FormLabel htmlFor='password' sx={{color: 'white'}}>Password</FormLabel>
               <TextField
                 required
                 fullWidth
@@ -132,6 +161,18 @@ const SignUp = () => {
                 error={passwordError}
                 helperText={passwordErrorMessage}
                 color={passwordError ? 'error' : 'primary'}
+                sx={{
+                  '& .MuiInputBase-root': {
+                    color: 'white',
+                  },
+                  '& .MuiInput-underline:before': {
+                    borderBottomColor: 'white', // Underline color
+                  },
+                  '& .MuiInput-underline:hover:before': {
+                    borderBottomColor: 'white',
+                  },
+                  marginBottom: '15px',
+                }}
               />
             </FormControl>
 
@@ -151,21 +192,23 @@ const SignUp = () => {
               Sign up
             </Button>
           </Box>
-          <Divider>
-            <Typography>or</Typography>
-          </Divider>
+          <Divider></Divider>
           <Box>
             <Typography>
               Already have an account?{' '}
               <Link
                 href={'/material-ui/getting-started/templates/sign-in/'}
                 variant='body2'
-                sx={{ alignSelf: 'center' }}
+                sx={{ alignSelf: 'center'}}
+                style={{ color: '#D5006D', textDecoration: 'none' }}
+              onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.color = '#F50057'}
+              onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.color = '#D5006D'}
               >
                 Sign in
               </Link>
             </Typography>
           </Box>
+        </Stack>
         </div>
       </div>
     </div>
