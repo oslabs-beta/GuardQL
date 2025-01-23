@@ -4,6 +4,7 @@ import Navbar from './components/NavBar';
 import Docs from './components/Docs';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import SignUp from './components/Sign-Up';
 
 const App = () => {
   return (
@@ -15,8 +16,9 @@ const App = () => {
     // </div>
     <div>
       <Login/>
-      <Dashboard />
-      <h1>Hi</h1>
+      {/* <Dashboard /> */}
+      <SignUp />
+      {/* <h1>Hi</h1> */}
     </div>
   );
 };
