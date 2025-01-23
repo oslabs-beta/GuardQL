@@ -1,9 +1,10 @@
 import * as styles from '../styles/login-and-signup.module.css'
 import * as React from 'react';
+import { useState } from 'react';
 import Login from './Login';
 import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png'
 
-// MUI
+/** Material UI Components */
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -15,12 +16,14 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 
 const SignUp = () => {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-  const [nameError, setNameError] = React.useState(false);
-  const [nameErrorMessage, setNameErrorMessage] = React.useState('');
+  const [emailError, setEmailError] = useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [nameError, setNameError] = useState(false);
+  const [nameErrorMessage, setNameErrorMessage] = useState('');
+  // made a useState to help trigger clicking on the login link
+  const [navigate, setNavigate] = useState<string | null>(null);
 
   const validateInputs = () => {
     const email = document.getElementById('email') as HTMLInputElement;
@@ -71,6 +74,15 @@ const SignUp = () => {
       email: data.get('email'),
       password: data.get('password'),
     });
+  };
+
+  // event function to trigger navigating to Login page
+  const handleNavigation = (target: string | null) => {
+    if (typeof target === 'string' || target === null) {
+      setNavigate(target);  // Now TypeScript should accept this
+    } else {
+      console.error('Invalid navigation target');
+    }
   };
 
   return (
@@ -198,8 +210,9 @@ const SignUp = () => {
           <Box>
             <Typography>
               Already have an account?{' '}
+              {/* Clicking on the Sign In link */}
               <Link
-                href={'/material-ui/getting-started/templates/sign-in/'}
+                onClick={() => handleNavigation('login')}
                 variant='body2'
                 sx={{ alignSelf: 'center'}}
                 style={{ color: '#D5006D', textDecoration: 'none' }}
@@ -207,6 +220,7 @@ const SignUp = () => {
               onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.color = '#D5006D'}
               >
                 Sign in
+                {navigate === 'login' && <Login />}
               </Link>
             </Typography>
           </Box>

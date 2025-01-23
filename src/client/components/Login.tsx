@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Button, TextField } from '@mui/material'
 // import './styles/login.css'
+import SignUp from './Sign-Up'
 import * as styles from '../styles/login-and-signup.module.css'
 import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png'
 
