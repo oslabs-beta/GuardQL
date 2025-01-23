@@ -1,5 +1,6 @@
 import * as styles from '../styles/login-and-signup.module.css'
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Login from './Login';
 import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png'
@@ -10,7 +11,7 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -212,9 +213,10 @@ const SignUp = () => {
               Already have an account?{' '}
               {/* Clicking on the Sign In link */}
               <Link
-                onClick={() => handleNavigation('login')}
-                variant='body2'
-                sx={{ alignSelf: 'center'}}
+                // onClick={() => handleNavigation('login')}
+                to="/login"
+                // variant='body2'
+                // sx={{ alignSelf: 'center'}}
                 style={{ color: '#D5006D', textDecoration: 'none' }}
               onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.color = '#F50057'}
               onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.color = '#D5006D'}

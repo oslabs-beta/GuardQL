@@ -1,9 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App'; // Check this path is correct
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
-root.render(<App />);
+root.render(
+<BrowserRouter>
+<App />
+</BrowserRouter>
+);
 // the ! is called the Non-Null Assertion Operator
 // it will tell TypeScript compiler that the value is not null
 // It can be risky because it can lead to runtime errors if the assumption is wrong. Can lead to error if the root is missing.

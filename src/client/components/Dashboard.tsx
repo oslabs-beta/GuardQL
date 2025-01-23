@@ -9,6 +9,7 @@ const Dashboard = () => {
   return (
     <div>
       <NavBar />
+      <h1 style={{ color: 'white', textAlign: 'center'}}>DASHBOARD TIME!</h1>
     </div>
   )
 };
