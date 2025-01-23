@@ -1,4 +1,4 @@
-import * as styles from './styles/signup.module.css'
+import * as styles from './styles/login-and-signup.module.css'
 import * as React from 'react';
 import Login from './Login';
 
@@ -75,14 +75,14 @@ const SignUp = () => {
   return (
     <div className={styles.background}>
       <div className={styles.container}>
-      <div className='leftContainer'>
+      <div className={styles.leftContainer}>
         <h1>This is the Sign Up page!</h1>
       <img src ='./GuardQL_Logo_R_-_Title2-w_2048px.png'
           style={{ width: '400px', height: 'auto' }} />
       </div>
 
         <div className={styles.rightContainer}>
-        <Stack className={styles.formContainer}>
+        <Stack className={styles.signUpFormContainer}>
           <Typography
             component='h3'
             variant='h4'>

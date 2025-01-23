@@ -29,10 +29,10 @@
   flex-direction: column;
 }
 
-.formContainer {
+.signUpFormContainer {
   display: flex;
   flex-direction: column;
-  gap: 1rem; /* Matches theme.spacing(2) */
+  gap: 1rem;
   width: 75%;
   max-width: 300px;
   margin: 0 auto;
