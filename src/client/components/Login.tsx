@@ -2,6 +2,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { Button, TextField } from '@mui/material'
 // import './styles/login.css'
 import * as styles from './styles/login-and-signup.module.css'
+import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png'
 
 type FormField = {
   email: string;
@@ -21,7 +22,8 @@ function Login() {
     <div className={styles.container}>
       <div className={styles.leftContainer}>
         <h1>This is Happening!</h1>
-      <img src ='./GuardQL_Logo_R_-_Title2-w_2048px.png'
+      <img src ={logo}
+          alt='GuardQL Logo'
           style={{ width: '400px', height: 'auto' }} />
       </div>
 

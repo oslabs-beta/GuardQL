@@ -53,6 +53,18 @@ export default {
         exclude: /\.module\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
+      // for images
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'assets/[name].[ext]',
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {

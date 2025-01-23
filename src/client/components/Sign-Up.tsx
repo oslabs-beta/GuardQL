@@ -1,6 +1,7 @@
 import * as styles from './styles/login-and-signup.module.css'
 import * as React from 'react';
 import Login from './Login';
+import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png'
 
 // MUI
 import Box from '@mui/material/Box';
@@ -77,7 +78,8 @@ const SignUp = () => {
       <div className={styles.container}>
       <div className={styles.leftContainer}>
         <h1>This is the Sign Up page!</h1>
-      <img src ='./GuardQL_Logo_R_-_Title2-w_2048px.png'
+      <img src ={logo}
+          alt='GuardQL Logo'
           style={{ width: '400px', height: 'auto' }} />
       </div>
 
