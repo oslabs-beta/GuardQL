@@ -1,4 +1,4 @@
-import * as styles from './styles/login-and-signup.module.css'
+import * as styles from '../styles/login-and-signup.module.css'
 import * as React from 'react';
 import Login from './Login';
 import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png'
