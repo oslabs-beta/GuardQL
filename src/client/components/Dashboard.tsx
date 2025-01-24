@@ -18,12 +18,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Divider from '@mui/material/Divider';
 import './Dashboard.css';
-<<<<<<< HEAD
 import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png'
-
-
-=======
->>>>>>> 10a793f (nothing of note)
 
 const drawerWidth = 240;
 
@@ -42,7 +37,7 @@ export default function NavBar() {
       <Drawer className="drawer" variant="permanent" anchor="left">
         <div className="drawer-header">
           <img 
-            src={logo}
+            src={logo} 
             alt="GuardQL Logo"
             className="drawer-logo"
           />
