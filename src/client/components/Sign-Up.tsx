@@ -11,7 +11,6 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-// import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -23,8 +22,6 @@ const SignUp = () => {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
   const [nameError, setNameError] = useState(false);
   const [nameErrorMessage, setNameErrorMessage] = useState('');
-  // made a useState to help trigger clicking on the login link
-  const [navigate, setNavigate] = useState<string | null>(null);
 
   const validateInputs = () => {
     const email = document.getElementById('email') as HTMLInputElement;
@@ -75,15 +72,6 @@ const SignUp = () => {
       email: data.get('email'),
       password: data.get('password'),
     });
-  };
-
-  // event function to trigger navigating to Login page
-  const handleNavigation = (target: string | null) => {
-    if (typeof target === 'string' || target === null) {
-      setNavigate(target);  // Now TypeScript should accept this
-    } else {
-      console.error('Invalid navigation target');
-    }
   };
 
   return (
@@ -190,7 +178,6 @@ const SignUp = () => {
                 }}
               />
             </FormControl>
-
             <Button
               type='submit'
               fullWidth
@@ -213,16 +200,12 @@ const SignUp = () => {
               Already have an account?{' '}
               {/* Clicking on the Sign In link */}
               <Link
-                // onClick={() => handleNavigation('login')}
                 to="/login"
-                // variant='body2'
-                // sx={{ alignSelf: 'center'}}
                 style={{ color: '#D5006D', textDecoration: 'none' }}
               onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.color = '#F50057'}
               onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.color = '#D5006D'}
               >
                 Sign in
-            
               </Link>
             </Typography>
           </Box>
