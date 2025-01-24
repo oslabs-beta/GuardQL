@@ -222,7 +222,7 @@ const SignUp = () => {
               onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.color = '#D5006D'}
               >
                 Sign in
-                {navigate === 'login' && <Login />}
+            
               </Link>
             </Typography>
           </Box>

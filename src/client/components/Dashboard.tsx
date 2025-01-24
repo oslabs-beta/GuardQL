@@ -9,7 +9,7 @@ const Dashboard = () => {
   return (
     <div>
       <NavBar />
-      <h1 style={{ color: 'white', textAlign: 'center'}}>DASHBOARD TIME!</h1>
+      <h1 style={{ color: 'white', textAlign: 'center'}}>DASHBOARD TIME! Ya Crazy Kids!!!</h1>
     </div>
   )
 };
