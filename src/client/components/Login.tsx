@@ -44,7 +44,15 @@ function Login() {
       <form onSubmit={handleSubmit(onSubmit)}>
 
         <TextField className='text-field'
-        {...register('user')}
+        {...register('user',{
+          required: 'Username is required',
+          minLength: {
+            value: 6,
+            message: 'Username must be atleast 6'
+          }
+        })}
+        error={!!errors.user}
+        helperText={errors.user?.message}
         type='text'
         variant='standard'
         fullWidth
@@ -65,7 +73,15 @@ function Login() {
 
       <TextField
       className='text-field'
-      {...register('password')}
+      {...register('password', {
+        required: 'Password is required',
+        minLength: {
+          value: 6,
+          message: 'Password must be atleast 6'
+        }
+      })}
+      error={!!errors.user}
+      helperText={errors.user?.message}
       type='password'
       placeholder='Password'
       variant='standard'
