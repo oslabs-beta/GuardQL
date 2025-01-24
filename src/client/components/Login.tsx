@@ -74,8 +74,8 @@ function Login() {
           message: 'Password must be atleast 6'
         }
       })}
-      error={!!errors.user}
-      helperText={errors.user?.message}
+      error={!!errors.password}
+      helperText={errors.password?.message}
       type='password'
       placeholder='Password'
       variant='standard'
