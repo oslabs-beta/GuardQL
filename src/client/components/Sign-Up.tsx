@@ -48,7 +48,7 @@ const SignUp = () => {
       setPasswordErrorMessage('');
     }
 
-    if (!userName.value || userName.value.length < 1) {
+    if (!userName.value || userName.value.length < 4) {
       setNameError(true);
       setNameErrorMessage('Username is required.');
       isValid = false;
@@ -97,6 +97,7 @@ const SignUp = () => {
             sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
           >
             <FormControl>
+              {/* Username input field */}
               <FormLabel htmlFor='userName' sx={{color: 'white'}}>Username</FormLabel>
               <TextField
                 autoComplete='userName'
@@ -124,6 +125,7 @@ const SignUp = () => {
               />
             </FormControl>
             <FormControl>
+              {/* Email input field */}
               <FormLabel htmlFor='email' sx={{color: 'white'}}>Email</FormLabel>
               <TextField
                 required
@@ -151,6 +153,7 @@ const SignUp = () => {
               />
             </FormControl>
             <FormControl>
+               {/* Password input field */}
               <FormLabel htmlFor='password' sx={{color: 'white'}}>Password</FormLabel>
               <TextField
                 required
