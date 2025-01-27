@@ -109,23 +109,37 @@ html, body {
   margin-bottom: 32px;
 }
 
-.logs-container {
+.logs-container, .slow-queries-container {
   background-color: #1e1e1e;
   padding: 16px;
   border-radius: 8px;
+  margin-bottom: 32px;
 }
 
-.log-message {
+.log-message, .query-operation {
   margin-bottom: 8px !important;
   color: #FFFFFF;
+  font-weight: bold !important;
 }
 
-.log-details {
+.log-details, .query-details, .query-threshold, .query-timestamp, .query-text {
   font-size: 14px !important;
   color: #BBBBBB !important;
+  margin-bottom: 4px !important;
 }
 
 .log-divider {
-  background-color: #FFFFFF !important;
+  background-color: #333333 !important;
   margin: 16px 0 !important;
+}
+
+.query-item {
+  padding: 16px;
+  border-radius: 4px;
+  background-color: #262626;
+  margin-bottom: 16px;
+}
+
+.query-item:last-child {
+  margin-bottom: 0;
 }
