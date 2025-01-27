@@ -2,6 +2,7 @@ import * as styles from '../styles/login-and-signup.module.css'
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { gql, useMutation }from '@apollo/client'
 import Login from './Login';
 import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png'
 
@@ -14,6 +15,19 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
+
+const REGISTER_MUTATION = gql`
+  mutation Register($input: RegisterInput!) {
+    register(input: $input) {
+      token
+      user {
+        id
+        username
+        email
+      }
+    }
+  }
+`;
 
 const SignUp = () => {
   const [emailError, setEmailError] = useState(false);
