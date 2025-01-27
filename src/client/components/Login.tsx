@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import SignUp from './Sign-Up'
 import * as styles from '../styles/login-and-signup.module.css'
 import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png'
+import Footer from './Footer'
 
 type FormField = {
   user: string;
@@ -115,6 +116,7 @@ function Login() {
       </div>
       </div>
       </div>
+      <Footer />
     </div>
   )
 }

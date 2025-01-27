@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Login from './Login';
 import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png'
+import Footer from './Footer'
 
 /** Material UI Components */
 import Box from '@mui/material/Box';
@@ -212,6 +213,7 @@ const SignUp = () => {
         </Stack>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
