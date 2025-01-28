@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import Login from './Login';
 import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
+import Footer from './Footer'
 
 /** Material UI Components */
 import {
@@ -118,7 +119,7 @@ const SignUp = () => {
     <div className={styles.background}>
       <div className={styles.container}>
         <div className={styles.leftContainer}>
-          <h1>This is the Sign Up page!</h1>
+          <h1>Sign Up for Free!</h1>
           <img
             src={logo}
             alt='GuardQL Logo'
@@ -257,13 +258,14 @@ const SignUp = () => {
                     ((e.target as HTMLAnchorElement).style.color = '#D5006D')
                   }
                 >
-                  Sign in
+                  Sign in.
                 </Link>
               </Typography>
             </Box>
           </Stack>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
