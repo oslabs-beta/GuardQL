@@ -1,19 +1,37 @@
-import * as styles from '../styles/login-and-signup.module.css'
+import * as styles from '../styles/login-and-signup.module.css';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { gql, useMutation } from '@apollo/client';
 import Login from './Login';
-import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png'
+import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
+import Footer from './Footer'
 
 /** Material UI Components */
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import FormLabel from '@mui/material/FormLabel';
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  TextField,
+  Typography,
+  Stack,
+  Divider,
+} from '@mui/material';
+
+// const REGISTER_MUTATION = gql`
+//   mutation Register($input: RegisterInput!) {
+//     register(input: $input) {
+//       token
+//       user {
+//         id
+//         username
+//         email
+//         password
+//       }
+//     }
+//   }
+// `;
 
 const SignUp = () => {
   const [emailError, setEmailError] = useState(false);
@@ -22,6 +40,7 @@ const SignUp = () => {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
   const [nameError, setNameError] = useState(false);
   const [nameErrorMessage, setNameErrorMessage] = useState('');
+  // const [register, { loading, error, data }] = useMutation(REGISTER_MUTATION);
 
   const validateInputs = () => {
     const email = document.getElementById('email') as HTMLInputElement;
@@ -48,7 +67,7 @@ const SignUp = () => {
       setPasswordErrorMessage('');
     }
 
-    if (!userName.value || userName.value.length < 1) {
+    if (!userName.value || userName.value.length < 4) {
       setNameError(true);
       setNameErrorMessage('Username is required.');
       isValid = false;
@@ -60,7 +79,7 @@ const SignUp = () => {
     return isValid;
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     if (nameError || emailError || passwordError) {
       event.preventDefault();
       return;
@@ -72,148 +91,183 @@ const SignUp = () => {
       email: data.get('email'),
       password: data.get('password'),
     });
+
+    const formData = new FormData(event.currentTarget);
+    const username = formData.get('userName') as string;
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+
+    // try {
+    //   const { data } = await register({
+    //     variables: {
+    //       input: {
+    //         username,
+    //         email,
+    //         password,
+    //       },
+    //     },
+    //   });
+
+    //   console.log('Registration successful:', data);
+    //   // Redirect the user or show a success message
+    // } catch (err) {
+    //   console.error('Error during registration:', err);
+    // }
   };
 
   return (
     <div className={styles.background}>
       <div className={styles.container}>
-      <div className={styles.leftContainer}>
-        <h1>This is the Sign Up page!</h1>
-      <img src ={logo}
-          alt='GuardQL Logo'
-          style={{ width: '400px', height: 'auto' }} />
-      </div>
+        <div className={styles.leftContainer}>
+          <h1>Sign Up for Free!</h1>
+          <img
+            src={logo}
+            alt='GuardQL Logo'
+            style={{ width: '400px', height: 'auto' }}
+          />
+        </div>
 
         <div className={styles.rightContainer}>
-        <Stack className={styles.signUpFormContainer}>
-          <Typography
-            component='h3'
-            variant='h4'>
-            Sign up
-          </Typography>
-          <Box
-            component='form'
-            onSubmit={handleSubmit}
-            sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
-          >
-            <FormControl>
-              <FormLabel htmlFor='userName' sx={{color: 'white'}}>Username</FormLabel>
-              <TextField
-                autoComplete='userName'
-                name='userName'
-                required
-                fullWidth
-                id='userName'
-                placeholder='johnsmith123'
-                variant='standard'
-                error={nameError}
-                helperText={nameErrorMessage}
-                color={nameError ? 'error' : 'primary'}
-                sx={{
-                  '& .MuiInputBase-root': {
-                    color: 'white',
-                  },
-                  '& .MuiInput-underline:before': {
-                    borderBottomColor: 'white', // Underline color
-                  },
-                  '& .MuiInput-underline:hover:before': {
-                    borderBottomColor: 'white',
-                  },
-                  marginBottom: '15px',
-                }}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel htmlFor='email' sx={{color: 'white'}}>Email</FormLabel>
-              <TextField
-                required
-                fullWidth
-                id='email'
-                placeholder='johnsmith@email.com'
-                name='email'
-                autoComplete='email'
-                variant='standard'
-                error={emailError}
-                helperText={emailErrorMessage}
-                color={passwordError ? 'error' : 'primary'}
-                sx={{
-                  '& .MuiInputBase-root': {
-                    color: 'white',
-                  },
-                  '& .MuiInput-underline:before': {
-                    borderBottomColor: 'white', // Underline color
-                  },
-                  '& .MuiInput-underline:hover:before': {
-                    borderBottomColor: 'white',
-                  },
-                  marginBottom: '15px',
-                }}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel htmlFor='password' sx={{color: 'white'}}>Password</FormLabel>
-              <TextField
-                required
-                fullWidth
-                name='password'
-                placeholder='••••••'
-                type='password'
-                id='password'
-                autoComplete='new-password'
-                variant='standard'
-                error={passwordError}
-                helperText={passwordErrorMessage}
-                color={passwordError ? 'error' : 'primary'}
-                sx={{
-                  '& .MuiInputBase-root': {
-                    color: 'white',
-                  },
-                  '& .MuiInput-underline:before': {
-                    borderBottomColor: 'white', // Underline color
-                  },
-                  '& .MuiInput-underline:hover:before': {
-                    borderBottomColor: 'white',
-                  },
-                  marginBottom: '15px',
-                }}
-              />
-            </FormControl>
-            <Button
-              type='submit'
-              fullWidth
-              variant='contained'
-              onClick={validateInputs}
-              sx={{
-                backgroundColor: 'hotpink',
-                '&:hover': {
-                  backgroundColor: 'deeppink',
-                },
-                marginTop: '15px',
-              }}
-            >
+          <Stack className={styles.signUpFormContainer}>
+            <Typography component='h3' variant='h4'>
               Sign up
-            </Button>
-          </Box>
-          <Divider></Divider>
-          <Box>
-            <Typography>
-              Already have an account?{' '}
-              {/* Clicking on the Sign In link */}
-              <Link
-                to="/login"
-                style={{ color: '#D5006D', textDecoration: 'none' }}
-              onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.color = '#F50057'}
-              onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.color = '#D5006D'}
-              >
-                Sign in
-              </Link>
             </Typography>
-          </Box>
-        </Stack>
+            <Box
+              component='form'
+              onSubmit={handleSubmit}
+              sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+            >
+              <FormControl>
+                {/* Username input field */}
+                <FormLabel htmlFor='userName' sx={{ color: 'white' }}>
+                  Username
+                </FormLabel>
+                <TextField
+                  autoComplete='userName'
+                  name='userName'
+                  required
+                  fullWidth
+                  id='userName'
+                  placeholder='johnsmith123'
+                  variant='standard'
+                  error={nameError}
+                  helperText={nameErrorMessage}
+                  color={nameError ? 'error' : 'primary'}
+                  sx={{
+                    '& .MuiInputBase-root': {
+                      color: 'white',
+                    },
+                    '& .MuiInput-underline:before': {
+                      borderBottomColor: 'white', // Underline color
+                    },
+                    '& .MuiInput-underline:hover:before': {
+                      borderBottomColor: 'white',
+                    },
+                    marginBottom: '15px',
+                  }}
+                />
+              </FormControl>
+              <FormControl>
+                {/* Email input field */}
+                <FormLabel htmlFor='email' sx={{ color: 'white' }}>
+                  Email
+                </FormLabel>
+                <TextField
+                  required
+                  fullWidth
+                  id='email'
+                  placeholder='johnsmith@email.com'
+                  name='email'
+                  autoComplete='email'
+                  variant='standard'
+                  error={emailError}
+                  helperText={emailErrorMessage}
+                  color={passwordError ? 'error' : 'primary'}
+                  sx={{
+                    '& .MuiInputBase-root': {
+                      color: 'white',
+                    },
+                    '& .MuiInput-underline:before': {
+                      borderBottomColor: 'white', // Underline color
+                    },
+                    '& .MuiInput-underline:hover:before': {
+                      borderBottomColor: 'white',
+                    },
+                    marginBottom: '15px',
+                  }}
+                />
+              </FormControl>
+              <FormControl>
+                {/* Password input field */}
+                <FormLabel htmlFor='password' sx={{ color: 'white' }}>
+                  Password
+                </FormLabel>
+                <TextField
+                  required
+                  fullWidth
+                  name='password'
+                  placeholder='••••••'
+                  type='password'
+                  id='password'
+                  autoComplete='new-password'
+                  variant='standard'
+                  error={passwordError}
+                  helperText={passwordErrorMessage}
+                  color={passwordError ? 'error' : 'primary'}
+                  sx={{
+                    '& .MuiInputBase-root': {
+                      color: 'white',
+                    },
+                    '& .MuiInput-underline:before': {
+                      borderBottomColor: 'white', // Underline color
+                    },
+                    '& .MuiInput-underline:hover:before': {
+                      borderBottomColor: 'white',
+                    },
+                    marginBottom: '15px',
+                  }}
+                />
+              </FormControl>
+              <Button
+                type='submit'
+                fullWidth
+                variant='contained'
+                onClick={validateInputs}
+                sx={{
+                  backgroundColor: 'hotpink',
+                  '&:hover': {
+                    backgroundColor: 'deeppink',
+                  },
+                  marginTop: '15px',
+                }}
+              >
+                Sign up
+              </Button>
+            </Box>
+            <Divider></Divider>
+            <Box>
+              <Typography>
+                Already have an account? {/* Clicking on the Sign In link */}
+                <Link
+                  to='/login'
+                  style={{ color: '#D5006D', textDecoration: 'none' }}
+                  onMouseEnter={(e) =>
+                    ((e.target as HTMLAnchorElement).style.color = '#F50057')
+                  }
+                  onMouseLeave={(e) =>
+                    ((e.target as HTMLAnchorElement).style.color = '#D5006D')
+                  }
+                >
+                  Sign in.
+                </Link>
+              </Typography>
+            </Box>
+          </Stack>
         </div>
       </div>
+      <Footer />
     </div>
   );
-}
+};
 
 export default SignUp;
