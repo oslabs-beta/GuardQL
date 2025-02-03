@@ -9,13 +9,13 @@ import SignUp from './components/Sign-Up';
 
 const App = () => {
   return (
-    
+
     <div>
       <Routes>
-      <Route path="/" element={<Login />}/>  
+      <Route path="/" element={<Login />}/>
       <Route path="/login" element={<Login />}/>
       <Route path="/signup" element={<SignUp />} />
-     
+
      <Route path="/dashboard" element={<Dashboard />} />
      </Routes>
     </div>
