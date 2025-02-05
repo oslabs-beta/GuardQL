@@ -1,14 +1,12 @@
 import * as styles from '../styles/login-and-signup.module.css';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Link, useNavigate} from 'react-router-dom';
 import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import Login from './Login';
 import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
 import Footer from './Footer'
-
-/** This is Sabrina's original Sign-Up component */
-
 /** Material UI Components */
 import {
   Box,
@@ -20,104 +18,32 @@ import {
   Stack,
   Divider,
 } from '@mui/material';
+import { on } from 'events';
 
-// const REGISTER_MUTATION = gql`
-//   mutation Register($input: RegisterInput!) {
-//     register(input: $input) {
-//       token
-//       user {
-//         id
-//         username
-//         email
-//         password
-//       }
-//     }
-//   }
-// `;
+/** This is the modified sign up form, edited by Mike, to be consistent with the login page structure */
 
-const SignUp = () => {
-  const [emailError, setEmailError] = useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = useState('');
-  const [passwordError, setPasswordError] = useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
-  const [nameError, setNameError] = useState(false);
-  const [nameErrorMessage, setNameErrorMessage] = useState('');
-  // const [register, { loading, error, data }] = useMutation(REGISTER_MUTATION);
+// type declaration
+type FormField = {
+  userName: string;
+  email: string;
+  password: string;
+}
 
-  const validateInputs = () => {
-    const email = document.getElementById('email') as HTMLInputElement;
-    const password = document.getElementById('password') as HTMLInputElement;
-    const userName = document.getElementById('userName') as HTMLInputElement;
+function SignUp() {
+  const navigate = useNavigate();
+  const{ register, handleSubmit, formState: { errors }, reset} = useForm<FormField>();
+  /**
+   * 
+   * "register" is a function provided by the React Hook Form library. Its purpose is to "register" or connect an input field to the form, so that React Hook Form can track its value, handle validation, and manage its state.
+   * 
+   * 
+   *  */ 
 
-    let isValid = true;
-
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
-      isValid = false;
-    } else {
-      setEmailError(false);
-      setEmailErrorMessage('');
-    }
-
-    if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage('');
-    }
-
-    if (!userName.value || userName.value.length < 4) {
-      setNameError(true);
-      setNameErrorMessage('Username is required.');
-      isValid = false;
-    } else {
-      setNameError(false);
-      setNameErrorMessage('');
-    }
-
-    return isValid;
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    if (nameError || emailError || passwordError) {
-      event.preventDefault();
-      return;
-    }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      userName: data.get('userName'),
-      lastName: data.get('lastName'),
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-
-    const formData = new FormData(event.currentTarget);
-    const username = formData.get('userName') as string;
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-
-    // try {
-    //   const { data } = await register({
-    //     variables: {
-    //       input: {
-    //         username,
-    //         email,
-    //         password,
-    //       },
-    //     },
-    //   });
-
-    //   console.log('Registration successful:', data);
-    //   // Redirect the user or show a success message
-    // } catch (err) {
-    //   console.error('Error during registration:', err);
-    // }
-    console.log("data", data);
-    
-  };
+  const onSubmit: SubmitHandler<FormField> = (data)=>{
+    console.log(data);
+    navigate('/dashboard')
+    reset();
+  }
 
   return (
     <div className={styles.background}>
@@ -138,7 +64,7 @@ const SignUp = () => {
             </Typography>
             <Box
               component='form'
-              onSubmit={handleSubmit}
+              onSubmit={handleSubmit(onSubmit)}
               sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
             >
               <FormControl>
@@ -147,16 +73,15 @@ const SignUp = () => {
                   Username
                 </FormLabel>
                 <TextField
+                 {...register('userName', { required: 'Username is required' })}
                   autoComplete='userName'
                   name='userName'
-                  required
                   fullWidth
                   id='userName'
                   placeholder='johnsmith123'
                   variant='standard'
-                  error={nameError}
-                  helperText={nameErrorMessage}
-                  color={nameError ? 'error' : 'primary'}
+                  error={!!errors.userName}
+                  helperText={errors.userName?.message}
                   sx={{
                     '& .MuiInputBase-root': {
                       color: 'white',
@@ -177,16 +102,21 @@ const SignUp = () => {
                   Email
                 </FormLabel>
                 <TextField
-                  required
+                 {...register('email', {
+                  required: 'Email is required',
+                  pattern: {
+                    value: /\S+@\S+\.\S+/,
+                    message: 'Please enter a valid email address.',
+                  },
+                })}
+                error={!!errors.email}
+                helperText={errors.email?.message}
                   fullWidth
                   id='email'
                   placeholder='johnsmith@email.com'
                   name='email'
                   autoComplete='email'
                   variant='standard'
-                  error={emailError}
-                  helperText={emailErrorMessage}
-                  color={passwordError ? 'error' : 'primary'}
                   sx={{
                     '& .MuiInputBase-root': {
                       color: 'white',
@@ -207,7 +137,9 @@ const SignUp = () => {
                   Password
                 </FormLabel>
                 <TextField
-                  required
+                  {...register('password', { required: 'Password is required', minLength: { value: 6, message: 'Password must be at least 6 characters long.' } })}
+                  error={!!errors.password}
+                  helperText={errors.password?.message}
                   fullWidth
                   name='password'
                   placeholder='••••••'
@@ -215,9 +147,6 @@ const SignUp = () => {
                   id='password'
                   autoComplete='new-password'
                   variant='standard'
-                  error={passwordError}
-                  helperText={passwordErrorMessage}
-                  color={passwordError ? 'error' : 'primary'}
                   sx={{
                     '& .MuiInputBase-root': {
                       color: 'white',
@@ -236,7 +165,6 @@ const SignUp = () => {
                 type='submit'
                 fullWidth
                 variant='contained'
-                onClick={validateInputs}
                 sx={{
                   backgroundColor: 'hotpink',
                   '&:hover': {
