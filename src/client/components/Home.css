@@ -1,0 +1,74 @@
+.root {
+  display: flex;
+  background-color: #121212;
+  color: #FFFFFF;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 24px;
+  background-color: #121212;
+  min-height: 100vh;
+}
+
+.app-bar {
+  width: calc(100% - 240px) !important;
+  margin-left: 240px !important;
+  background-color: #e623c6 !important;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.hero-section {
+  text-align: center;
+  padding: 100px 20px;
+  margin-top: 60px;
+}
+
+.hero-title {
+  margin-bottom: 40px;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.hero-subtitle {
+  margin: 30px 0 40px;
+  font-size: 18px;
+}
+
+.get-started-btn {
+  margin-top: 60px !important;
+  background-color: #e623c6 !important;
+  color: white !important;
+}
+
+.features-section {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.features-grid {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.feature-card {
+  background-color: #1e1e1e;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  width: 200px;
+}
+
+.feature-icon {
+  font-size: 40px;
+  color: #e623c6;
+}
+
+.feature-text {
+  margin-top: 10px;
+  font-size: 16px;
+}
