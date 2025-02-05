@@ -3,19 +3,19 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button, TextField } from '@mui/material'
 import Typography from '@mui/material/Typography';
+import SignUp from './Sign-Up'
 import * as styles from '../styles/login-and-signup.module.css'
 import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png'
 import Footer from './Footer'
 
-import SignUp from './Sign-Up'
+/** This is where the user will finally update their password */
 
-/** type declaration */
 type FormField = {
-  user: string;
-  password: string;
+  newPassword: string;
+  confirmPassword: string;
 }
 
-function Login() {
+function PasswordReset() {
   const navigate = useNavigate();
   const{ register, handleSubmit, formState: { errors }, reset} = useForm<FormField>();
 
@@ -28,37 +28,31 @@ function Login() {
   return (
     <div className={styles.background}>
     <div className={styles.container}>
-      <div className={styles.leftContainer}>
-        <h1>Uncover, Analyze, and Optimize Your GraphQL Performance.</h1>
-      <img src ={logo}
-          alt='GuardQL Logo'
-          style={{ width: '400px', height: 'auto' }} />
-      </div>
-
+     
       <div className={styles.rightContainer}>
 
         <div className={styles.loginFormContainer}>
         <Typography
           component='h3'
           variant='h4'>
-            Sign In
+            Create Password
         </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
 
         <TextField className='text-field'
-        {...register('user',{
-          required: 'Username is required',
+        {...register('newPassword',{
+          required: 'Password is required',
           minLength: {
             value: 6,
-            message: 'Username must be atleast 6'
+            message: 'Password must be atleast 6'
           }
         })}
-        error={!!errors.user}
-        helperText={errors.user?.message}
-        type='text'
+        error={!!errors.newPassword}
+        helperText={errors.newPassword?.message}
+        type='password'
         variant='standard'
         fullWidth
-        placeholder='Username'
+        placeholder='New Password'
         sx={{
           '& .MuiInputBase-root': {
             color: 'white',
@@ -75,17 +69,17 @@ function Login() {
 
       <TextField
       className='text-field'
-      {...register('password', {
+      {...register('confirmPassword', {
         required: 'Password is required',
         minLength: {
           value: 6,
           message: 'Password must be atleast 6'
         }
       })}
-      error={!!errors.password}
-      helperText={errors.password?.message}
+      error={!!errors.confirmPassword}
+      helperText={errors.confirmPassword?.message}
       type='password'
-      placeholder='Password'
+      placeholder='Confirm New Password'
       variant='standard'
       fullWidth
       sx={{
@@ -119,26 +113,6 @@ function Login() {
         Enter
       </Button>
 
-      <p className="text-center text-white">
-              Don't have an account:{' '}
-              <Link to="/signup"
-              style={{ color: '#FFC0CB', textDecoration: 'none' }}
-              onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.color = '#F50057'}
-              onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.color = '#FFC0CB'}
-              >
-                Sign Up
-              </Link>
-            </p>
-            <p className="text-center text-white" style={{ marginTop: '-15px' }}>
-              Forgotten Password:{' '}
-              <Link to="/ForgotPassword"
-              style={{ color: '#FF77A8', textDecoration: 'none' }}
-              onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.color = '#F50057'}
-              onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.color = '#FF77A8'}
-              >
-                Reset Here
-              </Link>
-            </p>
       </form>
       </div>
       </div>
@@ -148,4 +122,4 @@ function Login() {
   )
 }
 
-export default Login;
+export default PasswordReset;

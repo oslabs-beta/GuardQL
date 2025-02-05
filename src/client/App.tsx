@@ -19,6 +19,9 @@ const App = () => {
           <Route path="/login" element={<Login />}/>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/ForgotPassword" element={<ForgotPassword />} />
+          <Route path="/ConfirmEmail" element={< ConfirmEmail />} />
+          <Route path="/PasswordReset" element={< PasswordReset />} />
         </Routes>
       </div>
     </ApolloProvider>
