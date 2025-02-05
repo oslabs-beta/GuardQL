@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App'; // Check this path is correct
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
-<BrowserRouter>
-<App />
-</BrowserRouter>
+  <React.StrictMode>
+    {/* <BrowserRouter> */}
+    <HashRouter>
+      <App />
+    </HashRouter>
+    {/* </BrowserRouter> */}
+  </React.StrictMode>
 );
 // the ! is called the Non-Null Assertion Operator
 // it will tell TypeScript compiler that the value is not null
