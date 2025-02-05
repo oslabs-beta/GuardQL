@@ -37,6 +37,7 @@ const navItems = [
 
 export default function Home() {
   return (
+    <div>
     <Box className="root">
       <CssBaseline />
       <AppBar className="app-bar" position="fixed">
@@ -97,5 +98,6 @@ export default function Home() {
         </Box>
       </Box>
     </Box>
+    </div> 
   );
 }
