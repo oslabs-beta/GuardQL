@@ -5,7 +5,9 @@
       "module": "ESNext",     
       "moduleResolution": "Node",     
       "jsx": "react-jsx",   
-      "composite": true,                        
+      "composite": true, 
+      "allowImportingTsExtensions": true, 
+      "noEmit": true,                      
     }, 
-    "include" : ["./**/*.ts", "./**/*.tsx"]
+    "include" : ["../../src/**/*.ts", "../../src/**/*.tsx"]
   }
