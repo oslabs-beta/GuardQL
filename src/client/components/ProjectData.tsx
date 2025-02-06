@@ -119,6 +119,15 @@ const GET_PROJECT_REGULAR_QUERIES = gql`
   }
 `;
 
+export const LOGIN = gql`
+  mutation LoginUser($input: LoginInput) {
+    login(input: $input) {
+      user
+      token 
+    }
+  }
+`; 
+
 // Individual data fetching hooks
 export const useProjectErrors = (projectId: string): QueryResponse<ErrorData> => {
   const { data, loading, error, refetch } = useQuery(GET_PROJECT_ERRORS, {
