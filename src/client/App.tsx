@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
 import { client } from '../lib/apollo';
-import Home from './components/Home';
+import Home from './components/Home.tsx';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import SignUp from './components/Sign-Up';

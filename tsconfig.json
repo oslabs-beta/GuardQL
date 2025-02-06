@@ -2,20 +2,20 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src",
-    "jsx": "react-jsx",
-    "target": "ES6",
-    "module": "ESNext",
-    "moduleResolution": "node",
+    // "jsx": "react-jsx",
+    // "target": "ES2020",
+    // "module": "NodeNext",
+    // "moduleResolution": "NodeNext",
     "strict": true,
     "removeComments": true,
     "sourceMap": true,
     "esModuleInterop": true,
     "noImplicitAny": true,
-    "skipLibCheck": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    }
   },
-"include": ["src/**/*.ts", "src/**/*.tsx", "typings.d.ts"],
-"exclude": ["node_modules", "dist"],
+  // "include": ["src/**/*.ts", "src/**/*.tsx", "src/test-env/test-server.mts", "src/plugin/src/testPlugin.mts"],
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    { "path": "./src/client" }, 
+    { "path": "./src/server" }, 
+  ]
 }

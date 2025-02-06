@@ -1,0 +1,40 @@
+type Mutation {
+  login(input: LoginInput!): AuthPayload!
+  createUser(input: CreateUserInput!): CreateUserResponse!
+}
+
+input LoginInput {
+  username: String!
+  password: String!
+}
+
+input CreateUserInput {
+  username: String!
+  password: String!
+  email: String!
+}
+
+type AuthPayload {
+  user: User!
+  token: String!
+}
+
+type CreateUserResponse {
+  code: Int!
+  success: Boolean!
+  message: String!
+}
+
+type User {
+  id: ID!
+  username: String!
+}
+
+input LoginInput {
+  username: String!
+  password: String!
+}
+
+# type Query {
+#   getAllUsers: [User!]!
+# }
