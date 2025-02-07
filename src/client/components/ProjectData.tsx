@@ -120,9 +120,12 @@ const GET_PROJECT_REGULAR_QUERIES = gql`
 `;
 
 export const LOGIN = gql`
-  mutation LoginUser($input: LoginInput) {
+  mutation LoginUser($input: LoginInput!) {
     login(input: $input) {
-      user
+      user {
+        id
+        username
+      }
       token 
     }
   }

@@ -74,7 +74,7 @@ export default function Home() {
           <Typography className="hero-subtitle">
             Monitor, debug, and optimize your GraphQL queries with ease.
           </Typography>
-          <Button className="get-started-btn" href="/dashboard" variant="contained">
+          <Button className="get-started-btn" href="/#/Dashboard" variant="contained">
             Get Started
           </Button>
         </Box>

@@ -6,7 +6,8 @@ import Typography from '@mui/material/Typography';
 import * as styles from '../styles/login-and-signup.module.css'
 import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png'
 import Footer from './Footer'
-// import LOGIN from './'
+import { LOGIN } from './ProjectData'; 
+import { useMutation } from '@apollo/client'; 
 import SignUp from './Sign-Up'
 
 /** type declaration */
@@ -18,12 +19,50 @@ type FormField = {
 function Login() {
   const navigate = useNavigate();
   const{ register, handleSubmit, formState: { errors }, reset} = useForm<FormField>();
+  const [login, { loading: mutationLoading, error: mutationError }] = useMutation(LOGIN); 
+  // console.log('Data returned from loggingIn begins here:', data); 
 
-  const onSubmit: SubmitHandler<FormField> = (data)=>{
-    
-    console.log(data);
-    navigate('/dashboard')
-    reset();
+  
+  const onSubmit: SubmitHandler<FormField> = async (userInput) => {
+    try {
+      const { data } = await login({ 
+        variables: { 
+          input: {
+            username: userInput.user, 
+            password: userInput.password
+          }
+        }
+      }); 
+      // console.log('data begins here:', data); 
+      // console.log('Input data begins here:', userInput);
+
+      const token = data.login.token; 
+      localStorage.setItem('jwt', token); 
+      console.log('Local storage begins here:', localStorage.setItem); 
+      // console.log('This is the user\'s token:', token); 
+
+      navigate('/dashboard')
+      reset();
+
+    } catch (error) {
+      // console.log('useMutation not successful, error begins here:', error); 
+    }
+    // const { data } = await login({ 
+    //   variables: { 
+    //     input: {
+    //       username: userInput.user, 
+    //       password: userInput.password
+    //     }
+    //   }
+    // }); 
+
+
+    // if (mutationLoading) return 'Verifying user...'; 
+    // if (mutationError) return `Login error: ${mutationError.message}`; 
+
+    // if (data) console.log('User not found in the database'); 
+    // if (data!) console.log('User has been logged in successfully!'); 
+
   }
 
   return (
