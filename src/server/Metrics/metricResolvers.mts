@@ -1,4 +1,4 @@
-import { getProjectErrorMetrics, createProject, getUserProjects, findProject, createQueryMetric, createSlowQuery, createError, createErrorLocation } from './databaseQueries.mjs'
+import { getProjectRegularMetrics, getProjectSlowQueries, getProjectErrorMetrics, createProject, getUserProjects, findProject, createQueryMetric, createSlowQuery, createError, createErrorLocation } from './databaseQueries.mjs'
 import { DbConnection, MetricInput, ProjectInput } from './types.mjs'; 
 
 const metricResolvers = {
@@ -26,26 +26,76 @@ const metricResolvers = {
         }; 
       }
     },
-
+    //! refactor - restructure returned data for errors with more than one error object 
     getProjectErrorMetrics: async (_: any, { projectId }: { projectId: string }, { db, userId}: { db: DbConnection, userId: string | null }) => {
       if (!userId) {
-        throw new Error('You must be logged in to view metrics for a specific project'); 
+        throw new Error('You must be logged in to view error metrics for a specific project'); 
       }
 
       try {
-        const metrics = await getProjectErrorMetrics(db, projectId); 
-        console.log('The project error metrics begin here:', metrics); 
+        const errorMetrics = await getProjectErrorMetrics(db, projectId); 
+        // console.log('The project error metrics begin here:', errorMetrics); 
         return {
           code: 200, 
           success: true, 
-          message: 'Projects retrieved successfully', 
-          metrics: metrics
+          message: 'Error metrics retrieved successfully', 
+          metrics: errorMetrics
         }; 
       } catch (error) {
         return {
           code: 500, 
           success: false, 
-          message: 'Failed to retrieve project metrics', 
+          message: 'Failed to retrieve error metrics', 
+          metrics: []
+        }; 
+      }
+    },
+
+    getProjectSlowQueries: async (_: any, { projectId }: { projectId: string }, { db, userId }: { db: DbConnection, userId: string | null }) => {
+      if (!userId) {
+        throw new Error('You must be logged in to view slow query metrics for a specific project'); 
+      }
+
+      try {
+        const slowMetrics = await getProjectSlowQueries(db, projectId); 
+        // console.log('The project slow query metrics begin here:', slowMetrics); 
+        return {
+          code: 200, 
+          success: true, 
+          message: 'Slow query metrics retrieved successfully', 
+          metrics: slowMetrics
+        }; 
+      } catch (error) {
+        // console.log('The project slow query metrics error begins here:', error); 
+        return {
+          code: 500, 
+          success: false, 
+          message: 'Failed to retrieve slow query metrics', 
+          metrics: []
+        }; 
+      }
+    }, 
+
+    getProjectRegularMetrics: async (_:any, { projectId }: { projectId: string }, { db, userId }: { db: DbConnection, userId: string | null }) => {
+      if (!userId) {
+        throw new Error('You must be logged in to view query metrics for a specific project'); 
+      }
+    
+      try {
+        const metrics = await getProjectRegularMetrics(db, projectId); 
+        // console.log('The project query metrics begin here:', metrics); 
+        return {
+          code: 200, 
+          success: true, 
+          message: 'Query metrics retrieved successfully', 
+          metrics: metrics
+        }; 
+      } catch (error) {
+        // console.log('The project query metrics error begins here:', error); 
+        return {
+          code: 500, 
+          success: false, 
+          message: 'Failed to retrieve query metrics', 
           metrics: []
         }; 
       }
