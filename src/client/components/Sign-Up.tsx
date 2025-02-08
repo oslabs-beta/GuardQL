@@ -53,7 +53,7 @@ const SignUp = () => {
 
     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
       setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
+      setEmailErrorMessage('Please enter a valid email address');
       isValid = false;
     } else {
       setEmailError(false);
@@ -62,7 +62,7 @@ const SignUp = () => {
 
     if (!password.value || password.value.length < 6) {
       setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
+      setPasswordErrorMessage('Password must be at least 6 characters long');
       isValid = false;
     } else {
       setPasswordError(false);
@@ -71,7 +71,7 @@ const SignUp = () => {
 
     if (!userName.value || userName.value.length < 4) {
       setNameError(true);
-      setNameErrorMessage('Username is required.');
+      setNameErrorMessage('Username is required');
       isValid = false;
     } else {
       setNameError(false);

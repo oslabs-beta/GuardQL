@@ -38,18 +38,18 @@ export const getProjectSlowQueries = async (db: DbConnection, projectId: string)
   return slowMetrics.rows; 
 }
  
-export const getProjectRegularMetrics = async (db: DbConnection, projectId: string) => {
-  const metrics = await db.query(
-    `SELECT qm.*, sq.id as slow_query_id,        
-     sq.threshold_exceeded_by as threshold_exceeded_by
-     FROM query_metrics qm
-     INNER JOIN slow_queries sq ON qm.id = sq.query_id        
-     WHERE qm.project_id = $1
-     ORDER BY qm.date, qm.time DESC`, 
-    [projectId]
-  ); 
-  return metrics.rows; 
-}
+// export const getProjectRegularMetrics = async (db: DbConnection, projectId: string) => {
+//   const metrics = await db.query(
+//     `SELECT qm.*, sq.id as slow_query_id,        
+//      sq.threshold_exceeded_by as threshold_exceeded_by
+//      FROM query_metrics qm
+//      INNER JOIN slow_queries sq ON qm.id = sq.query_id        
+//      WHERE qm.project_id = $1
+//      ORDER BY qm.date, qm.time DESC`, 
+//     [projectId]
+//   ); 
+//   return metrics.rows; 
+// }
 
 export const findProject = async (db: DbConnection, username: string, projectName: string) => {
   const project = await db.query(

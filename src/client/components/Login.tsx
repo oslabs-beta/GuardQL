@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
-import React from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button, TextField } from '@mui/material'
 import Typography from '@mui/material/Typography';
@@ -18,7 +18,8 @@ type FormField = {
 
 function Login() {
   const navigate = useNavigate();
-  const{ register, handleSubmit, formState: { errors }, reset} = useForm<FormField>();
+  const { register, handleSubmit, formState: { errors }, reset} = useForm<FormField>();
+  const [ loginError, setLoginError ] = useState<string | null>(null); 
   const [login, { loading: mutationLoading, error: mutationError }] = useMutation(LOGIN); 
   // console.log('Data returned from loggingIn begins here:', data); 
 
@@ -38,31 +39,16 @@ function Login() {
 
       const token = data.login.token; 
       localStorage.setItem('jwt', token); 
-      console.log('Local storage begins here:', localStorage.setItem); 
+      setLoginError(null); 
+      // console.log('Local storage begins here:', localStorage); 
       // console.log('This is the user\'s token:', token); 
-
       navigate('/dashboard')
       reset();
 
     } catch (error) {
       // console.log('useMutation not successful, error begins here:', error); 
+      setLoginError('Username or password incorrect'); 
     }
-    // const { data } = await login({ 
-    //   variables: { 
-    //     input: {
-    //       username: userInput.user, 
-    //       password: userInput.password
-    //     }
-    //   }
-    // }); 
-
-
-    // if (mutationLoading) return 'Verifying user...'; 
-    // if (mutationError) return `Login error: ${mutationError.message}`; 
-
-    // if (data) console.log('User not found in the database'); 
-    // if (data!) console.log('User has been logged in successfully!'); 
-
   }
 
   return (
@@ -90,7 +76,7 @@ function Login() {
           required: 'Username is required',
           minLength: {
             value: 6,
-            message: 'Username must be atleast 6'
+            message: 'Username must be at least 6 characters long'
           }
         })}
         error={!!errors.user}
@@ -119,7 +105,7 @@ function Login() {
         required: 'Password is required',
         minLength: {
           value: 6,
-          message: 'Password must be atleast 6'
+          message: 'Password must be at least 6 characters long'
         }
       })}
       error={!!errors.password}
@@ -142,7 +128,7 @@ function Login() {
         marginBottom: '15px'
       }}
       />
-
+      {loginError && <p style={{ color: 'red' }}>{loginError}</p>}
       <Button
       type='submit'
       variant='contained'

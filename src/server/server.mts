@@ -75,6 +75,7 @@ async function startApolloServer() {
         if (token) {
           try {
             const decoded = verifyToken(token); 
+            console.log('Decoded token begins here:', decoded); 
             // console.log('Decoded token:', decoded); 
             userId = decoded.userId; 
           } catch (error) {

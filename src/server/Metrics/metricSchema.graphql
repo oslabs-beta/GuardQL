@@ -6,8 +6,8 @@ type Mutation {
 }
 
 type Query {
-  "An array of all the query metric objects for a specific project"
-  getProjectRegularMetrics(projectId: String!): getProjectRegularMetricsResponse!
+  # "An array of all the query metric objects for a specific project"
+  # getProjectRegularMetrics(projectId: String!): getProjectRegularMetricsResponse!
   "An array of all the slow query metric objects for a specific project"
   getProjectSlowQueries(projectId: String!): GetProjectSlowQueriesResponse!
   "An array of all the error objects for a specific project"

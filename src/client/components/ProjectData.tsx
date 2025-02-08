@@ -67,20 +67,24 @@ interface QueryResponse<T> {
 // GraphQL Queries
 const GET_PROJECT_ERRORS = gql`
   query GetProjectErrors($projectId: String!) {
-    getProjectErrors(projectId: $projectId) {
-      id
-      projectId
-      date
-      time
-      operation
-      operationName
-      query
-      errors {
-        message
-        locations {
-          line
-          column
-        }
+    getProjectErrorMetrics(projectId: $projectId) {
+      code
+      success
+      message
+      metrics {
+        id
+        project_id
+        date
+        time
+        operation
+        operation_name
+        query
+        request_time
+        query_threshold
+        error_id
+        error_message
+        line
+        column
       }
     }
   }
@@ -89,16 +93,21 @@ const GET_PROJECT_ERRORS = gql`
 const GET_PROJECT_SLOW_QUERIES = gql`
   query GetProjectSlowQueries($projectId: String!) {
     getProjectSlowQueries(projectId: $projectId) {
-      id
-      projectId
-      date
-      time
-      operation
-      operationName
-      query
-      requestTime
-      queryThreshold
-      thresholdExceededBy
+      code
+      success
+      message
+      metrics {
+        id
+        project_id
+        date
+        time
+        operation
+        operation_name
+        query
+        request_time
+        query_threshold
+        threshold_exceeded_by
+      }
     }
   }
 `;
@@ -132,19 +141,37 @@ export const LOGIN = gql`
 `; 
 
 // Individual data fetching hooks
-export const useProjectErrors = (projectId: string): QueryResponse<ErrorData> => {
-  const { data, loading, error, refetch } = useQuery(GET_PROJECT_ERRORS, {
-    variables: { projectId },
-    pollInterval: 30000,
-    fetchPolicy: 'network-only',
-  });
+// export const useProjectErrors = (projectId: string): QueryResponse<ErrorData> => {
+//   const { data, loading, error, refetch } = useQuery(GET_PROJECT_ERRORS, {
+//     variables: { projectId },
+//     pollInterval: 30000,
+//     fetchPolicy: 'network-only',
+//   });
 
-  return {
-    data: data?.getProjectErrors || [],
-    loading,
-    error,
-    refetch
-  };
+//   return {
+//     data: data?.getProjectErrors || [],
+//     loading,
+//     error,
+//     refetch
+//   };
+// };
+
+export const useProjectErrors = (projectId: string) => {
+  const [projectErrors, { loading, error }] = useQuery(GET_PROJECT_ERRORS); 
+
+  
+  
+  // {
+  //   variables: { projectId },
+  //   pollInterval: 30000,
+  //   fetchPolicy: 'network-only',
+  // });
+
+  // return {
+  //   data: data?.getProjectErrors || [],
+  //   loading,
+  //   error,
+  // };
 };
 
 export const useProjectSlowQueries = (projectId: string): QueryResponse<SlowMetricData> => {

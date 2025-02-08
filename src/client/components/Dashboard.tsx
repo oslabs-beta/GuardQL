@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useProjectMetrics } from './ProjectData';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -15,6 +15,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import BugReportIcon from '@mui/icons-material/BugReport';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Divider from '@mui/material/Divider';
@@ -22,6 +23,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import './Dashboard.css';
 import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
+import { useQuery } from '@apollo/client';
+import { queries } from './ProjectData'; 
 
 interface NavItem {
   text: string;
@@ -32,6 +35,23 @@ const drawerWidth = 240;
 
 export default function Dashboard() {
   const [projectId] = useState('project1');
+  const [projectErrors, { loading, error }] = useQuery(queries.GET_PROJECT_ERRORS); 
+
+  useEffect(() => {
+    const getProjectErrors = async () => {
+      try {
+        const { data } = await projectErrors({
+          variables: {
+            projectId: '3', 
+          }
+        }); 
+        console.log()
+      } catch (error) {
+  
+      }
+    }
+    getProjectErrors(); 
+  }); 
   
   const {
     metrics,
@@ -43,9 +63,8 @@ export default function Dashboard() {
   } = useProjectMetrics(projectId);
 
   const navItems: NavItem[] = [
+    { text: 'Home', icon: <HomeIcon sx={{ color: '#FFFFFF' }} /> },
     { text: 'Dashboard', icon: <DashboardIcon sx={{ color: '#FFFFFF' }} /> },
-    { text: 'Error Logs', icon: <BugReportIcon sx={{ color: '#FFFFFF' }} /> },
-    { text: 'Slow Queries', icon: <QueryStatsIcon sx={{ color: '#FFFFFF' }} /> },
     { text: 'Performance', icon: <BarChartIcon sx={{ color: '#FFFFFF' }} /> },
     { text: 'About', icon: <InfoIcon sx={{ color: '#FFFFFF' }} /> },
     { text: 'Account', icon: <AccountCircleIcon sx={{ color: '#FFFFFF' }} /> },
