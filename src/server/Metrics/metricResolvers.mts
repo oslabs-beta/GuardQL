@@ -1,4 +1,4 @@
-import { getProjectRegularMetrics, getProjectSlowQueries, getProjectErrorMetrics, createProject, getUserProjects, findProject, createQueryMetric, createSlowQuery, createError, createErrorLocation } from './databaseQueries.mjs'
+import { getProjectRegularQueries, getProjectSlowQueries, getProjectErrorMetrics, createProject, getUserProjects, findProject, createQueryMetric, createSlowQuery, createError, createErrorLocation } from './databaseQueries.mjs'
 import { DbConnection, MetricInput, ProjectInput } from './types.mjs'; 
 
 const metricResolvers = {
@@ -76,30 +76,30 @@ const metricResolvers = {
       }
     }, 
 
-    // getProjectRegularMetrics: async (_:any, { projectId }: { projectId: string }, { db, userId }: { db: DbConnection, userId: string | null }) => {
-    //   if (!userId) {
-    //     throw new Error('You must be logged in to view query metrics for a specific project'); 
-    //   }
+    getProjectRegularQueries: async (_:any, { projectId }: { projectId: string }, { db, userId }: { db: DbConnection, userId: string | null }) => {
+      if (!userId) {
+        throw new Error('You must be logged in to view regular query metrics for a specific project'); 
+      }
     
-    //   try {
-    //     const metrics = await getProjectRegularMetrics(db, projectId); 
-    //     // console.log('The project query metrics begin here:', metrics); 
-    //     return {
-    //       code: 200, 
-    //       success: true, 
-    //       message: 'Query metrics retrieved successfully', 
-    //       metrics: metrics
-    //     }; 
-    //   } catch (error) {
-    //     // console.log('The project query metrics error begins here:', error); 
-    //     return {
-    //       code: 500, 
-    //       success: false, 
-    //       message: 'Failed to retrieve query metrics', 
-    //       metrics: []
-    //     }; 
-    //   }
-    // },
+      try {
+        const metrics = await getProjectRegularQueries(db, projectId); 
+        console.log('The project regular query metrics begin here:', metrics); 
+        return {
+          code: 200, 
+          success: true, 
+          message: 'Regular query metrics retrieved successfully', 
+          metrics: metrics
+        }; 
+      } catch (error) {
+        console.log('The project regular query metrics error begins here:', error); 
+        return {
+          code: 500, 
+          success: false, 
+          message: 'Failed to retrieve regular query metrics', 
+          metrics: []
+        }; 
+      }
+    },
 
     //! Add rds security to databse queries!!! 
     // getAllMetrics: async (_: any, { projectId }: { projectId: string }, { db, userId}: { db: DbConnection, userId: string | null }) => {

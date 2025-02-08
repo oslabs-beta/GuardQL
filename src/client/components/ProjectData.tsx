@@ -30,15 +30,15 @@ interface ErrorData {
 
 interface SlowMetricData {
   id: string;
-  projectId: string;
+  project_id: string;
   date: string;
   time: string;
   operation: string;
-  operationName: string;
+  operation_name: string;
   query: string;
-  requestTime: number;
-  queryThreshold: number;
-  thresholdExceededBy: number;
+  request_time: number;
+  query_threshold: number;
+  threshold_exceeded_by: number;
 }
 
 interface RegularMetricData {
@@ -167,7 +167,40 @@ export const LOGIN = gql`
 //     refetch
 //   };
 // };
+
+
+// export const getProjectSlowQueries = (projectId: string): QueryResponse<SlowMetricData> => {
+//   const { data, loading, error, refetch } = useQuery(GET_PROJECT_SLOW_QUERIES, {
+//     variables: { projectId },
+//     pollInterval: 30000,
+//     fetchPolicy: 'network-only',
+//   });
+
+//   return {
+//     data: data?.getProjectSlowQueries || [],
+//     loading,
+//     error,
+//     refetch
+//   };
+// };
+
+// export const getProjectRegularQueries = (projectId: string): QueryResponse<RegularMetricData> => {
+//   const { data, loading, error, refetch } = useQuery(GET_PROJECT_REGULAR_QUERIES, {
+//     variables: { projectId },
+//     pollInterval: 30000,
+//     fetchPolicy: 'network-only',
+//   });
+
+//   return {
+//     data: data?.getProjectRegularQueries || [],
+//     loading,
+//     error,
+//     refetch
+//   };
+// };
+
 const token = localStorage.getItem('jwt'); 
+// console.log('This is the current token after logging in:', token); 
 
 export const getProjectErrorMetrics = (projectId: string): QueryResponse<ErrorData> => {
   const { data, loading, error, refetch } = useQuery(GET_PROJECT_ERRORS, {
@@ -187,14 +220,16 @@ export const getProjectErrorMetrics = (projectId: string): QueryResponse<ErrorDa
   };
 };
 
-
-export const useProjectSlowQueries = (projectId: string): QueryResponse<SlowMetricData> => {
+export const getProjectSlowQueries = (projectId: string): QueryResponse<SlowMetricData> => {
   const { data, loading, error, refetch } = useQuery(GET_PROJECT_SLOW_QUERIES, {
     variables: { projectId },
-    pollInterval: 30000,
-    fetchPolicy: 'network-only',
+    context: {
+      headers: {
+        Authorization: token ? `Bearer ${token}`: '', 
+      },
+    },
   });
-
+  console.log('slow query data from projectData file begins here:', data); 
   return {
     data: data?.getProjectSlowQueries || [],
     loading,
@@ -203,7 +238,9 @@ export const useProjectSlowQueries = (projectId: string): QueryResponse<SlowMetr
   };
 };
 
-export const useProjectRegularQueries = (projectId: string): QueryResponse<RegularMetricData> => {
+
+
+export const getProjectRegularQueries = (projectId: string): QueryResponse<RegularMetricData> => {
   const { data, loading, error, refetch } = useQuery(GET_PROJECT_REGULAR_QUERIES, {
     variables: { projectId },
     pollInterval: 30000,
@@ -219,16 +256,16 @@ export const useProjectRegularQueries = (projectId: string): QueryResponse<Regul
 };
 
 // Utility functions
-const calculateAverageQueryTime = (queries: (SlowMetricData | RegularMetricData)[]): number => {
-  if (!queries.length) return 0;
-  const total = queries.reduce((sum, query) => sum + query.requestTime, 0);
-  return Math.round(total / queries.length);
-};
+// const calculateAverageQueryTime = (queries: (SlowMetricData | RegularMetricData)[]): number => {
+//   if (!queries.length) return 0;
+//   const total = queries.reduce((sum, query) => sum + query.requestTime, 0);
+//   return Math.round(total / queries.length);
+// };
 
-const findSlowestQuery = (queries: (SlowMetricData | RegularMetricData)[]): number => {
-  if (!queries.length) return 0;
-  return Math.max(...queries.map(query => query.requestTime));
-};
+// const findSlowestQuery = (queries: (SlowMetricData | RegularMetricData)[]): number => {
+//   if (!queries.length) return 0;
+//   return Math.max(...queries.map(query => query.requestTime));
+// };
 
 // Combined metrics hook
 interface ProjectMetricsResponse {
@@ -245,19 +282,19 @@ interface ProjectMetricsResponse {
 //     data: errors, 
 //     loading: errorsLoading, 
 //     error: errorsError 
-//   } = useProjectErrors(projectId);
+//   } = getProjectErrorMetrics(projectId);
   
 //   const { 
 //     data: slowQueries, 
 //     loading: slowQueriesLoading, 
 //     error: slowQueriesError 
-//   } = useProjectSlowQueries(projectId);
+//   } = getProjectSlowQueries(projectId);
   
 //   const { 
 //     data: regularQueries, 
 //     loading: regularQueriesLoading, 
 //     error: regularQueriesError 
-//   } = useProjectRegularQueries(projectId);
+//   } = getProjectRegularQueries(projectId);
 
 //   const calculateMetrics = (): ProjectMetrics | null => {
 //     if (!errors || !slowQueries || !regularQueries) return null;

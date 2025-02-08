@@ -6,14 +6,26 @@ type Mutation {
 }
 
 type Query {
-  # "An array of all the query metric objects for a specific project"
-  # getProjectRegularMetrics(projectId: String!): getProjectRegularMetricsResponse!
+  "An array of all the query metric objects for a specific project"
+  getProjectRegularQueries(projectId: String!): getProjectRegularQueriesResponse!
   "An array of all the slow query metric objects for a specific project"
   getProjectSlowQueries(projectId: String!): GetProjectSlowQueriesResponse!
   "An array of all the error objects for a specific project"
   getProjectErrorMetrics(projectId: String!): GetProjectErrorMetricsResponse!
   "An array of all the projects for a specific user"
   getUserProjects: GetUserProjectsResponse!
+}
+
+"Return type to send all regular query metrics for a specific project to the dashboard"
+type getProjectRegularQueriesResponse {
+  "status of the query"
+  code: Int!
+  "indicates whether the query was successful"
+  success: Boolean!
+  "message to confirm query outcome"
+  message: String!
+  "regular query metrics belonging to the project"
+  metrics: [ReturnedRegularQuery!]!
 }
 
 "Return type to send all slow query metrics for a specific project to the dashboard"
@@ -205,6 +217,28 @@ type ReturnedSlowQuery {
   query_threshold: Int!
   "amount of time exceeded from threshold"
   threshold_exceeded_by: Int!
+}
+
+"Returned regular query metric structure for the dashboard's regular queries display"
+type ReturnedRegularQuery {
+  "ID assigned by SQL database"
+  id: ID!
+  "project ID"
+  project_id: String!
+  "date to identify when the query ocurred"
+  date: String!
+  "time to identify when the query occurred"
+  time: String!
+  "to identify the query's operation type"
+  operation: String!
+  "name of operation to identify which specific operation the query metric belongs to"
+  operation_name: String!
+  "user's GraphQL query"
+  query: String! 
+  "time it took for request to be executed"
+  request_time: Int!
+  "user inputted threshold for query time"
+  query_threshold: Int!
 }
 
 "Properties in each error object within the errors array"

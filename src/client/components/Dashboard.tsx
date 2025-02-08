@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getProjectErrorMetrics } from './ProjectData';
+import { getProjectErrorMetrics, getProjectSlowQueries } from './ProjectData';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -37,8 +37,10 @@ export default function Dashboard() {
   // const [projectId] = useState('project1');
   const [projectId] = useState('3');
 
-  const { loading, error, data, refetch } = getProjectErrorMetrics(projectId); 
-  console.log('error data from dashboard file begins here:', data); 
+  // const { loading, error, data, refetch } = getProjectErrorMetrics(projectId); 
+  // const { loading, error, data, refetch } = getProjectSlowQueries(projectId); 
+  // const { loading, error, data, refetch } = getProjectRegularQueries(projectId); 
+  // console.log('error data from dashboard file begins here:', data); 
 
   // const {
   //   metrics,
@@ -57,53 +59,126 @@ export default function Dashboard() {
     { text: 'Account', icon: <AccountCircleIcon sx={{ color: '#FFFFFF' }} /> },
   ];
 
-  const renderLogs = () => {
-    if (loading) return <CircularProgress />;
-    if (error) return <Alert severity="error">Error loading logs</Alert>;
-    if (!data?.metrics.length) return <Typography>No recent errors</Typography>;
-    console.log('Error message from data begins here:', data.metrics[0].error_message); 
-    return (
-      <Box className="logs-container">
-        {data.metrics.map((error, index) => (
-          <Box key={error.id} className="error-item">
-            <Typography className="log-message">
-              Operation: {error.operation_name}
-            </Typography>
-            <Typography className="log-details">
-              Date: {error.date}, Time: {error.time}
-            </Typography>
+  //? functioning individual render functions begin here ---------------------------------->
 
-            {/* what is mb?? */}
-              <Box key={index} mb={1}>
-                <Typography color="error">
-                  Error: {error.error_message}
-                </Typography>
-                <Typography variant="caption">
-                  Location: Line {error.line}, Column {error.column}
-                </Typography>
-              </Box>
-            {/* {error.map((err, index) => (
-              <Box key={index} mb={1}>
-                <Typography color="error">
-                  Error: {err.message}
-                </Typography>
-                <Typography variant="caption">
-                  Location: Line {err.locations[0]?.line}, Column {err.locations[0]?.column}
-                </Typography>
-              </Box>
-            ))} */}
-            <Typography className="query-text">
-              Query: {error.query}
-            </Typography>
-            <Divider className="log-divider" />
-          </Box>
-        ))}
-      </Box>
-    );
-  };
+
+  //   const renderMetrics = () => {
+  //   if (loading) {
+  //     return (
+  //       <Box display="flex" justifyContent="center" p={2}>
+  //         <CircularProgress />
+  //       </Box>
+  //     );
+  //   }
+
+  //   if (error) {
+  //     return (
+  //       <Alert severity="error">
+  //         Error loading metrics: {error.message}
+  //       </Alert>
+  //     );
+  //   }
+
+  //   if (!metrics) return null;
+
+  //   return (
+  //     <Box className="metrics-container">
+  //       <Box className="metric-box">
+  //         <Typography className="metric-label">Total Errors</Typography>
+  //         <Typography className="metric-value">{metrics.totalErrors}</Typography>
+  //       </Box>
+  //       <Box className="metric-box">
+  //         <Typography className="metric-label">Average Query Time</Typography>
+  //         <Typography className="metric-value">{metrics.averageQueryTime}ms</Typography>
+  //       </Box>
+  //       <Box className="metric-box">
+  //         <Typography className="metric-label">Slowest Query</Typography>
+  //         <Typography className="metric-value">{metrics.slowestQuery}ms</Typography>
+  //       </Box>
+  //     </Box>
+  //   );
+  // };
 
 
 
+  //   const renderSlowQueries = () => {
+  //   if (loading) return <CircularProgress />;
+  //   if (error) return <Alert severity="error">Error loading slow queries</Alert>;
+  //   if (!data?.metrics.length) return <Typography>No slow queries detected</Typography>;
+
+  //   return (
+  //     <Box className="slow-queries-container">
+  //       {data.metrics.map((query) => (
+  //         <Box key={query.id} className="query-item">
+  //           <Typography className="query-operation">
+  //             Operation: {query.operation_name}
+  //           </Typography>
+  //           <Typography className="query-details">
+  //             Execution Time: {query.request_time}ms
+  //             (Exceeded by {query.threshold_exceeded_by}ms)
+  //           </Typography>
+  //           <Typography className="query-threshold">
+  //             Threshold: {query.query_threshold}ms
+  //           </Typography>
+  //           <Typography className="query-timestamp">
+  //             {query.date} {query.time}
+  //           </Typography>
+  //           <Typography className="query-text">
+  //             Query: {query.query}
+  //           </Typography>
+  //         </Box>
+  //       ))}
+  //     </Box>
+  //   );
+  // };
+
+  // const renderLogs = () => {
+  //   if (loading) return <CircularProgress />;
+  //   if (error) return <Alert severity="error">Error loading logs</Alert>;
+  //   if (!data?.metrics.length) return <Typography>No recent errors</Typography>;
+  //   console.log('Error message from data begins here:', data.metrics[0].error_message); 
+  //   return (
+  //     <Box className="logs-container">
+  //       {data.metrics.map((error, index) => (
+  //         <Box key={error.id} className="error-item">
+  //           <Typography className="log-message">
+  //             Operation: {error.operation_name}
+  //           </Typography>
+  //           <Typography className="log-details">
+  //             Date: {error.date}, Time: {error.time}
+  //           </Typography>
+
+  //           {/* what is mb?? */}
+  //             <Box key={index} mb={1}>
+  //               <Typography color="error">
+  //                 Error: {error.error_message}
+  //               </Typography>
+  //               <Typography variant="caption">
+  //                 Location: Line {error.line}, Column {error.column}
+  //               </Typography>
+  //             </Box>
+  //           {/* {error.map((err, index) => (
+  //             <Box key={index} mb={1}>
+  //               <Typography color="error">
+  //                 Error: {err.message}
+  //               </Typography>
+  //               <Typography variant="caption">
+  //                 Location: Line {err.locations[0]?.line}, Column {err.locations[0]?.column}
+  //               </Typography>
+  //             </Box>
+  //           ))} */}
+  //           <Typography className="query-text">
+  //             Query: {error.query}
+  //           </Typography>
+  //           <Divider className="log-divider" />
+  //         </Box>
+  //       ))}
+  //     </Box>
+  //   );
+  // };
+  //? functioning individual render functions end here ---------------------------------->
+
+  //! original code begins here --------------------------------------------->
   
   // const renderMetrics = () => {
   //   if (loading) {
@@ -142,7 +217,7 @@ export default function Dashboard() {
   //   );
   // };
 
-  //! error section begins here --------------------------------------------->
+
   // const renderLogs = () => {
   //   if (loading) return <CircularProgress />;
   //   if (error) return <Alert severity="error">Error loading logs</Alert>;
@@ -209,6 +284,8 @@ export default function Dashboard() {
   //   );
   // };
 
+  //! original code ends here --------------------------------------------->
+
   return (
     <Box className="root">
       <CssBaseline />
@@ -260,7 +337,7 @@ export default function Dashboard() {
         <Typography variant="h5" className="section-title">
           Errors
         </Typography>
-        {renderLogs()}
+        {/* {renderLogs()} */}
       </Box>
     </Box>
   );
