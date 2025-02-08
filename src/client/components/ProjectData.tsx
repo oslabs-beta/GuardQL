@@ -13,13 +13,19 @@ interface ErrorDetails {
 
 interface ErrorData {
   id: string;
-  projectId: string;
+  project_id: string;
   date: string;
   time: string;
   operation: string;
-  operationName: string;
+  operation_name: string;
   query: string;
-  errors: ErrorDetails[];
+  request_time: number; 
+  query_threshold: number; 
+  error_id: string;
+  error_message: string; 
+  line: number; 
+  column: number; 
+  // errors: ErrorDetails[];
 }
 
 interface SlowMetricData {
@@ -61,7 +67,13 @@ interface QueryResponse<T> {
   loading: boolean;
   error?: any;
   refetch: () => void;
-  data?: T[];
+  // data?: T[];
+  data?: {
+    code: number; 
+    success: boolean; 
+    message: string; 
+    metrics: T[] ;
+  }
 }
 
 // GraphQL Queries
@@ -141,7 +153,7 @@ export const LOGIN = gql`
 `; 
 
 // Individual data fetching hooks
-// export const useProjectErrors = (projectId: string): QueryResponse<ErrorData> => {
+// export const getProjectErrors = (projectId: string): QueryResponse<ErrorData> => {
 //   const { data, loading, error, refetch } = useQuery(GET_PROJECT_ERRORS, {
 //     variables: { projectId },
 //     pollInterval: 30000,
@@ -155,24 +167,26 @@ export const LOGIN = gql`
 //     refetch
 //   };
 // };
+const token = localStorage.getItem('jwt'); 
 
-export const useProjectErrors = (projectId: string) => {
-  const [projectErrors, { loading, error }] = useQuery(GET_PROJECT_ERRORS); 
-
-  
-  
-  // {
-  //   variables: { projectId },
-  //   pollInterval: 30000,
-  //   fetchPolicy: 'network-only',
-  // });
-
-  // return {
-  //   data: data?.getProjectErrors || [],
-  //   loading,
-  //   error,
-  // };
+export const getProjectErrorMetrics = (projectId: string): QueryResponse<ErrorData> => {
+  const { data, loading, error, refetch } = useQuery(GET_PROJECT_ERRORS, {
+    variables: { projectId },
+    context: {
+      headers: {
+        Authorization: token ? `Bearer ${token}`: '', 
+      },
+    },
+  });
+  // console.log('error data from projectData file begins here:', data); 
+  return {
+    data: data?.getProjectErrorMetrics || [],
+    loading,
+    error,
+    refetch
+  };
 };
+
 
 export const useProjectSlowQueries = (projectId: string): QueryResponse<SlowMetricData> => {
   const { data, loading, error, refetch } = useQuery(GET_PROJECT_SLOW_QUERIES, {
@@ -226,57 +240,57 @@ interface ProjectMetricsResponse {
   regularQueries: RegularMetricData[];
 }
 
-export const useProjectMetrics = (projectId: string): ProjectMetricsResponse => {
-  const { 
-    data: errors, 
-    loading: errorsLoading, 
-    error: errorsError 
-  } = useProjectErrors(projectId);
+// export const useProjectMetrics = (projectId: string): ProjectMetricsResponse => {
+//   const { 
+//     data: errors, 
+//     loading: errorsLoading, 
+//     error: errorsError 
+//   } = useProjectErrors(projectId);
   
-  const { 
-    data: slowQueries, 
-    loading: slowQueriesLoading, 
-    error: slowQueriesError 
-  } = useProjectSlowQueries(projectId);
+//   const { 
+//     data: slowQueries, 
+//     loading: slowQueriesLoading, 
+//     error: slowQueriesError 
+//   } = useProjectSlowQueries(projectId);
   
-  const { 
-    data: regularQueries, 
-    loading: regularQueriesLoading, 
-    error: regularQueriesError 
-  } = useProjectRegularQueries(projectId);
+//   const { 
+//     data: regularQueries, 
+//     loading: regularQueriesLoading, 
+//     error: regularQueriesError 
+//   } = useProjectRegularQueries(projectId);
 
-  const calculateMetrics = (): ProjectMetrics | null => {
-    if (!errors || !slowQueries || !regularQueries) return null;
+//   const calculateMetrics = (): ProjectMetrics | null => {
+//     if (!errors || !slowQueries || !regularQueries) return null;
 
-    const allQueries = [...slowQueries, ...regularQueries];
+//     const allQueries = [...slowQueries, ...regularQueries];
 
-    return {
-      totalErrors: errors.length,
-      averageQueryTime: calculateAverageQueryTime(allQueries),
-      slowestQuery: findSlowestQuery(allQueries),
-      totalSlowQueries: slowQueries.length,
-      totalRegularQueries: regularQueries.length,
-      errorRate: errors.length / (allQueries.length || 1),
-      performanceScore: calculatePerformanceScore(allQueries),
-    };
-  };
+//     return {
+//       totalErrors: errors.length,
+//       averageQueryTime: calculateAverageQueryTime(allQueries),
+//       slowestQuery: findSlowestQuery(allQueries),
+//       totalSlowQueries: slowQueries.length,
+//       totalRegularQueries: regularQueries.length,
+//       errorRate: errors.length / (allQueries.length || 1),
+//       performanceScore: calculatePerformanceScore(allQueries),
+//     };
+//   };
 
-  const calculatePerformanceScore = (queries: (SlowMetricData | RegularMetricData)[]): number => {
-    if (!queries.length) return 100;
-    const slowQueriesCount = queries.filter(q => q.requestTime > q.queryThreshold).length;
-    const slowQueryRatio = slowQueriesCount / queries.length;
-    return Math.round(100 * (1 - slowQueryRatio));
-  };
+//   const calculatePerformanceScore = (queries: (SlowMetricData | RegularMetricData)[]): number => {
+//     if (!queries.length) return 100;
+//     const slowQueriesCount = queries.filter(q => q.requestTime > q.queryThreshold).length;
+//     const slowQueryRatio = slowQueriesCount / queries.length;
+//     return Math.round(100 * (1 - slowQueryRatio));
+//   };
 
-  return {
-    metrics: calculateMetrics(),
-    loading: errorsLoading || slowQueriesLoading || regularQueriesLoading,
-    error: errorsError || slowQueriesError || regularQueriesError,
-    errors: errors || [],
-    slowQueries: slowQueries || [],
-    regularQueries: regularQueries || []
-  };
-};
+//   return {
+//     metrics: calculateMetrics(),
+//     loading: errorsLoading || slowQueriesLoading || regularQueriesLoading,
+//     error: errorsError || slowQueriesError || regularQueriesError,
+//     errors: errors || [],
+//     slowQueries: slowQueries || [],
+//     regularQueries: regularQueries || []
+//   };
+// };
 
 
 export const queries = {
