@@ -1,4 +1,4 @@
-.root {
+/* .root {
   display: flex;
   background-color: #121212;
   color: #FFFFFF;
@@ -46,6 +46,117 @@
 .features-section {
   margin-top: 40px;
   text-align: center;
+}*/
+
+/* .features-grid {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.feature-card {
+  background-color: #1e1e1e;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  width: 200px;
+}
+
+.feature-icon {
+  font-size: 40px;
+  color: #e623c6;
+}
+
+.feature-text {
+  margin-top: 10px;
+  font-size: 16px;
+} 
+
+.feature-text-2 {
+  margin-top: 10px;
+  font-size: 10px;
+}  */
+
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  padding: 1.5rem 2rem;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar .logo {
+  color: #fff;
+  cursor: pointer;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar ul li a {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.dashboard-btn {
+  background: #e623c6;
+  padding: 8px 16px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: white;
+}
+
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #431645;
+  color: white;
+  text-align: center;
+}
+
+.get-started-btn {
+  background: #e623c6;
+  padding: 8px 16px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: white;
+}
+
+.section {
+  padding: 80px 20px;
+  text-align: center;
+  background: rgb(233, 233, 233);
+}
+
+.about-p {
+  padding: 0rem 10rem; 
 }
 
 .features-grid {
@@ -70,5 +181,81 @@
 
 .feature-text {
   margin-top: 10px;
+  font-size: 100px;
+} 
+
+.feature-text-2 {
+  margin-top: 10px;
+  font-size: 100px;
+} 
+
+.howList {
+  list-style-type: none; 
+}
+
+.team-section {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.team-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.team-card {
+  background: #222;
+  border: 4px solid #de54c7; 
+  padding: 20px;
+  border-radius: 20px;
+  width: 200px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-pic {
+  width: 150px; /* Set a fixed width */
+  height: 150px; /* Match width for a circle */
+  object-fit: cover; /* Prevents distortion */
+  border-radius: 50%;
+  border: 2px dotted #de54c7; 
+}
+
+.profile-h3 {
+  color: white; 
+  padding: 0.5rem 0.5rem;
+}
+
+.profile-p {
+  color: white; 
+  font-size: 12px;
+  text-align: center;
+}
+
+.profile-title {
+  color:  #de54c7; 
   font-size: 16px;
+  padding: 0.3rem 0rem;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 0.3rem 0rem;
+}
+
+.social-links a {
+  color: #de54c7;
+  transition: color 0.3s ease;
+}
+
+.social-links a.linkedin:hover {
+  color: #0077b5;
+}
+
+.social-links a.github:hover {
+  color: #171515;
 }

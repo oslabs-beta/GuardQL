@@ -1,6 +1,8 @@
 .topBorder {
   border-top: 0.5px solid #D923CD;
-  padding-top: 1rem;
+  background: #222;
+  /* padding-top: 1rem; */
+  padding: 1rem 1rem;
 }
 
 .footer {
@@ -8,6 +10,8 @@
   flex-direction: column;
   text-align: center;
   justify-content: center;
+  color: white; 
+  /* background: #222; */
 }
 
 .footer p {
