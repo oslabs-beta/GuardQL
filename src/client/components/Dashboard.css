@@ -12,6 +12,7 @@ html, body {
 
 .root {
   display: flex;
+  flex-direction: column;
   background-color: #121212;
   color: #FFFFFF;
   min-height: 100vh;
@@ -28,6 +29,8 @@ html, body {
 .app-bar {
   width: calc(100% - 240px) !important;
   margin-left: 240px !important;
+  /* width: 100% !important;
+  margin-left: 0 !important; */
   background-color: #e623c6 !important;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2) !important;
 }
@@ -42,10 +45,11 @@ html, body {
 }
 
 .drawer-logo {
-  max-width: 180px;
+  max-width: 270px;
+  /* align-items: center; */
   width: 100%;
   height: auto;
-  display: block;
+  /* display: block; */
 }
 
 .header-title {
