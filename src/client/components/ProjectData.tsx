@@ -43,38 +43,38 @@ interface SlowMetricData {
 
 interface RegularMetricData {
   id: string;
-  projectId: string;
+  project_id: string;
   date: string;
   time: string;
   operation: string;
-  operationName: string;
+  operation_name: string;
   query: string;
-  requestTime: number;
-  queryThreshold: number;
+  request_time: number;
+  query_threshold: number;
 }
 
-interface ProjectMetrics {
-  totalErrors: number;
-  averageQueryTime: number;
-  slowestQuery: number;
-  totalSlowQueries: number;
-  totalRegularQueries: number;
-  errorRate: number;
-  performanceScore: number;
-}
+// interface ProjectMetrics {
+//   totalErrors: number;
+//   averageQueryTime: number;
+//   slowestQuery: number;
+//   totalSlowQueries: number;
+//   totalRegularQueries: number;
+//   errorRate: number;
+//   performanceScore: number;
+// }
 
-interface QueryResponse<T> {
-  loading: boolean;
-  error?: any;
-  refetch: () => void;
-  // data?: T[];
-  data?: {
-    code: number; 
-    success: boolean; 
-    message: string; 
-    metrics: T[] ;
-  }
-}
+// interface QueryResponse<T> {
+//   loading: boolean;
+//   error?: any;
+//   refetch: () => void;
+//   // data?: T[];
+//   data?: {
+//     code: number; 
+//     success: boolean; 
+//     message: string; 
+//     metrics: T[] ;
+//   }
+// }
 
 // GraphQL Queries
 const GET_PROJECT_ERRORS = gql`
@@ -127,15 +127,20 @@ const GET_PROJECT_SLOW_QUERIES = gql`
 const GET_PROJECT_REGULAR_QUERIES = gql`
   query GetProjectRegularQueries($projectId: String!) {
     getProjectRegularQueries(projectId: $projectId) {
-      id
-      projectId
-      date
-      time
-      operation
-      operationName
-      query
-      requestTime
-      queryThreshold
+      code
+      success
+      message
+      metrics {
+        id
+        project_id
+        date
+        time
+        operation
+        operation_name
+        query
+        request_time
+        query_threshold
+      }
     }
   }
 `;
@@ -200,7 +205,7 @@ export const LOGIN = gql`
 // };
 
 const token = localStorage.getItem('jwt'); 
-// console.log('This is the current token after logging in:', token); 
+console.log('This is the current token after logging in:', token); 
 
 export const getProjectErrorMetrics = (projectId: string): QueryResponse<ErrorData> => {
   const { data, loading, error, refetch } = useQuery(GET_PROJECT_ERRORS, {
@@ -229,7 +234,7 @@ export const getProjectSlowQueries = (projectId: string): QueryResponse<SlowMetr
       },
     },
   });
-  console.log('slow query data from projectData file begins here:', data); 
+  // console.log('Slow query data from projectData file begins here:', data); 
   return {
     data: data?.getProjectSlowQueries || [],
     loading,
@@ -238,15 +243,16 @@ export const getProjectSlowQueries = (projectId: string): QueryResponse<SlowMetr
   };
 };
 
-
-
 export const getProjectRegularQueries = (projectId: string): QueryResponse<RegularMetricData> => {
   const { data, loading, error, refetch } = useQuery(GET_PROJECT_REGULAR_QUERIES, {
     variables: { projectId },
-    pollInterval: 30000,
-    fetchPolicy: 'network-only',
+    context: {
+      headers: {
+        Authorization: token ? `Bearer ${token}`: '', 
+      },
+    },
   });
-
+  console.log('Regular query data from projectData file begins here:', data); 
   return {
     data: data?.getProjectRegularQueries || [],
     loading,
@@ -267,67 +273,116 @@ export const getProjectRegularQueries = (projectId: string): QueryResponse<Regul
 //   return Math.max(...queries.map(query => query.requestTime));
 // };
 
+
+interface QueryResponse<T> {
+  loading: boolean;
+  error?: any;
+  refetch: () => void;
+  // data?: T[];
+  data?: {
+    code: number; 
+    success: boolean; 
+    message: string; 
+    metrics: T[] ;
+  }
+}
+
+// interface ProjectMetrics {
+//   totalErrors: number;
+//   averageQueryTime: number;
+//   slowestQuery: number;
+//   totalSlowQueries: number;
+//   totalRegularQueries: number;
+//   errorRate: number;
+//   performanceScore: number;
+// }
+
 // Combined metrics hook
 interface ProjectMetricsResponse {
   metrics: ProjectMetrics | null;
   loading: boolean;
   error?: any;
-  errors: ErrorData[];
-  slowQueries: SlowMetricData[];
-  regularQueries: RegularMetricData[];
+  errors: {
+    code: number; 
+    success: boolean; 
+    message: string; 
+    metrics: ErrorData[];
+  }
+  slowQueries: {
+    code: number; 
+    success: boolean; 
+    message: string; 
+    metrics: SlowMetricData[];
+  }
+  regularQueries: {
+    code: number; 
+    success: boolean; 
+    message: string; 
+    metrics: RegularMetricData[];
+  }
 }
 
-// export const useProjectMetrics = (projectId: string): ProjectMetricsResponse => {
-//   const { 
-//     data: errors, 
-//     loading: errorsLoading, 
-//     error: errorsError 
-//   } = getProjectErrorMetrics(projectId);
+interface ProjectMetrics {
+  totalErrors: number;
+  averageQueryTime: number;
+  slowestQuery: number;
+  totalSlowQueries: number;
+  totalRegularQueries: number;
+  errorRate: number;
+  performanceScore: number;
+}
+
+export const getProjectMetrics = (projectId: string): ProjectMetricsResponse => {
+  const { 
+    loading: errorsLoading, 
+    error: errorsError,  
+    data: errors, 
+  } = getProjectErrorMetrics(projectId);
   
-//   const { 
-//     data: slowQueries, 
-//     loading: slowQueriesLoading, 
-//     error: slowQueriesError 
-//   } = getProjectSlowQueries(projectId);
+  const {
+    loading: slowQueriesLoading, 
+    error: slowQueriesError, 
+    data: slowQueries, 
+  } = getProjectSlowQueries(projectId);
   
-//   const { 
-//     data: regularQueries, 
-//     loading: regularQueriesLoading, 
-//     error: regularQueriesError 
-//   } = getProjectRegularQueries(projectId);
+  const { 
+    loading: regularQueriesLoading, 
+    error: regularQueriesError, 
+    data: regularQueries, 
+  } = getProjectRegularQueries(projectId);
 
-//   const calculateMetrics = (): ProjectMetrics | null => {
-//     if (!errors || !slowQueries || !regularQueries) return null;
+  const calculateMetrics = (): ProjectMetrics | null => {
+    if (!errors || !slowQueries || !regularQueries) return null;
 
-//     const allQueries = [...slowQueries, ...regularQueries];
+    const allQueries = [...slowQueries.metrics, ...regularQueries.metrics];
 
-//     return {
-//       totalErrors: errors.length,
-//       averageQueryTime: calculateAverageQueryTime(allQueries),
-//       slowestQuery: findSlowestQuery(allQueries),
-//       totalSlowQueries: slowQueries.length,
-//       totalRegularQueries: regularQueries.length,
-//       errorRate: errors.length / (allQueries.length || 1),
-//       performanceScore: calculatePerformanceScore(allQueries),
-//     };
-//   };
+    return {
+      totalErrors: errors.length,
+      averageQueryTime: calculateAverageQueryTime(allQueries),
+      slowestQuery: findSlowestQuery(allQueries),
+      totalSlowQueries: slowQueries.length,
+      totalRegularQueries: regularQueries.length,
+      errorRate: errors.length / (allQueries.length || 1),
+      performanceScore: calculatePerformanceScore(allQueries),
+    };
+  };
 
-//   const calculatePerformanceScore = (queries: (SlowMetricData | RegularMetricData)[]): number => {
-//     if (!queries.length) return 100;
-//     const slowQueriesCount = queries.filter(q => q.requestTime > q.queryThreshold).length;
-//     const slowQueryRatio = slowQueriesCount / queries.length;
-//     return Math.round(100 * (1 - slowQueryRatio));
-//   };
+  const calculatePerformanceScore = (queries: (SlowMetricData | RegularMetricData)[]): number => {
+    if (!queries.length) return 100;
+    const slowQueriesCount = queries.filter(q => q.requestTime > q.queryThreshold).length;
+    const slowQueryRatio = slowQueriesCount / queries.length;
+    return Math.round(100 * (1 - slowQueryRatio));
+  };
 
-//   return {
-//     metrics: calculateMetrics(),
-//     loading: errorsLoading || slowQueriesLoading || regularQueriesLoading,
-//     error: errorsError || slowQueriesError || regularQueriesError,
-//     errors: errors || [],
-//     slowQueries: slowQueries || [],
-//     regularQueries: regularQueries || []
-//   };
-// };
+  return {
+    metrics: calculateMetrics(),
+    loading: errorsLoading || slowQueriesLoading || regularQueriesLoading,
+    error: errorsError || slowQueriesError || regularQueriesError,
+    errors: errors || [],
+    slowQueries: slowQueries || [],
+    regularQueries: regularQueries || []
+  };
+};
 
 
 export const queries = {

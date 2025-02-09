@@ -6,7 +6,7 @@ type Mutation {
 }
 
 type Query {
-  "An array of all the query metric objects for a specific project"
+  "An array of all the regular query metric objects for a specific project"
   getProjectRegularQueries(projectId: String!): getProjectRegularQueriesResponse!
   "An array of all the slow query metric objects for a specific project"
   getProjectSlowQueries(projectId: String!): GetProjectSlowQueriesResponse!

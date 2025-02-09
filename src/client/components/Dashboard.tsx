@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getProjectErrorMetrics, getProjectSlowQueries } from './ProjectData';
+import { getProjectErrorMetrics, getProjectSlowQueries, getProjectRegularQueries, getProjectMetrics } from './ProjectData';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -42,14 +42,14 @@ export default function Dashboard() {
   // const { loading, error, data, refetch } = getProjectRegularQueries(projectId); 
   // console.log('error data from dashboard file begins here:', data); 
 
-  // const {
-  //   metrics,
-  //   loading,
-  //   error,
-  //   errors,
-  //   slowQueries,
-  //   regularQueries
-  // } = useProjectMetrics(projectId);
+  const {
+    metrics,
+    loading,
+    error,
+    errors,
+    slowQueries,
+    regularQueries
+  } = getProjectMetrics(projectId);
 
   const navItems: NavItem[] = [
     { text: 'Home', icon: <HomeIcon sx={{ color: '#FFFFFF' }} /> },
@@ -59,45 +59,46 @@ export default function Dashboard() {
     { text: 'Account', icon: <AccountCircleIcon sx={{ color: '#FFFFFF' }} /> },
   ];
 
+
   //? functioning individual render functions begin here ---------------------------------->
 
 
-  //   const renderMetrics = () => {
-  //   if (loading) {
-  //     return (
-  //       <Box display="flex" justifyContent="center" p={2}>
-  //         <CircularProgress />
-  //       </Box>
-  //     );
-  //   }
+    const renderMetrics = () => {
+    if (loading) {
+      return (
+        <Box display="flex" justifyContent="center" p={2}>
+          <CircularProgress />
+        </Box>
+      );
+    }
 
-  //   if (error) {
-  //     return (
-  //       <Alert severity="error">
-  //         Error loading metrics: {error.message}
-  //       </Alert>
-  //     );
-  //   }
+    if (error) {
+      return (
+        <Alert severity="error">
+          Error loading metrics: {error.message}
+        </Alert>
+      );
+    }
 
-  //   if (!metrics) return null;
+    if (!metrics) return null;
 
-  //   return (
-  //     <Box className="metrics-container">
-  //       <Box className="metric-box">
-  //         <Typography className="metric-label">Total Errors</Typography>
-  //         <Typography className="metric-value">{metrics.totalErrors}</Typography>
-  //       </Box>
-  //       <Box className="metric-box">
-  //         <Typography className="metric-label">Average Query Time</Typography>
-  //         <Typography className="metric-value">{metrics.averageQueryTime}ms</Typography>
-  //       </Box>
-  //       <Box className="metric-box">
-  //         <Typography className="metric-label">Slowest Query</Typography>
-  //         <Typography className="metric-value">{metrics.slowestQuery}ms</Typography>
-  //       </Box>
-  //     </Box>
-  //   );
-  // };
+    return (
+      <Box className="metrics-container">
+        <Box className="metric-box">
+          <Typography className="metric-label">Total Errors</Typography>
+          <Typography className="metric-value">{metrics.totalErrors}</Typography>
+        </Box>
+        <Box className="metric-box">
+          <Typography className="metric-label">Average Query Time</Typography>
+          <Typography className="metric-value">{metrics.averageQueryTime}ms</Typography>
+        </Box>
+        <Box className="metric-box">
+          <Typography className="metric-label">Slowest Query</Typography>
+          <Typography className="metric-value">{metrics.slowestQuery}ms</Typography>
+        </Box>
+      </Box>
+    );
+  };
 
 
 
@@ -328,6 +329,7 @@ export default function Dashboard() {
           Key Metrics
         </Typography>
         {/* {renderMetrics()} */}
+        {renderRegularQueries()}
 
         <Typography variant="h5" className="section-title">
           Slow Queries
