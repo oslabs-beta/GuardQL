@@ -83,7 +83,7 @@ const metricResolvers = {
     
       try {
         const metrics = await getProjectRegularQueries(db, projectId); 
-        console.log('The project regular query metrics begin here:', metrics); 
+        // console.log('The project regular query metrics begin here:', metrics); 
         return {
           code: 200, 
           success: true, 
@@ -91,7 +91,7 @@ const metricResolvers = {
           metrics: metrics
         }; 
       } catch (error) {
-        console.log('The project regular query metrics error begins here:', error); 
+        // console.log('The project regular query metrics error begins here:', error); 
         return {
           code: 500, 
           success: false, 

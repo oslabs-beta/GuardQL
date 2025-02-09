@@ -102,81 +102,81 @@ export default function Dashboard() {
 
 
 
-  //   const renderSlowQueries = () => {
-  //   if (loading) return <CircularProgress />;
-  //   if (error) return <Alert severity="error">Error loading slow queries</Alert>;
-  //   if (!data?.metrics.length) return <Typography>No slow queries detected</Typography>;
+    const renderSlowQueries = () => {
+    if (loading) return <CircularProgress />;
+    if (error) return <Alert severity="error">Error loading slow queries</Alert>;
+    if (!slowQueries?.metrics.length) return <Typography>No slow queries detected</Typography>;
 
-  //   return (
-  //     <Box className="slow-queries-container">
-  //       {data.metrics.map((query) => (
-  //         <Box key={query.id} className="query-item">
-  //           <Typography className="query-operation">
-  //             Operation: {query.operation_name}
-  //           </Typography>
-  //           <Typography className="query-details">
-  //             Execution Time: {query.request_time}ms
-  //             (Exceeded by {query.threshold_exceeded_by}ms)
-  //           </Typography>
-  //           <Typography className="query-threshold">
-  //             Threshold: {query.query_threshold}ms
-  //           </Typography>
-  //           <Typography className="query-timestamp">
-  //             {query.date} {query.time}
-  //           </Typography>
-  //           <Typography className="query-text">
-  //             Query: {query.query}
-  //           </Typography>
-  //         </Box>
-  //       ))}
-  //     </Box>
-  //   );
-  // };
+    return (
+      <Box className="slow-queries-container">
+        {slowQueries.metrics.map((query) => (
+          <Box key={query.id} className="query-item">
+            <Typography className="query-operation">
+              Operation: {query.operation_name}
+            </Typography>
+            <Typography className="query-details">
+              Execution Time: {query.request_time}ms
+              (Exceeded by {query.threshold_exceeded_by}ms)
+            </Typography>
+            <Typography className="query-threshold">
+              Threshold: {query.query_threshold}ms
+            </Typography>
+            <Typography className="query-timestamp">
+              {query.date} {query.time}
+            </Typography>
+            <Typography className="query-text">
+              Query: {query.query}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
+    );
+  };
 
-  // const renderLogs = () => {
-  //   if (loading) return <CircularProgress />;
-  //   if (error) return <Alert severity="error">Error loading logs</Alert>;
-  //   if (!data?.metrics.length) return <Typography>No recent errors</Typography>;
-  //   console.log('Error message from data begins here:', data.metrics[0].error_message); 
-  //   return (
-  //     <Box className="logs-container">
-  //       {data.metrics.map((error, index) => (
-  //         <Box key={error.id} className="error-item">
-  //           <Typography className="log-message">
-  //             Operation: {error.operation_name}
-  //           </Typography>
-  //           <Typography className="log-details">
-  //             Date: {error.date}, Time: {error.time}
-  //           </Typography>
+  const renderLogs = () => {
+    if (loading) return <CircularProgress />;
+    if (error) return <Alert severity="error">Error loading logs</Alert>;
+    if (!errors?.metrics.length) return <Typography>No recent errors</Typography>;
+    // console.log('Error message from data begins here:', errors.metrics[0].error_message); 
+    return (
+      <Box className="logs-container">
+        {errors.metrics.map((error, index) => (
+          <Box key={error.id} className="error-item">
+            <Typography className="log-message">
+              Operation: {error.operation_name}
+            </Typography>
+            <Typography className="log-details">
+              Date: {error.date}, Time: {error.time}
+            </Typography>
 
-  //           {/* what is mb?? */}
-  //             <Box key={index} mb={1}>
-  //               <Typography color="error">
-  //                 Error: {error.error_message}
-  //               </Typography>
-  //               <Typography variant="caption">
-  //                 Location: Line {error.line}, Column {error.column}
-  //               </Typography>
-  //             </Box>
-  //           {/* {error.map((err, index) => (
-  //             <Box key={index} mb={1}>
-  //               <Typography color="error">
-  //                 Error: {err.message}
-  //               </Typography>
-  //               <Typography variant="caption">
-  //                 Location: Line {err.locations[0]?.line}, Column {err.locations[0]?.column}
-  //               </Typography>
-  //             </Box>
-  //           ))} */}
-  //           <Typography className="query-text">
-  //             Query: {error.query}
-  //           </Typography>
-  //           <Divider className="log-divider" />
-  //         </Box>
-  //       ))}
-  //     </Box>
-  //   );
-  // };
+            {/* what is mb?? */}
+              <Box key={index} mb={1}>
+                <Typography color="error">
+                  Error: {error.error_message}
+                </Typography>
+                <Typography variant="caption">
+                  Location: Line {error.line}, Column {error.column}
+                </Typography>
+              </Box>
+            {/* {error.map((err, index) => (
+              <Box key={index} mb={1}>
+                <Typography color="error">
+                  Error: {err.message}
+                </Typography>
+                <Typography variant="caption">
+                  Location: Line {err.locations[0]?.line}, Column {err.locations[0]?.column}
+                </Typography>
+              </Box>
+            ))} */}
+            <Typography className="query-text">
+              Query: {error.query}
+            </Typography>
+            <Divider className="log-divider" />
+          </Box>
+        ))}
+      </Box>
+    );
+  };
   //? functioning individual render functions end here ---------------------------------->
 
   //! original code begins here --------------------------------------------->
@@ -328,18 +328,17 @@ export default function Dashboard() {
         <Typography variant="h5" className="section-title">
           Key Metrics
         </Typography>
-        {/* {renderMetrics()} */}
-        {renderRegularQueries()}
+        {renderMetrics()}
 
         <Typography variant="h5" className="section-title">
           Slow Queries
         </Typography>
-        {/* {renderSlowQueries()} */}
+        {renderSlowQueries()}
 
         <Typography variant="h5" className="section-title">
           Errors
         </Typography>
-        {/* {renderLogs()} */}
+        {renderLogs()}
       </Box>
     </Box>
   );
