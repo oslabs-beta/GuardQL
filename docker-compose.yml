@@ -1,16 +1,17 @@
-version: '3.9'
 services:
   frontend:
     build:
-      context: ./src/client
-      dockerfile: Dockerfile
+      context: . # Root directory
+      dockerfile: ./src/client/Dockerfile
+    image: guardql-frontend:latest
     ports:
       - "8081:80"
 
   backend:
     build:
-      context: ./src/server
-      dockerfile: Dockerfile
+      context: . # Root directory
+      dockerfile: ./src/server/Dockerfile
+    image: guardql-backend:latest
     ports:
       - "4000:4000"
     depends_on:
