@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  frontend:
+    build:
+      context: ./src/client
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+
+  backend:
+    build:
+      context: ./src/server
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    depends_on:
+      - database
+    environment:
+      DB_USER: guardql_user
+      DB_PASSWORD: guardql_pass
+      DB_HOST: database
+      DB_NAME: guardql_db
+
+  database:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: guardql_user
+      POSTGRES_PASSWORD: guardql_pass
+      POSTGRES_DB: guardql_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
