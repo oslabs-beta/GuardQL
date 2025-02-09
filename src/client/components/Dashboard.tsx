@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getProjectErrorMetrics, getProjectSlowQueries, getProjectRegularQueries, getProjectMetrics } from './ProjectData';
+import { getProjectMetrics } from './ProjectData';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -23,8 +23,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import './Dashboard.css';
 import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
-import { useQuery } from '@apollo/client';
-import { queries } from './ProjectData'; 
+
 
 interface NavItem {
   text: string;
@@ -34,13 +33,7 @@ interface NavItem {
 const drawerWidth = 240;
 
 export default function Dashboard() {
-  // const [projectId] = useState('project1');
-  const [projectId] = useState('3');
-
-  // const { loading, error, data, refetch } = getProjectErrorMetrics(projectId); 
-  // const { loading, error, data, refetch } = getProjectSlowQueries(projectId); 
-  // const { loading, error, data, refetch } = getProjectRegularQueries(projectId); 
-  // console.log('error data from dashboard file begins here:', data); 
+  const [projectId] = useState('1');
 
   const {
     metrics,
@@ -59,11 +52,8 @@ export default function Dashboard() {
     { text: 'Account', icon: <AccountCircleIcon sx={{ color: '#FFFFFF' }} /> },
   ];
 
-
-  //? functioning individual render functions begin here ---------------------------------->
-
-
-    const renderMetrics = () => {
+  //? working functions begin here ---------------------------------->
+  const renderMetrics = () => {
     if (loading) {
       return (
         <Box display="flex" justifyContent="center" p={2}>
@@ -100,9 +90,37 @@ export default function Dashboard() {
     );
   };
 
+  const renderRegularQueries = () => {
+    if (loading) return <CircularProgress />;
+    if (error) return <Alert severity="error">Error loading regular queries</Alert>;
+    if (!regularQueries?.metrics.length) return <Typography>No regular queries detected</Typography>;
 
+    return (
+      <Box className="slow-queries-container">
+        {regularQueries.metrics.map((query) => (
+          <Box key={query.id} className="query-item">
+            <Typography className="query-operation">
+              Operation: {query.operation_name}
+            </Typography>
+            <Typography className="query-details">
+              Execution Time: {query.request_time}ms
+            </Typography>
+            <Typography className="query-threshold">
+              Threshold: {query.query_threshold}ms
+            </Typography>
+            <Typography className="query-timestamp">
+              {query.date} {query.time}
+            </Typography>
+            <Typography className="query-text">
+              Query: {query.query}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
+    );
+  };
 
-    const renderSlowQueries = () => {
+  const renderSlowQueries = () => {
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">Error loading slow queries</Alert>;
     if (!slowQueries?.metrics.length) return <Typography>No slow queries detected</Typography>;
@@ -177,7 +195,7 @@ export default function Dashboard() {
       </Box>
     );
   };
-  //? functioning individual render functions end here ---------------------------------->
+  //? working functions end here ---------------------------------->
 
   //! original code begins here --------------------------------------------->
   
@@ -329,6 +347,11 @@ export default function Dashboard() {
           Key Metrics
         </Typography>
         {renderMetrics()}
+
+        <Typography variant="h5" className="section-title">
+          Regular Queries
+        </Typography>
+        {renderRegularQueries()}
 
         <Typography variant="h5" className="section-title">
           Slow Queries

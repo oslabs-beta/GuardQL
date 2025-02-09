@@ -156,6 +156,7 @@ export const LOGIN = gql`
   }
 `; 
 
+//! original useQuery functions begin here ---------------------------------------------------------> 
 // Individual data fetching hooks
 // export const getProjectErrors = (projectId: string): QueryResponse<ErrorData> => {
 //   const { data, loading, error, refetch } = useQuery(GET_PROJECT_ERRORS, {
@@ -202,10 +203,13 @@ export const LOGIN = gql`
 //     refetch
 //   };
 // };
+//! original useQuery functions end here ---------------------------------------------------------> 
 
 const token = localStorage.getItem('jwt'); 
-console.log('This is the current token after logging in:', token); 
+// console.log('This is the current token after logging in:', token); 
 
+
+// Individual data fetching hooks
 export const getProjectErrorMetrics = (projectId: string): QueryResponse<ErrorData> => {
   const { data, loading, error, refetch } = useQuery(GET_PROJECT_ERRORS, {
     variables: { projectId },
@@ -284,7 +288,6 @@ interface ProjectMetrics {
   performanceScore: number;
 }
 
-// Combined metrics hook
 interface ProjectMetricsResponse {
   metrics: ProjectMetrics | null;
   loading: boolean;

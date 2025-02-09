@@ -34,14 +34,14 @@ function Login() {
           }
         }
       }); 
-      // console.log('data begins here:', data); 
-      // console.log('Input data begins here:', userInput);
+      // console.log('data from login.tsx begins here:', data); 
+      // console.log('Input data from login.tsx begins here:', userInput);
 
       const token = data.login.token; 
       localStorage.setItem('jwt', token); 
       setLoginError(null); 
       // console.log('Local storage begins here:', localStorage); 
-      console.log('This is the user\'s token:', token); 
+      // console.log('This is the user\'s token:', token); 
       navigate('/dashboard')
       reset();
 
