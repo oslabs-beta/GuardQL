@@ -5,7 +5,7 @@ services:
       context: ./src/client
       dockerfile: Dockerfile
     ports:
-      - "8081:8081"
+      - "8081:80"
 
   backend:
     build:
@@ -31,6 +31,11 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+    healthcheck: # To avoid potential startup race conditions (e.g., backend starts before the database is ready),
+      test: ["CMD-SHELL", "pg_isready -U guardql_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   db_data:
