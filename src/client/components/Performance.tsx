@@ -43,9 +43,6 @@ export default function Performance() {
 
      const navigate = useNavigate();
 
-    const handleNavigation = (path: string) => {
-  const navigate = useNavigate();
-
   const handleNavigation = (path: string) => {
     if (path === '/logout') {
       handleLogout();
