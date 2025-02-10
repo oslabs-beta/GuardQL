@@ -4,6 +4,7 @@ node_modules
 dist
 src/components
 .ssh/*
+src/server/dist
 
 # logs
 npm-debug.log*
