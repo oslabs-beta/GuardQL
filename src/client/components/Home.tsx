@@ -160,7 +160,7 @@ const App: React.FC = () => {
         <p>GuardQL helps developers track errors and performance metrics effortlessly</p>
         <br></br>
         <br></br>
-        <button className="get-started-btn"><a href="/#/login" className="get-started-btn">Get Started</a></button>
+        <button className="get-started-btn"><a className="get-started-btn-a" href="/#/login" >Get Started</a></button>
       </section>
 
       {/* About Section */}

@@ -130,6 +130,10 @@ body {
   color: white;
 }
 
+.dashboard-btn:hover {
+  background: #690f5a;
+}
+
 .hero {
   height: 100vh;
   display: flex;
@@ -145,8 +149,17 @@ body {
   background: #e623c6;
   padding: 8px 16px;
   border-radius: 5px;
-  text-decoration: none;
+  font-size: 16px;
+  border: 1px solid rgb(68, 68, 68);
+}
+
+.get-started-btn-a {
+  text-decoration: none; 
   color: white;
+}
+
+.get-started-btn:hover {
+  background: #222;
 }
 
 .section {
@@ -210,15 +223,15 @@ body {
   border: 4px solid #de54c7; 
   padding: 20px;
   border-radius: 20px;
-  width: 200px;
+  width: 250px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .profile-pic {
-  width: 150px; /* Set a fixed width */
-  height: 150px; /* Match width for a circle */
-  object-fit: cover; /* Prevents distortion */
+  width: 150px; 
+  height: 150px; 
+  object-fit: cover; 
   border-radius: 50%;
   border: 2px dotted #de54c7; 
 }

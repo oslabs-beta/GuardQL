@@ -2,10 +2,18 @@ import * as styles from '../styles/login-and-signup.module.css';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
-import Login from './Login';
+import { useMutation } from '@apollo/client';
 import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
-import Footer from './Footer'
+import Footer from './Footer';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { CREATE_ACCOUNT } from './ProjectData'; 
+
+
+const theme = createTheme({
+  typography: {
+    fontFamily: 'Montserrat, sans-serif',
+  },
+});
 
 /** This is Sabrina's original Sign-Up component */
 
@@ -21,19 +29,6 @@ import {
   Divider,
 } from '@mui/material';
 
-// const REGISTER_MUTATION = gql`
-//   mutation Register($input: RegisterInput!) {
-//     register(input: $input) {
-//       token
-//       user {
-//         id
-//         username
-//         email
-//         password
-//       }
-//     }
-//   }
-// `;
 
 const SignUp = () => {
   const [emailError, setEmailError] = useState(false);
@@ -42,16 +37,24 @@ const SignUp = () => {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
   const [nameError, setNameError] = useState(false);
   const [nameErrorMessage, setNameErrorMessage] = useState('');
-  // const [register, { loading, error, data }] = useMutation(REGISTER_MUTATION);
+  const [ createAccountSuccess, setCreateAccountSuccess ] = useState<string | null>(null); 
+  const [ createAccountError, setCreateAccountError ] = useState<string | null>(null); 
+  const [signup, { loading, error, data }] = useMutation(CREATE_ACCOUNT);
 
-  const validateInputs = () => {
-    const email = document.getElementById('email') as HTMLInputElement;
-    const password = document.getElementById('password') as HTMLInputElement;
-    const userName = document.getElementById('userName') as HTMLInputElement;
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const userInput = new FormData(event.currentTarget);
+
+    const username = userInput.get('userName')?.toString() || '';
+    const password = userInput.get('password')?.toString() || '';
+    const email = userInput.get('email')?.toString() || '';
 
     let isValid = true;
 
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
       setEmailError(true);
       setEmailErrorMessage('Please enter a valid email address');
       isValid = false;
@@ -60,7 +63,7 @@ const SignUp = () => {
       setEmailErrorMessage('');
     }
 
-    if (!password.value || password.value.length < 6) {
+    if (!password || password.length < 6) {
       setPasswordError(true);
       setPasswordErrorMessage('Password must be at least 6 characters long');
       isValid = false;
@@ -69,7 +72,7 @@ const SignUp = () => {
       setPasswordErrorMessage('');
     }
 
-    if (!userName.value || userName.value.length < 4) {
+    if (!username || username.length < 4) {
       setNameError(true);
       setNameErrorMessage('Username is required');
       isValid = false;
@@ -78,52 +81,35 @@ const SignUp = () => {
       setNameErrorMessage('');
     }
 
-    return isValid;
-  };
+    if (!isValid) return; 
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    if (nameError || emailError || passwordError) {
-      event.preventDefault();
-      return;
+
+    try {
+      const { data } = await signup({
+        variables: {
+          input: {
+            username,
+            password,
+            email,
+          },
+        },
+      });
+      // console.log('Registration successful:', data);
+      setCreateAccountSuccess('Account created successfully!'); 
+      // navigate('/login')
+    } catch (error) {
+      // console.error('Error during registration:', error);
+      setCreateAccountError('Account creation was unsuccessful'); 
     }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      userName: data.get('userName'),
-      lastName: data.get('lastName'),
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-
-    const formData = new FormData(event.currentTarget);
-    const username = formData.get('userName') as string;
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-
-    // try {
-    //   const { data } = await register({
-    //     variables: {
-    //       input: {
-    //         username,
-    //         email,
-    //         password,
-    //       },
-    //     },
-    //   });
-
-    //   console.log('Registration successful:', data);
-    //   // Redirect the user or show a success message
-    // } catch (err) {
-    //   console.error('Error during registration:', err);
-    // }
-    console.log("data", data);
-    
   };
 
   return (
     <div className={styles.background}>
       <div className={styles.container}>
+        <ThemeProvider theme={theme}>
         <div className={styles.leftContainer}>
-          <h1>Sign Up for Free!</h1>
+          <h1>Uncover, Analyze, and Optimize Your GraphQL Performance</h1>
+          <br></br>
           <img
             src={logo}
             alt='GuardQL Logo'
@@ -134,7 +120,7 @@ const SignUp = () => {
         <div className={styles.rightContainer}>
           <Stack className={styles.signUpFormContainer}>
             <Typography component='h3' variant='h4'>
-              Sign up
+              Sign Up
             </Typography>
             <Box
               component='form'
@@ -152,7 +138,7 @@ const SignUp = () => {
                   required
                   fullWidth
                   id='userName'
-                  placeholder='johnsmith123'
+                  placeholder='developer123'
                   variant='standard'
                   error={nameError}
                   helperText={nameErrorMessage}
@@ -180,7 +166,7 @@ const SignUp = () => {
                   required
                   fullWidth
                   id='email'
-                  placeholder='johnsmith@email.com'
+                  placeholder='developer@email.com'
                   name='email'
                   autoComplete='email'
                   variant='standard'
@@ -210,7 +196,7 @@ const SignUp = () => {
                   required
                   fullWidth
                   name='password'
-                  placeholder='••••••'
+                  placeholder='••••••••••••'
                   type='password'
                   id='password'
                   autoComplete='new-password'
@@ -236,17 +222,19 @@ const SignUp = () => {
                 type='submit'
                 fullWidth
                 variant='contained'
-                onClick={validateInputs}
+                // onClick={handleSubmit}
                 sx={{
-                  backgroundColor: 'hotpink',
+                  backgroundColor: '#e623c6',
                   '&:hover': {
-                    backgroundColor: 'deeppink',
+                    backgroundColor: '#e263cd',
                   },
                   marginTop: '15px',
                 }}
               >
-                Sign up
+                Create Account
               </Button>
+              {createAccountError && (<p style={{ color: 'red', marginTop: "10px" }}>{createAccountError}</p>)}
+              {createAccountSuccess && (<p style={{ color: '#e623c6', marginTop: "10px" }}>{createAccountSuccess}</p>)}
             </Box>
             <Divider></Divider>
             <Box>
@@ -254,20 +242,21 @@ const SignUp = () => {
                 Already have an account? {/* Clicking on the Sign In link */}
                 <Link
                   to='/login'
-                  style={{ color: '#D5006D', textDecoration: 'none' }}
+                  style={{ color: '#e623c6', textDecoration: 'none' }}
                   onMouseEnter={(e) =>
-                    ((e.target as HTMLAnchorElement).style.color = '#F50057')
+                    ((e.target as HTMLAnchorElement).style.color = '#e263cd')
                   }
                   onMouseLeave={(e) =>
-                    ((e.target as HTMLAnchorElement).style.color = '#D5006D')
+                    ((e.target as HTMLAnchorElement).style.color = '#e623c6')
                   }
                 >
-                  Sign in.
+                  Sign In
                 </Link>
               </Typography>
             </Box>
           </Stack>
         </div>
+        </ThemeProvider>
       </div>
       <Footer />
     </div>
