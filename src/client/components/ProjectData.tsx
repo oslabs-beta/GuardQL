@@ -323,6 +323,11 @@ export const getUserProjects = (): QueryResponseProjects<UserProjectData> => {
         Authorization: token ? `Bearer ${token}`: '', 
       },
     },
+    // Add these options to help manage the request timing
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'cache-first',
+    // Only start the query when we have a token
+    skip: !token,
   });
   // console.log('User project data from projectData file begins here:', data); 
   // console.log('User project error from projectData file begins here:', error); 

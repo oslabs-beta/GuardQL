@@ -118,6 +118,9 @@ import navLogo from '../assets/GuardQL_Text_Only-white.png';
 import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 import Cindy from '../assets/profilepic-cindy.jpeg';
 import Sabrina from '../assets/profilepic-sabrina.jpeg';
+import Sienna from '../assets/profilepic-sienna.jpeg';
+import Mike from '../assets/profilepic-mike.jpeg';
+// import Nico from '../assets/profilepic-nico.jpeg';
 import dashboard from '../assets/dashboard.png';
 import Footer from './Footer';
 import '../styles/footer.module.css';
@@ -126,18 +129,53 @@ import BugReportIcon from '@mui/icons-material/BugReport';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import { JwtPayload } from '../lib/apollo'; 
 
 const teamMembers = [
-  { name: "Sienna Shepherd", image: "image1.jpg", linkedin: "", github: "", bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+  { name: "Sienna Shepherd", image: Sienna, linkedin: "https://www.linkedin.com/in/sienna-shepherd/", github: "https://github.com/codecaptaincode", bio: "Sienna is a detail-oriented software engineer passionate about solving complex problems and bringing ideas to life through code. Specializing in full-stack development, she builds intuitive, user-friendly applications that make a meaningful impact. When she’s not coding, you’ll likely find her discovering new music, getting lost in a good book or video game, and exploring NYC’s hidden gems." },
   { name: "Sabrina Ira", image: Sabrina, linkedin: "https://www.linkedin.com/in/sabrinaira", github: "https://github.com/sabrinaira", bio: "Sabrina is a passionate software engineer with a unique blend of creativity and technical expertise. With a background in art, she brings a fresh perspective to full-stack development, crafting innovative and user-centric applications. Sabrina thrives on understanding the intricacies of software development, constantly honing her skills to deliver optimal solutions and push the boundaries of what technology can achieve." },
-  { name: "Nico Henry", image: "image3.jpg", linkedin: "", github: "", bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-  { name: "Mike Thurstlic", image: "image4.jpg", linkedin: "", github: "", bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+  { name: "Nico Henry", image: "", linkedin: "", github: "", bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+  { name: "Mike Thurstlic", image: Mike, linkedin: "https://www.linkedin.com/in/mike-thurstlic-a2b8a82a4/", github: "https://github.com/thurstlic7", bio: "Mike Thurstlic is a frontend developer and is proud to be a member of the GuardQL team. He lives in NYC." },
   { name: "Cindy Rodríguez-Llivipuma", image: Cindy, linkedin: "https://www.linkedin.com/in/cindy-rod-lliv", github: "https://github.com/csrl23", bio: "Cindy is a full-stack engineer passionate about building tools that empower engineers to work more efficiently. I enjoy solving complex problems, optimizing workflows, and creating intuitive solutions that enhance the development experience." }
 ];
 
 
 const App: React.FC = () => {
+
+  const navigate = useNavigate();
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    
+    const jwt = localStorage.getItem('jwt');
+    
+    if (jwt) {
+      try {
+        const decodedToken = jwtDecode<JwtPayload>(jwt);
+        const currentTime = Math.floor(Date.now() / 1000);
+        
+        if (decodedToken.exp > currentTime) {
+          // Token is valid, go to dashboard
+          navigate('/dashboard');
+        } else {
+          // Token is expired, remove it and go to login
+          localStorage.removeItem('jwt');
+          navigate('/login');
+        }
+      } catch (error) {
+        // Token is invalid, go to login
+        navigate('/login');
+      }
+    } else {
+      // No token, go to login
+      navigate('/login');
+    }
+  };
+
+
+
   return (
     <div>
       {/* Navbar */}
@@ -150,19 +188,19 @@ const App: React.FC = () => {
           <li><Link to="features" smooth={true} duration={500}>Features</Link></li>
           <li><Link to="how-it-works" smooth={true} duration={500}>How It Works</Link></li>
           <li><Link to="team" smooth={true} duration={500}>Team</Link></li>
-          <li><a href="/#/login" className="dashboard-btn">Dashboard</a></li>
+          <li><a href="#" className="dashboard-btn" onClick={handleNavClick}>Dashboard</a></li>
         </ul>
       </nav>
       {/* Hero Section */}
       <section className="hero">
-        <img src={logo} alt="GuardQL Logo" className="drawer-logo" />
+        <img src={logo} alt="GuardQL Logo" className="drawer-logo" style={{height: 280}}/>
         <br></br>
         <h2>Monitor, Debug, and Optimize Your GraphQL APIs With Ease</h2>
         <br></br>
         <p>GuardQL helps developers track errors and performance metrics effortlessly</p>
         <br></br>
         <br></br>
-        <button className="get-started-btn"><a className="get-started-btn-a" href="/#/login" >Get Started</a></button>
+        <button className="get-started-btn"><a className="get-started-btn-a" href="#" onClick={handleNavClick}>Get Started</a></button>
       </section>
 
       {/* About Section */}

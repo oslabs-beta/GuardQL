@@ -110,13 +110,8 @@ const SignUp = () => {
         <div className={styles.leftContainer}>
           <h1>Uncover, Analyze, and Optimize Your GraphQL Performance</h1>
           <br></br>
-          <img
-            src={logo}
-            alt='GuardQL Logo'
-            style={{ width: '400px', height: 'auto' }}
-          />
+          <Link to={'/home'}><img src ={logo} alt='GuardQL Logo' style={{ width: '400px', height: 'auto' }} /></Link>
         </div>
-
         <div className={styles.rightContainer}>
           <Stack className={styles.signUpFormContainer}>
             <Typography component='h3' variant='h4'>
