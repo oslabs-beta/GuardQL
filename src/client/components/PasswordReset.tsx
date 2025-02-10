@@ -5,7 +5,7 @@ import { Button, TextField } from '@mui/material'
 import Typography from '@mui/material/Typography';
 import SignUp from './Sign-Up'
 import * as styles from '../styles/login-and-signup.module.css'
-import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png'
+import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png'
 import Footer from './Footer'
 
 /** This is where the user will finally update their password */
@@ -28,7 +28,7 @@ function PasswordReset() {
   return (
     <div className={styles.background}>
     <div className={styles.container}>
-     
+
       <div className={styles.rightContainer}>
 
         <div className={styles.loginFormContainer}>

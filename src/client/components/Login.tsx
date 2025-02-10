@@ -5,10 +5,10 @@ import { Button, TextField } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import * as styles from '../styles/login-and-signup.module.css';
-import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
+import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 import Footer from './Footer';
-import { LOGIN } from './ProjectData'; 
-import { useMutation } from '@apollo/client'; 
+import { LOGIN } from './ProjectData';
+import { useMutation } from '@apollo/client';
 import SignUp from './Sign-Up';
 
 /** type declaration */
@@ -26,35 +26,35 @@ const theme = createTheme({
 function Login() {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors }, reset} = useForm<FormField>();
-  const [ loginError, setLoginError ] = useState<string | null>(null); 
-  const [login, { loading: mutationLoading, error: mutationError }] = useMutation(LOGIN); 
-  // console.log('Data returned from loggingIn begins here:', data); 
+  const [ loginError, setLoginError ] = useState<string | null>(null);
+  const [login, { loading: mutationLoading, error: mutationError }] = useMutation(LOGIN);
+  // console.log('Data returned from loggingIn begins here:', data);
 
-  
+
   const onSubmit: SubmitHandler<FormField> = async (userInput) => {
    try {
-      const { data } = await login({ 
-        variables: { 
+      const { data } = await login({
+        variables: {
           input: {
-            username: userInput.user, 
+            username: userInput.user,
             password: userInput.password
           }
         }
-      }); 
-      // console.log('data from login.tsx begins here:', data); 
+      });
+      // console.log('data from login.tsx begins here:', data);
       // console.log('Input data from login.tsx begins here:', userInput);
 
-      const token = data.login.token; 
-      localStorage.setItem('jwt', token); 
-      setLoginError(null); 
-      // console.log('Local storage begins here:', localStorage); 
-      // console.log('This is the user\'s token:', token); 
+      const token = data.login.token;
+      localStorage.setItem('jwt', token);
+      setLoginError(null);
+      // console.log('Local storage begins here:', localStorage);
+      // console.log('This is the user\'s token:', token);
       navigate('/dashboard')
       reset();
 
     } catch (error) {
-      console.log('useMutation not successful, error begins here:', error); 
-      setLoginError('Username or password incorrect'); 
+      console.log('useMutation not successful, error begins here:', error);
+      setLoginError('Username or password incorrect');
     }
   }
 

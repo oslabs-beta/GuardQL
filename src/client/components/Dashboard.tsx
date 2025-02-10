@@ -22,7 +22,7 @@ import Divider from '@mui/material/Divider';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import './Dashboard.css';
-import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
+import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 
 
 interface NavItem {
@@ -156,7 +156,7 @@ export default function Dashboard() {
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">Error loading logs</Alert>;
     if (!errors?.metrics.length) return <Typography>No recent errors</Typography>;
-    // console.log('Error message from data begins here:', errors.metrics[0].error_message); 
+    // console.log('Error message from data begins here:', errors.metrics[0].error_message);
     return (
       <Box className="logs-container">
         {errors.metrics.map((error, index) => (
@@ -199,7 +199,7 @@ export default function Dashboard() {
   //? working functions end here ---------------------------------->
 
   //! original code begins here --------------------------------------------->
-  
+
   // const renderMetrics = () => {
   //   if (loading) {
   //     return (
@@ -323,8 +323,8 @@ export default function Dashboard() {
         anchor="left"
       >
         <div className="drawer-header">
-          <img 
-            src={logo} 
+          <img
+            src={logo}
             alt="GuardQL Logo"
             className="drawer-logo"
           />
