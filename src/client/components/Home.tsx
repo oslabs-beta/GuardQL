@@ -117,6 +117,7 @@ import "./Home.css";
 import navLogo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px nav-logo.png';
 import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
 import Cindy from '../assets/profilepic-cindy.jpeg';
+import Sabrina from '../assets/profilepic-sabrina.jpeg';
 import dashboard from '../assets/dashboard.png';
 import Footer from './Footer'; 
 import '../styles/footer.module.css'; 
@@ -129,10 +130,10 @@ import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 
 const teamMembers = [
   { name: "Sienna Shepherd", image: "image1.jpg", linkedin: "", github: "", bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-  { name: "Sabrina Ira", image: "image2.jpg", linkedin: "", github: "", bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+  { name: "Sabrina Ira", image: Sabrina, linkedin: "https://www.linkedin.com/in/sabrinaira", github: "https://github.com/sabrinaira", bio: "Sabrina is a passionate software engineer with a unique blend of creativity and technical expertise. With a background in art, she brings a fresh perspective to full-stack development, crafting innovative and user-centric applications. Sabrina thrives on understanding the intricacies of software development, constantly honing her skills to deliver optimal solutions and push the boundaries of what technology can achieve." },
   { name: "Nico Henry", image: "image3.jpg", linkedin: "", github: "", bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
   { name: "Mike Thurstlic", image: "image4.jpg", linkedin: "", github: "", bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-  { name: "Cindy Rodríguez-Llivipuma", image: Cindy, linkedin: "https://www.linkedin.com/in/cindy-rod-lliv", github: "https://github.com/csrl23", bio: "I'm a full-stack engineer passionate about building tools that empower engineers to work more efficiently. I enjoy solving complex problems, optimizing workflows, and creating intuitive solutions that enhance the development experience." }
+  { name: "Cindy Rodríguez-Llivipuma", image: Cindy, linkedin: "https://www.linkedin.com/in/cindy-rod-lliv", github: "https://github.com/csrl23", bio: "Cindy is a full-stack engineer passionate about building tools that empower engineers to work more efficiently. I enjoy solving complex problems, optimizing workflows, and creating intuitive solutions that enhance the development experience." }
 ]; 
 
 
@@ -208,10 +209,13 @@ const App: React.FC = () => {
         <h2>How It Works</h2>
         <br></br>
         <ol className="howList">
-          <li>1. Connect GuardQL to your GraphQL API</li>
-          <li>2. View logs in real-time</li>
-          <li>3. Analyze errors & performance metrics</li>
-          <li>4. Optimize queries for better efficiency</li>
+          <li>1. Install the GuardQL NPM package</li>
+          <li>2. Add the GuardQL plugin to your Apollo Server configuaration</li>
+          <li>3. Log in to your GuardQL dashboard</li>
+          <li>4. Select the project you added the GuardQL plugin to, or create a new project and then select it</li>
+          <li>5. Run your GraphQL operations and view performance metrics in real-time on your dashboard</li>
+          {/* <li>6. Analyze errors & performance metrics</li>
+          <li>7. Optimize queries for better efficiency</li> */}
         </ol>
       </section>
 
