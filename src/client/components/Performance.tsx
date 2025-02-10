@@ -15,6 +15,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import BugReportIcon from '@mui/icons-material/BugReport';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -24,6 +25,7 @@ import Alert from '@mui/material/Alert';
 import './Dashboard.css';
 import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 import { Link, useNavigate } from 'react-router-dom';
+import { client } from '../lib/apollo';
 
 
 interface NavItem {
@@ -42,15 +44,28 @@ export default function Performance() {
      const navigate = useNavigate();
 
     const handleNavigation = (path: string) => {
+  const navigate = useNavigate();
+
+  const handleNavigation = (path: string) => {
+    if (path === '/logout') {
+      handleLogout();
+    } else {
       navigate(path);
-    };
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('jwt');
+    client.clearStore();
+    navigate('/login');
+  };
 
     const navItems: NavItem[] = [
         { text: 'Home', icon: <HomeIcon sx={{ color: '#FFFFFF' }} />, link: '/home' },
         { text: 'Dashboard', icon: <DashboardIcon sx={{ color: '#FFFFFF' }} />, link: '/dashboard' },
         { text: 'Performance', icon: <BarChartIcon sx={{ color: '#FFFFFF' }} />, link: '/performance' },
-        // { text: 'About', icon: <InfoIcon sx={{ color: '#FFFFFF' }} />, link: '/about'  },
-        { text: 'Account', icon: <AccountCircleIcon sx={{ color: '#FFFFFF' }} />, link: '/account' },
+        // { text: 'Account', icon: <AccountCircleIcon sx={{ color: '#FFFFFF' }} />, link: '/account' },
+        { text: 'Log Out', icon: <LogoutIcon sx={{ color: '#FFFFFF' }} />, link: '/logout' },
     ];
 
     return (
@@ -81,7 +96,8 @@ export default function Performance() {
             {navItems.map(({ text, icon, link }) => (
               <ListItem key={text} disablePadding>
                 {/* console.log("Navigating to:", {link}); */}
-                <ListItemButton component={Link} to={link}>
+                {/* <ListItemButton component={Link} to={link}> */}
+                <ListItemButton onClick={() => handleNavigation(link)}>
                 {/* <ListItemButton onClick={() => handleNavigation(`${link}`)}> */}
                   <ListItemIcon>{icon}</ListItemIcon>
                   <ListItemText primary={text} />

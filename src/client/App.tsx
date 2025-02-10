@@ -7,8 +7,8 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Performance from './components/Performance';
 import SignUp from './components/Sign-Up';
-import About from './components/About';
-import Account from './components/Account';
+// import About from './components/About';
+// import Account from './components/Account';
 import ForgotPassword from './components/ForgotPassword';
 import ConfirmationEmail from './components/ConfirmEmail';
 import PasswordReset from './components/PasswordReset';
@@ -22,8 +22,8 @@ const App = () => {
           <Route path="/home" element={<Home />}/> 
           <Route path="/dashboard" element={<Dashboard />} /> 
           <Route path="/performance" element={<Performance />} />
-          <Route path="/about" element={<About />}/>
-          <Route path="/account" element={<Account />} />
+          {/* <Route path="/about" element={<About />}/> */}
+          {/* <Route path="/account" element={<Account />} /> */}
           <Route path="/login" element={<Login />}/>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />

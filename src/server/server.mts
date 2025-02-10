@@ -70,7 +70,7 @@ async function startApolloServer() {
         // console.log('Request headers:', req.headers);
         const token = req.headers.authorization?.replace('Bearer ', '');
         // console.log('Extracted token:', token);
-        let userId: string | null = null;
+         let userId: string | null = null;
 
         if (token) {
           try {

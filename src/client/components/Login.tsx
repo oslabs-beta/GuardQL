@@ -30,7 +30,6 @@ function Login() {
   const [login, { loading: mutationLoading, error: mutationError }] = useMutation(LOGIN);
   // console.log('Data returned from loggingIn begins here:', data);
 
-
   const onSubmit: SubmitHandler<FormField> = async (userInput) => {
    try {
       const { data } = await login({
@@ -43,16 +42,23 @@ function Login() {
       });
       // console.log('data from login.tsx begins here:', data);
       // console.log('Input data from login.tsx begins here:', userInput);
-
-
       const token = data.login.token;
       localStorage.setItem('jwt', token);
       setLoginError(null);
+
+      const jwt = localStorage.getItem('jwt');
+      if (jwt) {
+        navigate('/dashboard');
+        reset();
+        console.log('The token was retrieved successfully after login:', jwt); 
+      } else if (!jwt) {
+        console.log('The token was not retrieved successfully after login:', jwt); 
+        reset();
+        navigate('/login');
+      }
       // console.log('Local storage begins here:', localStorage);
       // console.log('This is the user\'s token:', token);
-      navigate('/dashboard');
-      reset();
-
+      // navigate('/dashboard');
     } catch (error) {
       console.log('useMutation not successful, error begins here:', error);
       setLoginError('Username or password incorrect');
@@ -66,7 +72,7 @@ function Login() {
         <div className={styles.leftContainer}>
           <h1>Uncover, Analyze, and Optimize Your GraphQL Performance</h1>
           <br></br>
-          <img src ={logo} alt='GuardQL Logo' style={{ width: '400px', height: 'auto' }} />
+          <Link to={'/home'}><img src ={logo} alt='GuardQL Logo' style={{ width: '400px', height: 'auto' }} /></Link>
         </div>
         <div className={styles.rightContainer}>
 
