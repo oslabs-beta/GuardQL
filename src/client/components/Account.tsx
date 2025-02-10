@@ -22,7 +22,7 @@ import Divider from '@mui/material/Divider';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import './Dashboard.css';
-import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
+import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 import { Link, useNavigate } from 'react-router-dom';
 
 
@@ -40,7 +40,7 @@ export default function Account() {
     // console.log("Performance component is rendering!");
 
      const navigate = useNavigate();
-    
+
     const handleNavigation = (path: string) => {
       navigate(path);
     };
@@ -63,15 +63,15 @@ export default function Account() {
             </Typography>
           </Toolbar>
         </AppBar>
-  
+
         <Drawer
           className="drawer"
           variant="permanent"
           anchor="left"
         >
           <div className="drawer-header">
-            <img 
-              src={logo} 
+            <img
+              src={logo}
               alt="GuardQL Logo"
               className="drawer-logo"
             />
