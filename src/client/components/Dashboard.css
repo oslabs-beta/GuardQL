@@ -137,7 +137,7 @@ html, body {
   margin: 16px 0 !important;
 }
 
-.query-item {
+.query-item, .error-item {
   padding: 16px;
   border-radius: 4px;
   background-color: #262626;
@@ -148,9 +148,33 @@ html, body {
   margin-bottom: 0;
 }
 
+.scrollable-container {
+  max-height: 300px; /* Adjust based on your UI */
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid #3e3d3d;
+  border-radius: 5px;
+  background-color: #1e1e1e;
+}
 
 
 
+.select-project-section {
+  /* background: #e623c6;  */
+  display: flex;
+  align-items: center;
+  gap: 30px; 
+}
+
+.dropdown {
+  background: #e623c6; 
+  color: white !important;
+  height: 40px; 
+}
+
+.dropdown-item-create {
+  color: #e623c6 !important; 
+}
 /* .root {
   display: flex;
   background-color: #121212;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getProjectMetrics } from './ProjectData';
+import { getProjectMetrics, getUserProjects, GET_USER_PROJECTS } from './ProjectData';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -23,7 +23,11 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import './Dashboard.css';
 import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
-
+import { Link, useNavigate } from 'react-router-dom';
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import { SelectChangeEvent } from '@mui/material';
+import { useQuery } from '@apollo/client';
 
 interface NavItem {
   text: string;
@@ -31,10 +35,28 @@ interface NavItem {
   link: string;
 }
 
+interface Project {
+  id: string;
+  name: string;
+}
+
 const drawerWidth = 240;
 
 export default function Dashboard() {
+  const [projectsData, setProjects] = useState<Project[]>([]);
+  const [selectedProjectId, setSelectedProjectId] = useState<string>('');
+  const [loadingProjects, setLoadingProjects] = useState(true);
+  const [errorProjects, setErrorProjects] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+  };
+
   const [projectId] = useState('12');
+
 
   const {
     metrics,
@@ -42,19 +64,39 @@ export default function Dashboard() {
     error,
     errors,
     slowQueries,
-    regularQueries
+    regularQueries,
+    projects
   } = getProjectMetrics(projectId);
+  
 
   const navItems: NavItem[] = [
-    { text: 'Home', icon: <HomeIcon sx={{ color: '#FFFFFF' }} />, link: '/#/home' },
+    { text: 'Home', icon: <HomeIcon sx={{ color: '#FFFFFF' }} />, link: '/home' },
     { text: 'Dashboard', icon: <DashboardIcon sx={{ color: '#FFFFFF' }} />, link: '/dashboard' },
     { text: 'Performance', icon: <BarChartIcon sx={{ color: '#FFFFFF' }} />, link: '/performance' },
-    { text: 'About', icon: <InfoIcon sx={{ color: '#FFFFFF' }} />, link: '/about'  },
-    { text: 'Account', icon: <AccountCircleIcon sx={{ color: '#FFFFFF' }} />, link: '/#/account' },
+    // { text: 'About', icon: <InfoIcon sx={{ color: '#FFFFFF' }} />, link: '/about'  },
+    { text: 'Account', icon: <AccountCircleIcon sx={{ color: '#FFFFFF' }} />, link: '/account' },
   ];
 
-  //? working functions begin here ---------------------------------->
+  const renderProjects = () => {
+    if (loading) return <CircularProgress />;
+    if (error) return <Alert severity="error">Error loading projects</Alert>;
+    if (!projects?.projects.length) return <Typography>No projects retrieved</Typography>;
+    if (projects?.projects) {
+      const projectsArray = projects?.projects; 
+      console.log('The projects data begins here:', projectsArray); 
+      setProjects(projectsArray); 
+    }
+  }; 
+
   const renderMetrics = () => {
+    // if (!selectedProjectId) {
+    //   return (
+    //     <Box display="flex" justifyContent="center" p={2}>
+    //       <NoProjectSelected />
+    //     </Box>
+    //   )
+    // }
+
     if (loading) {
       return (
         <Box display="flex" justifyContent="center" p={2}>
@@ -92,12 +134,23 @@ export default function Dashboard() {
   };
 
   const renderRegularQueries = () => {
+    // if (!selectedProjectId) {
+    //   return (
+    //     <Box display="flex" justifyContent="center" p={2}>
+    //       <NoProjectSelected />
+    //     </Box>
+    //   )
+    // }
+
+
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">Error loading regular queries</Alert>;
     if (!regularQueries?.metrics.length) return <Typography>No regular queries detected</Typography>;
 
     return (
       <Box className="slow-queries-container">
+      <Box className="scrollable-container">
+
         {regularQueries.metrics.map((query) => (
           <Box key={query.id} className="query-item">
             <Typography className="query-operation">
@@ -118,16 +171,28 @@ export default function Dashboard() {
           </Box>
         ))}
       </Box>
+      </Box>
     );
   };
 
   const renderSlowQueries = () => {
+    // if (!selectedProjectId) {
+    //   return (
+    //     <Box display="flex" justifyContent="center" p={2}>
+    //       <NoProjectSelected />
+    //     </Box>
+    //   )
+    // }
+
+
+
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">Error loading slow queries</Alert>;
     if (!slowQueries?.metrics.length) return <Typography>No slow queries detected</Typography>;
 
     return (
       <Box className="slow-queries-container">
+      <Box className="scrollable-container">
         {slowQueries.metrics.map((query) => (
           <Box key={query.id} className="query-item">
             <Typography className="query-operation">
@@ -149,16 +214,28 @@ export default function Dashboard() {
           </Box>
         ))}
       </Box>
+      </Box>
     );
   };
 
   const renderLogs = () => {
+    // if (!selectedProjectId) {
+    //   return (
+    //     <Box display="flex" justifyContent="center" p={2}>
+    //       <NoProjectSelected />
+    //     </Box>
+    //   )
+    // }
+
+
+
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">Error loading logs</Alert>;
     if (!errors?.metrics.length) return <Typography>No recent errors</Typography>;
     // console.log('Error message from data begins here:', errors.metrics[0].error_message); 
     return (
       <Box className="logs-container">
+      <Box className="scrollable-container">
         {errors.metrics.map((error, index) => (
           <Box key={error.id} className="error-item">
             <Typography className="log-message">
@@ -190,54 +267,15 @@ export default function Dashboard() {
             <Typography className="query-text">
               Query: {error.query}
             </Typography>
-            <Divider className="log-divider" />
+            {/* <Divider className="log-divider" /> */}
           </Box>
         ))}
       </Box>
+      </Box>
     );
   };
-  //? working functions end here ---------------------------------->
 
-  //! original code begins here --------------------------------------------->
-  
-  // const renderMetrics = () => {
-  //   if (loading) {
-  //     return (
-  //       <Box display="flex" justifyContent="center" p={2}>
-  //         <CircularProgress />
-  //       </Box>
-  //     );
-  //   }
-
-  //   if (error) {
-  //     return (
-  //       <Alert severity="error">
-  //         Error loading metrics: {error.message}
-  //       </Alert>
-  //     );
-  //   }
-
-  //   if (!metrics) return null;
-
-  //   return (
-  //     <Box className="metrics-container">
-  //       <Box className="metric-box">
-  //         <Typography className="metric-label">Total Errors</Typography>
-  //         <Typography className="metric-value">{metrics.totalErrors}</Typography>
-  //       </Box>
-  //       <Box className="metric-box">
-  //         <Typography className="metric-label">Average Query Time</Typography>
-  //         <Typography className="metric-value">{metrics.averageQueryTime}ms</Typography>
-  //       </Box>
-  //       <Box className="metric-box">
-  //         <Typography className="metric-label">Slowest Query</Typography>
-  //         <Typography className="metric-value">{metrics.slowestQuery}ms</Typography>
-  //       </Box>
-  //     </Box>
-  //   );
-  // };
-
-
+  //! original renderLogs begins here --------------------------------------------->
   // const renderLogs = () => {
   //   if (loading) return <CircularProgress />;
   //   if (error) return <Alert severity="error">Error loading logs</Alert>;
@@ -272,38 +310,6 @@ export default function Dashboard() {
   //     </Box>
   //   );
   // };
-
-  // const renderSlowQueries = () => {
-  //   if (loading) return <CircularProgress />;
-  //   if (error) return <Alert severity="error">Error loading slow queries</Alert>;
-  //   if (!slowQueries?.length) return <Typography>No slow queries detected</Typography>;
-
-  //   return (
-  //     <Box className="slow-queries-container">
-  //       {slowQueries.map((query) => (
-  //         <Box key={query.id} className="query-item">
-  //           <Typography className="query-operation">
-  //             Operation: {query.operationName}
-  //           </Typography>
-  //           <Typography className="query-details">
-  //             Execution Time: {query.requestTime}ms
-  //             (Exceeded by {query.thresholdExceededBy}ms)
-  //           </Typography>
-  //           <Typography className="query-threshold">
-  //             Threshold: {query.queryThreshold}ms
-  //           </Typography>
-  //           <Typography className="query-timestamp">
-  //             {query.date} {query.time}
-  //           </Typography>
-  //           <Typography className="query-text">
-  //             Query: {query.query}
-  //           </Typography>
-  //         </Box>
-  //       ))}
-  //     </Box>
-  //   );
-  // };
-
   //! original code ends here --------------------------------------------->
 
   return (
@@ -333,10 +339,11 @@ export default function Dashboard() {
         <List>
           {navItems.map(({ text, icon, link }) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton>
+              {/* console.log("Navigating to:", {link}); */}
+              <ListItemButton component={Link} to={link}>
+              {/* <ListItemButton onClick={() => handleNavigation(`${link}`)}> */}
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={text} />
-                <a href={link}></a>
               </ListItemButton>
             </ListItem>
           ))}
@@ -345,6 +352,33 @@ export default function Dashboard() {
 
       <Box component="main" className="main-content">
         <Toolbar />
+        <div className="select-project-section">
+        <Typography variant="h6" className="section-title">
+          Select Project:
+        </Typography>
+        <Select
+        //  defaultValue=""
+         value={selectedProjectId ?? ''}
+         onChange={(e) => setSelectedProjectId(e.target.value)}
+         onOpen={renderProjects}
+         onClose={() => setOpen(false)}
+         displayEmpty
+         className="dropdown"
+        >
+        <MenuItem className="dropdown-item" value="" disabled>
+         Projects
+        </MenuItem>
+        {projectsData.map((project) => (
+          <MenuItem className="dropdown-item" key={project.id} value={project.name}>
+            {project.name}
+          </MenuItem>
+        ))}
+        <MenuItem className="dropdown-item-create">
+         + Create New Project
+        </MenuItem>
+        </Select>
+        </div>
+
         <Typography variant="h5" className="section-title">
           Key Metrics
         </Typography>

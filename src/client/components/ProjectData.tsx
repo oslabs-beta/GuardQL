@@ -53,6 +53,11 @@ interface RegularMetricData {
   query_threshold: number;
 }
 
+interface UserProjectData {
+  id: string; 
+  name: string; 
+}
+
 interface ProjectMetrics {
   totalErrors: number;
   averageQueryTime: number;
@@ -72,6 +77,18 @@ interface QueryResponse<T> {
     success: boolean; 
     message: string; 
     metrics: T[] ;
+  }
+}
+
+interface QueryResponseProjects<T> {
+  loading: boolean;
+  error?: any;
+  refetch: () => void;
+  data?: {
+    code: number; 
+    success: boolean; 
+    message: string; 
+    projects: T[] ;
   }
 }
 
@@ -162,6 +179,21 @@ export const CREATE_ACCOUNT = gql`
       code
       success
       message
+    }
+  }
+`; 
+
+
+export const GET_USER_PROJECTS = gql`
+  query GetUserProjects {
+    getUserProjects {
+      code
+      success
+      message
+      projects {
+        id
+        name
+      }
     }
   }
 `; 
@@ -274,6 +306,25 @@ export const getProjectRegularQueries = (projectId: string): QueryResponse<Regul
   };
 };
 
+export const getUserProjects = (): QueryResponseProjects<UserProjectData> => {
+  const { data, loading, error, refetch } = useQuery(GET_USER_PROJECTS, {
+    context: {
+      headers: {
+        Authorization: token ? `Bearer ${token}`: '', 
+      },
+    },
+  });
+  console.log('User project data from projectData file begins here:', data); 
+  console.log('User project error from projectData file begins here:', error); 
+  return {
+    data: data?.getUserProjects || [],
+    loading,
+    error,
+    refetch
+  };
+};
+
+
 // Utility functions
 const calculateAverageQueryTime = (queries: (SlowMetricData | RegularMetricData)[]): number => {
   if (!queries.length) return 0;
@@ -320,6 +371,12 @@ interface ProjectMetricsResponse {
     message: string | undefined; 
     metrics: RegularMetricData[];
   }
+  projects: {
+    code: number | undefined; 
+    success: boolean | undefined; 
+    message: string | undefined; 
+    projects: UserProjectData[];
+  }
 }
 
 
@@ -341,6 +398,12 @@ export const getProjectMetrics = (projectId: string): ProjectMetricsResponse => 
     error: regularQueriesError, 
     data: regularQueries, 
   } = getProjectRegularQueries(projectId);
+
+  const { 
+    loading: projectsLoading, 
+    error: projectsError, 
+    data: projects, 
+  } = getUserProjects();
 
   const calculateMetrics = (): ProjectMetrics | null => {
     if (!errors?.metrics || !slowQueries?.metrics || !regularQueries?.metrics) return null;
@@ -367,8 +430,8 @@ export const getProjectMetrics = (projectId: string): ProjectMetricsResponse => 
 
   return {
     metrics: calculateMetrics(),
-    loading: errorsLoading || slowQueriesLoading || regularQueriesLoading,
-    error: errorsError || slowQueriesError || regularQueriesError,
+    loading: errorsLoading || slowQueriesLoading || regularQueriesLoading || projectsLoading,
+    error: errorsError || slowQueriesError || regularQueriesError || projectsError,
     errors: {
       code: errors?.code,
       success: errors?.success,
@@ -386,6 +449,12 @@ export const getProjectMetrics = (projectId: string): ProjectMetricsResponse => 
       success: regularQueries?.success,
       message: regularQueries?.message, 
       metrics: regularQueries?.metrics || [],
+    }, 
+    projects: {
+      code: projects?.code,
+      success: projects?.success,
+      message: projects?.message, 
+      projects: projects?.projects || [],
     }
   };
 };

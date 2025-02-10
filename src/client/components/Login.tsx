@@ -49,7 +49,7 @@ function Login() {
       setLoginError(null); 
       // console.log('Local storage begins here:', localStorage); 
       // console.log('This is the user\'s token:', token); 
-      navigate('/dashboard')
+      navigate('/dashboard');
       reset();
 
     } catch (error) {

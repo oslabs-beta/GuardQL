@@ -272,3 +272,8 @@ body {
 .social-links a.github:hover {
   color: #171515;
 }
+
+.dashboard-image {
+  border-radius: 0.6rem;
+  border: 2.5px solid #de54c7;
+}
