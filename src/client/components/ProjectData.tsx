@@ -156,6 +156,16 @@ export const LOGIN = gql`
   }
 `; 
 
+export const CREATE_ACCOUNT = gql`
+  mutation CreateAccount($input: CreateUserInput!) {
+    createUser(input: $input) {
+      code
+      success
+      message
+    }
+  }
+`; 
+
 //! original useQuery functions begin here ---------------------------------------------------------> 
 // Individual data fetching hooks
 // export const getProjectErrors = (projectId: string): QueryResponse<ErrorData> => {

@@ -5,7 +5,7 @@ import { Link, useNavigate} from 'react-router-dom';
 import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import Login from './Login';
-import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
+import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 import Footer from './Footer'
 /** Material UI Components */
 import {
@@ -33,11 +33,11 @@ function SignUp() {
   const navigate = useNavigate();
   const{ register, handleSubmit, formState: { errors }, reset} = useForm<FormField>();
   /**
-   * 
+   *
    * "register" is a function provided by the React Hook Form library. Its purpose is to "register" or connect an input field to the form, so that React Hook Form can track its value, handle validation, and manage its state.
-   * 
-   * 
-   *  */ 
+   *
+   *
+   *  */
 
   const onSubmit: SubmitHandler<FormField> = (data)=>{
     console.log(data);

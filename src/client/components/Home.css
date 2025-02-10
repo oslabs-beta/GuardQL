@@ -71,7 +71,7 @@
 .feature-text {
   margin-top: 10px;
   font-size: 16px;
-} 
+}
 
 .feature-text-2 {
   margin-top: 10px;
@@ -130,6 +130,10 @@ body {
   color: white;
 }
 
+.dashboard-btn:hover {
+  background: #690f5a;
+}
+
 .hero {
   height: 100vh;
   display: flex;
@@ -145,8 +149,17 @@ body {
   background: #e623c6;
   padding: 8px 16px;
   border-radius: 5px;
+  font-size: 16px;
+  border: 1px solid rgb(68, 68, 68);
+}
+
+.get-started-btn-a {
   text-decoration: none;
   color: white;
+}
+
+.get-started-btn:hover {
+  background: #222;
 }
 
 .section {
@@ -156,7 +169,7 @@ body {
 }
 
 .about-p {
-  padding: 0rem 10rem; 
+  padding: 0rem 10rem;
 }
 
 .features-grid {
@@ -182,15 +195,15 @@ body {
 .feature-text {
   margin-top: 10px;
   font-size: 100px;
-} 
+}
 
 .feature-text-2 {
   margin-top: 10px;
   font-size: 100px;
-} 
+}
 
 .howList {
-  list-style-type: none; 
+  list-style-type: none;
 }
 
 .team-section {
@@ -207,35 +220,35 @@ body {
 
 .team-card {
   background: #222;
-  border: 4px solid #de54c7; 
+  border: 4px solid #de54c7;
   padding: 20px;
   border-radius: 20px;
-  width: 200px;
+  width: 250px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .profile-pic {
-  width: 150px; /* Set a fixed width */
-  height: 150px; /* Match width for a circle */
-  object-fit: cover; /* Prevents distortion */
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
   border-radius: 50%;
-  border: 2px dotted #de54c7; 
+  border: 2px dotted #de54c7;
 }
 
 .profile-h3 {
-  color: white; 
+  color: white;
   padding: 0.5rem 0.5rem;
 }
 
 .profile-p {
-  color: white; 
+  color: white;
   font-size: 12px;
   text-align: center;
 }
 
 .profile-title {
-  color:  #de54c7; 
+  color:  #de54c7;
   font-size: 16px;
   padding: 0.3rem 0rem;
 }

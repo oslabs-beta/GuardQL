@@ -22,8 +22,8 @@
 // import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 // import Divider from '@mui/material/Divider';
 // import './Home.css';
-// import Footer from './Footer'; 
-// import * as styles from '../styles/login-and-signup.module.css'; 
+// import Footer from './Footer';
+// import * as styles from '../styles/login-and-signup.module.css';
 // import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
 
 // const drawerWidth = 240;
@@ -50,7 +50,7 @@
 //           </Typography>
 //         </Toolbar>
 //       </AppBar>
-      
+
 //       <Drawer className="drawer" variant="permanent" anchor="left">
 //         <div className="drawer-header">
 //           <img src={logo} alt="GuardQL Logo" className="drawer-logo" />
@@ -67,7 +67,7 @@
 //           ))}
 //         </List>
 //       </Drawer>
-      
+
 //       <Box component="main" className="main-content">
 //         <Toolbar />
 //         <Box className="hero-section">
@@ -85,7 +85,7 @@
 //             Get Started
 //           </Button>
 //         </Box>
-        
+
 //         <Box className="features-section">
 //           <Typography variant="h4" className="section-title">Why Use GuardQL?</Typography>
           // <Box className="features-grid">
@@ -106,7 +106,7 @@
 //       </Box>
 //     </Box>
 //     <Footer />
-//     </div> 
+//     </div>
 //   );
 // }
 
@@ -114,11 +114,11 @@
 import React from "react";
 import { Link, animateScroll as scroll } from "react-scroll";
 import "./Home.css";
-import navLogo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px nav-logo.png';
-import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
+import navLogo from '../assets/GuardQL_Text_Only-white.png';
+import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 import Cindy from '../assets/profilepic-cindy.jpeg';
-import Footer from './Footer'; 
-import '../styles/footer.module.css'; 
+import Footer from './Footer';
+import '../styles/footer.module.css';
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import BugReportIcon from '@mui/icons-material/BugReport';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
@@ -132,7 +132,7 @@ const teamMembers = [
   { name: "Nico Henry", image: "image3.jpg", linkedin: "", github: "", bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
   { name: "Mike Thurstlic", image: "image4.jpg", linkedin: "", github: "", bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
   { name: "Cindy Rodríguez-Llivipuma", image: Cindy, linkedin: "https://www.linkedin.com/in/cindy-rod-lliv", github: "https://github.com/csrl23", bio: "I'm a full-stack engineer passionate about building tools that empower engineers to work more efficiently. I enjoy solving complex problems, optimizing workflows, and creating intuitive solutions that enhance the development experience." }
-]; 
+];
 
 
 const App: React.FC = () => {
@@ -141,7 +141,7 @@ const App: React.FC = () => {
       {/* Navbar */}
       <nav className="navbar">
         <h1 className="logo" onClick={() => scroll.scrollToTop()}>
-          <img src={navLogo} alt="GuardQL Logo" className="nav-logo" style={{height:40, width:200}} />
+          <img src={navLogo} alt="GuardQL Logo" className="nav-logo" style={{height:50, width:200}} />
         </h1>
         <ul>
           <li><Link to="about" smooth={true} duration={500}>About</Link></li>
@@ -160,14 +160,14 @@ const App: React.FC = () => {
         <p>GuardQL helps developers track errors and performance metrics effortlessly</p>
         <br></br>
         <br></br>
-        <button className="get-started-btn"><a href="/#/login" className="get-started-btn">Get Started</a></button>
+        <button className="get-started-btn"><a className="get-started-btn-a" href="/#/login" >Get Started</a></button>
       </section>
 
       {/* About Section */}
       <section id="about" className="section">
         <h2>About GuardQL</h2>
         <br></br>
-        <p className="about-p">GuardQL is a powerful debugging and performance monitoring tool designed to help developers optimize their GraphQL queries. 
+        <p className="about-p">GuardQL is a powerful debugging and performance monitoring tool designed to help developers optimize their GraphQL queries.
         With real-time insights, error tracking, and slow query analysis, GuardQL empowers developers to maintain high-performing applications.</p>
       </section>
 
@@ -186,7 +186,7 @@ const App: React.FC = () => {
             <h3 className = "profile-h3">Error Tracking</h3>
             <p className = "profile-title">Identify and analyze GraphQL errors.</p>
           </div>
-          <div className="team-card"> 
+          <div className="team-card">
             <MonitorHeartIcon className="feature-icon" />
             <h3 className = "profile-h3">Error Tracking</h3>
             <p className = "profile-title">Identify and analyze GraphQL errors.</p>
@@ -244,4 +244,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
