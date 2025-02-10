@@ -18,7 +18,7 @@ export default {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
   },
-  watch: true, // Enable file watching for changes
+  // watch: true, // Enable file watching for changes
   module: {
     rules: [
       {
