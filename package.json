@@ -10,7 +10,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:plugin": "node --loader ts-node/esm src/test-env/test-server.mts",
     "dev": "concurrently \"npm run start:server\" \"npm run start:client\"",
-    "build": "webpack --mode production"
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "webpack --mode production",
+    "build:backend": "tsc --project ./src/server/tsconfig.json"
   },
   "keywords": [],
   "author": "",

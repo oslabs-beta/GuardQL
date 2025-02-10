@@ -1,11 +1,11 @@
 {
-    "extends": "../../tsconfig.json", 
-    "compilerOptions": {
-      "target": "ES2020",                                  
-      "module": "NodeNext",     
-      "moduleResolution": "NodeNext", 
-      "composite": true                        
-    }, 
-    "include" : ["./**/*.ts", "./**/*.mts"]
-  }
-  
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "composite": true,
+    "outDir": "../../dist" // Outputs the compiled server files to dist/server
+  },
+  "include": ["./**/*.ts", "./**/*.mts", "./**/*.graphql"]
+}

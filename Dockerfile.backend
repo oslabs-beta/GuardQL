@@ -1,0 +1,17 @@
+# This is the BACKEND Docker file
+FROM node:18
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+
+# Copy backend source files
+COPY ./src/server ./src/server
+COPY ./tsconfig.json ./tsconfig.json
+RUN npm run build:backend
+
+# Copy .graphql files to their respective folder in dist/server
+COPY ./src/server/OAuth/*.graphql ./dist/server/OAuth/
+COPY ./src/server/Metrics/*.graphql ./dist/server/Metrics/
+
+EXPOSE 4000
+CMD ["node", "dist/server/server.mjs"]

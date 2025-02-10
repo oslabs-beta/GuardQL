@@ -1,0 +1,22 @@
+# This is the FRONTEND Docker file
+# Step 1: Build the app
+FROM node:18 AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+# Copy frontend source files
+COPY ./src/client ./src/client
+COPY ./webpack.config.js ./webpack.config.js
+COPY ./tsconfig.json ./tsconfig.json
+
+# Copy the public folder (for index.html and style.css)
+COPY ./src/public ./src/public
+
+# Build the frontend assets
+RUN npm run build:frontend
+
+# Step 2: Serve the app
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

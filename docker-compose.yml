@@ -2,7 +2,7 @@ services:
   frontend:
     build:
       context: . # Root directory
-      dockerfile: ./src/client/Dockerfile
+      dockerfile: Dockerfile.frontend
     image: guardql-frontend:latest
     ports:
       - "8081:80"
@@ -12,7 +12,7 @@ services:
   backend:
     build:
       context: . # Root directory
-      dockerfile: ./src/server/Dockerfile
+      dockerfile: Dockerfile.backend
     image: guardql-backend:latest
     ports:
       - "4000:4000"
