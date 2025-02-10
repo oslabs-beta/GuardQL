@@ -36,7 +36,7 @@ const drawerWidth = 240;
 
 
 
-export default function Performance() {
+export default function Account() {
     // console.log("Performance component is rendering!");
 
      const navigate = useNavigate();

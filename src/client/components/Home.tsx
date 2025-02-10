@@ -117,6 +117,7 @@ import "./Home.css";
 import navLogo from '../assets/GuardQL_Text_Only-white.png';
 import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 import Cindy from '../assets/profilepic-cindy.jpeg';
+import dashboard from '../assets/dashboard.png';
 import Footer from './Footer';
 import '../styles/footer.module.css';
 import { FaLinkedin, FaGithub } from "react-icons/fa";
@@ -166,6 +167,9 @@ const App: React.FC = () => {
       {/* About Section */}
       <section id="about" className="section">
         <h2>About GuardQL</h2>
+        <br></br>
+        <img src={dashboard} alt="Dashboard Image" className="dashboard-image" style={{height:550, width:800}} />
+        <br></br>
         <br></br>
         <p className="about-p">GuardQL is a powerful debugging and performance monitoring tool designed to help developers optimize their GraphQL queries.
         With real-time insights, error tracking, and slow query analysis, GuardQL empowers developers to maintain high-performing applications.</p>

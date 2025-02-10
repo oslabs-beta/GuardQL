@@ -1,5 +1,6 @@
 import { ApolloClient, InMemoryCache, ApolloLink, HttpLink } from '@apollo/client';
 import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 export interface JwtPayload {
   exp: number; 
@@ -22,10 +23,13 @@ const authLink = new ApolloLink((operation, forward) => {
       try {
         const decodedToken = jwtDecode<JwtPayload>(jwt); 
         const currentTime = Math.floor(Date.now() / 1000); 
+
+        // const navigate = useNavigate();
+
         if (decodedToken.exp < currentTime) {
           localStorage.removeItem('jwt'); 
-
           window.location.href = '/login'; 
+          // navigate('/login');
         }
       } catch (error) {
         console.error('Token validation error:', error); 
