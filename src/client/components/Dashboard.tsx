@@ -28,12 +28,13 @@ import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
 interface NavItem {
   text: string;
   icon: React.ReactNode;
+  link: string;
 }
 
 const drawerWidth = 240;
 
 export default function Dashboard() {
-  const [projectId] = useState('1');
+  const [projectId] = useState('12');
 
   const {
     metrics,
@@ -45,11 +46,11 @@ export default function Dashboard() {
   } = getProjectMetrics(projectId);
 
   const navItems: NavItem[] = [
-    { text: 'Home', icon: <HomeIcon sx={{ color: '#FFFFFF' }} /> },
-    { text: 'Dashboard', icon: <DashboardIcon sx={{ color: '#FFFFFF' }} /> },
-    { text: 'Performance', icon: <BarChartIcon sx={{ color: '#FFFFFF' }} /> },
-    { text: 'About', icon: <InfoIcon sx={{ color: '#FFFFFF' }} /> },
-    { text: 'Account', icon: <AccountCircleIcon sx={{ color: '#FFFFFF' }} /> },
+    { text: 'Home', icon: <HomeIcon sx={{ color: '#FFFFFF' }} />, link: '/#/home' },
+    { text: 'Dashboard', icon: <DashboardIcon sx={{ color: '#FFFFFF' }} />, link: '/dashboard' },
+    { text: 'Performance', icon: <BarChartIcon sx={{ color: '#FFFFFF' }} />, link: '/performance' },
+    { text: 'About', icon: <InfoIcon sx={{ color: '#FFFFFF' }} />, link: '/about'  },
+    { text: 'Account', icon: <AccountCircleIcon sx={{ color: '#FFFFFF' }} />, link: '/#/account' },
   ];
 
   //? working functions begin here ---------------------------------->
@@ -330,11 +331,12 @@ export default function Dashboard() {
         </div>
         <Divider />
         <List>
-          {navItems.map(({ text, icon }) => (
+          {navItems.map(({ text, icon, link }) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={text} />
+                <a href={link}></a>
               </ListItemButton>
             </ListItem>
           ))}
