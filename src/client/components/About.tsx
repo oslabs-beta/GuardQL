@@ -19,7 +19,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Divider from '@mui/material/Divider';
 import './About.css';
-import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
+import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 
 const drawerWidth = 240;
 
@@ -44,8 +44,8 @@ export default function About() {
           </Typography>
         </Toolbar>
       </AppBar>
-      
-      <Drawer 
+
+      <Drawer
         className="drawer"
         variant="permanent"
         anchor="left"
@@ -73,7 +73,7 @@ export default function About() {
           ))}
         </List>
       </Drawer>
-      
+
       <Box component="main" className="main-content">
         <Toolbar />
         <Box className="content-container">
@@ -82,11 +82,11 @@ export default function About() {
               About GuardQL
             </Typography>
             <Typography className="section-text">
-              GuardQL is a powerful debugging and performance monitoring tool designed to help developers optimize their GraphQL queries. 
+              GuardQL is a powerful debugging and performance monitoring tool designed to help developers optimize their GraphQL queries.
               With real-time insights, error tracking, and slow query analysis, GuardQL empowers developers to maintain high-performing applications.
             </Typography>
           </Box>
-          
+
           <Box className="features-section">
             <Typography variant="h4" className="section-title">
               What GuardQL Offers
@@ -98,7 +98,7 @@ export default function About() {
               <li>🛠 Developer-Friendly - Simple UI, easy debugging.</li>
             </ul>
           </Box>
-          
+
           <Box className="how-it-works section">
             <Typography variant="h4" className="section-title">
               How It Works
@@ -112,7 +112,7 @@ export default function About() {
               </Typography>
             </Box>
           </Box>
-          
+
           <Box className="team-section section">
             <Typography variant="h4" className="section-title">
               Meet the Team

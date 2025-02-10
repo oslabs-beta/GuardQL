@@ -3,10 +3,10 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
+import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 import Footer from './Footer';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { CREATE_ACCOUNT } from './ProjectData'; 
+import { CREATE_ACCOUNT } from './ProjectData';
 
 
 const theme = createTheme({
@@ -37,8 +37,8 @@ const SignUp = () => {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
   const [nameError, setNameError] = useState(false);
   const [nameErrorMessage, setNameErrorMessage] = useState('');
-  const [ createAccountSuccess, setCreateAccountSuccess ] = useState<string | null>(null); 
-  const [ createAccountError, setCreateAccountError ] = useState<string | null>(null); 
+  const [ createAccountSuccess, setCreateAccountSuccess ] = useState<string | null>(null);
+  const [ createAccountError, setCreateAccountError ] = useState<string | null>(null);
   const [signup, { loading, error, data }] = useMutation(CREATE_ACCOUNT);
 
 
@@ -81,7 +81,7 @@ const SignUp = () => {
       setNameErrorMessage('');
     }
 
-    if (!isValid) return; 
+    if (!isValid) return;
 
 
     try {
@@ -95,11 +95,11 @@ const SignUp = () => {
         },
       });
       // console.log('Registration successful:', data);
-      setCreateAccountSuccess('Account created successfully!'); 
+      setCreateAccountSuccess('Account created successfully!');
       // navigate('/login')
     } catch (error) {
       // console.error('Error during registration:', error);
-      setCreateAccountError('Account creation was unsuccessful'); 
+      setCreateAccountError('Account creation was unsuccessful');
     }
   };
 

@@ -5,7 +5,7 @@ import { Button, TextField } from '@mui/material'
 import Typography from '@mui/material/Typography';
 import SignUp from './Sign-Up'
 import * as styles from '../styles/login-and-signup.module.css'
-import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png'
+import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png'
 import Footer from './Footer'
 
 /** This is after the user hits the submit button to send the reset password link to their inbox */
@@ -16,7 +16,7 @@ type FormField = {
 }
 
 function ConfirmationEmail() {
-  
+
 
   return (
     <div className={styles.background}>
@@ -37,8 +37,8 @@ function ConfirmationEmail() {
                 Log In
               </Link>
             </p>
-            
-          
+
+
       </div>
   </div>
   <Footer />

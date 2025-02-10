@@ -22,12 +22,12 @@ import Divider from '@mui/material/Divider';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import './Dashboard.css';
-import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
+import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 import { Link, useNavigate } from 'react-router-dom';
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import { CREATE_PROJECT } from './ProjectData'; 
-import { useMutation } from '@apollo/client'; 
+import { CREATE_PROJECT } from './ProjectData';
+import { useMutation } from '@apollo/client';
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from "@mui/material";
 // import { SelectChangeEvent } from '@mui/material';
 // import { useQuery } from '@apollo/client';
@@ -62,7 +62,7 @@ export default function Dashboard() {
 
   const [projectId] = useState('12');
 
-  const [createProject, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_PROJECT); 
+  const [createProject, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_PROJECT);
 
   const {
     metrics,
@@ -74,14 +74,14 @@ export default function Dashboard() {
     projects
   } = getProjectMetrics(selectedProjectId);
 
-  
+
   const NoProjectSelected = () => (
-    <Box 
-      display="flex" 
-      justifyContent="center" 
-      alignItems="center" 
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
       p={4}
-      sx={{ 
+      sx={{
         border: '1px dashed #ccc',
         borderRadius: '4px',
         backgroundColor: '#f5f5f5'
@@ -109,28 +109,28 @@ export default function Dashboard() {
   ];
 
 
-  const token = localStorage.getItem('jwt'); 
+  const token = localStorage.getItem('jwt');
 
   const handleCreateProject = async () => {
-    if (!newProjectName.trim()) return; 
-    // console.log('This is the new project name:', newProjectName); 
+    if (!newProjectName.trim()) return;
+    // console.log('This is the new project name:', newProjectName);
     try {
-      const { data } = await createProject({ 
-        variables: { 
+      const { data } = await createProject({
+        variables: {
           input: {
-            name: newProjectName, 
+            name: newProjectName,
           }
-        }, 
+        },
         context: {
           headers: {
-            Authorization: token ? `Bearer ${token}`: '', 
+            Authorization: token ? `Bearer ${token}`: '',
           },
         },
-      }); 
-      // console.log('data from handleCreateProject function begins here:', data); 
+      });
+      // console.log('data from handleCreateProject function begins here:', data);
 
-      setDialogOpen(false); 
-      setNewProjectName(""); 
+      setDialogOpen(false);
+      setNewProjectName("");
 
     } catch (error) {
       console.error("Error creating project:", error);
@@ -142,11 +142,11 @@ export default function Dashboard() {
     if (error) return <Alert severity="error">Error loading projects</Alert>;
     if (!projects?.projects.length) return <Typography>No projects retrieved</Typography>;
     if (projects?.projects) {
-      // const projectsArray = projects?.projects; 
-      // console.log('The projects data begins here:', projectsArray); 
-      setProjects(projects?.projects); 
+      // const projectsArray = projects?.projects;
+      // console.log('The projects data begins here:', projectsArray);
+      setProjects(projects?.projects);
     }
-  }; 
+  };
 
   const renderMetrics = () => {
     if (!selectedProjectId) {
@@ -286,7 +286,7 @@ export default function Dashboard() {
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">Error loading logs</Alert>;
     if (!errors?.metrics.length) return <Typography>No recent errors</Typography>;
-    // console.log('Error message from data begins here:', errors.metrics[0].error_message); 
+    // console.log('Error message from data begins here:', errors.metrics[0].error_message);
     return (
       <Box className="logs-container">
       <Box className="scrollable-container">
@@ -329,7 +329,46 @@ export default function Dashboard() {
     );
   };
 
-  //! original renderLogs begins here --------------------------------------------->
+  //! original code begins here --------------------------------------------->
+
+  // const renderMetrics = () => {
+  //   if (loading) {
+  //     return (
+  //       <Box display="flex" justifyContent="center" p={2}>
+  //         <CircularProgress />
+  //       </Box>
+  //     );
+  //   }
+
+  //   if (error) {
+  //     return (
+  //       <Alert severity="error">
+  //         Error loading metrics: {error.message}
+  //       </Alert>
+  //     );
+  //   }
+
+  //   if (!metrics) return null;
+
+  //   return (
+  //     <Box className="metrics-container">
+  //       <Box className="metric-box">
+  //         <Typography className="metric-label">Total Errors</Typography>
+  //         <Typography className="metric-value">{metrics.totalErrors}</Typography>
+  //       </Box>
+  //       <Box className="metric-box">
+  //         <Typography className="metric-label">Average Query Time</Typography>
+  //         <Typography className="metric-value">{metrics.averageQueryTime}ms</Typography>
+  //       </Box>
+  //       <Box className="metric-box">
+  //         <Typography className="metric-label">Slowest Query</Typography>
+  //         <Typography className="metric-value">{metrics.slowestQuery}ms</Typography>
+  //       </Box>
+  //     </Box>
+  //   );
+  // };
+
+
   // const renderLogs = () => {
   //   if (loading) return <CircularProgress />;
   //   if (error) return <Alert severity="error">Error loading logs</Alert>;
@@ -383,8 +422,8 @@ export default function Dashboard() {
         anchor="left"
       >
         <div className="drawer-header">
-          <img 
-            src={logo} 
+          <img
+            src={logo}
             alt="GuardQL Logo"
             className="drawer-logo"
           />
@@ -430,8 +469,8 @@ export default function Dashboard() {
             {project.name}
           </MenuItem>
         ))}
-        <MenuItem className="dropdown-item-create" 
-        // value="create-new" 
+        <MenuItem className="dropdown-item-create"
+        // value="create-new"
         onClick={() => setDialogOpen(true)}>
          + Create New Project
         </MenuItem>
