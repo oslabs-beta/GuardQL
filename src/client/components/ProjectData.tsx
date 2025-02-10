@@ -198,6 +198,16 @@ export const GET_USER_PROJECTS = gql`
   }
 `; 
 
+export const CREATE_PROJECT = gql`
+  mutation CreateProject($input: CreateProjectInput!) {
+    createProject(input: $input) {
+      code
+      success
+      message
+    }
+  }
+`; 
+
 //! original useQuery functions begin here ---------------------------------------------------------> 
 // Individual data fetching hooks
 // export const getProjectErrors = (projectId: string): QueryResponse<ErrorData> => {
@@ -314,8 +324,8 @@ export const getUserProjects = (): QueryResponseProjects<UserProjectData> => {
       },
     },
   });
-  console.log('User project data from projectData file begins here:', data); 
-  console.log('User project error from projectData file begins here:', error); 
+  // console.log('User project data from projectData file begins here:', data); 
+  // console.log('User project error from projectData file begins here:', error); 
   return {
     data: data?.getUserProjects || [],
     loading,

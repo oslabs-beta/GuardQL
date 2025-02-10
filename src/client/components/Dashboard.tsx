@@ -12,11 +12,11 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import BugReportIcon from '@mui/icons-material/BugReport';
-import QueryStatsIcon from '@mui/icons-material/QueryStats';
+// import BugReportIcon from '@mui/icons-material/BugReport';
+// import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import HomeIcon from '@mui/icons-material/Home';
-import InfoIcon from '@mui/icons-material/Info';
+// import InfoIcon from '@mui/icons-material/Info';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Divider from '@mui/material/Divider';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -26,8 +26,11 @@ import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png';
 import { Link, useNavigate } from 'react-router-dom';
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import { SelectChangeEvent } from '@mui/material';
-import { useQuery } from '@apollo/client';
+import { CREATE_PROJECT } from './ProjectData'; 
+import { useMutation } from '@apollo/client'; 
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from "@mui/material";
+// import { SelectChangeEvent } from '@mui/material';
+// import { useQuery } from '@apollo/client';
 
 interface NavItem {
   text: string;
@@ -48,6 +51,8 @@ export default function Dashboard() {
   const [loadingProjects, setLoadingProjects] = useState(true);
   const [errorProjects, setErrorProjects] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [newProjectName, setNewProjectName] = useState("");
 
   const navigate = useNavigate();
 
@@ -57,6 +62,7 @@ export default function Dashboard() {
 
   const [projectId] = useState('12');
 
+  const [createProject, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_PROJECT); 
 
   const {
     metrics,
@@ -66,8 +72,33 @@ export default function Dashboard() {
     slowQueries,
     regularQueries,
     projects
-  } = getProjectMetrics(projectId);
+  } = getProjectMetrics(selectedProjectId);
+
   
+  const NoProjectSelected = () => (
+    <Box 
+      display="flex" 
+      justifyContent="center" 
+      alignItems="center" 
+      p={4}
+      sx={{ 
+        border: '1px dashed #ccc',
+        borderRadius: '4px',
+        backgroundColor: '#f5f5f5'
+      }}
+    >
+      <Typography variant="body1" color="text.secondary">
+        Please select a project to view metric data
+      </Typography>
+    </Box>
+  );
+
+
+  // useEffect(() => {
+  //   console.log("Selected Project ID:", selectedProjectId);
+  //   console.log("Returned array of project is her:", projectsData);
+  // }, [selectedProjectId]);
+
 
   const navItems: NavItem[] = [
     { text: 'Home', icon: <HomeIcon sx={{ color: '#FFFFFF' }} />, link: '/home' },
@@ -77,25 +108,54 @@ export default function Dashboard() {
     { text: 'Account', icon: <AccountCircleIcon sx={{ color: '#FFFFFF' }} />, link: '/account' },
   ];
 
+
+  const token = localStorage.getItem('jwt'); 
+
+  const handleCreateProject = async () => {
+    if (!newProjectName.trim()) return; 
+    // console.log('This is the new project name:', newProjectName); 
+    try {
+      const { data } = await createProject({ 
+        variables: { 
+          input: {
+            name: newProjectName, 
+          }
+        }, 
+        context: {
+          headers: {
+            Authorization: token ? `Bearer ${token}`: '', 
+          },
+        },
+      }); 
+      // console.log('data from handleCreateProject function begins here:', data); 
+
+      setDialogOpen(false); 
+      setNewProjectName(""); 
+
+    } catch (error) {
+      console.error("Error creating project:", error);
+    }
+  };
+
   const renderProjects = () => {
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">Error loading projects</Alert>;
     if (!projects?.projects.length) return <Typography>No projects retrieved</Typography>;
     if (projects?.projects) {
-      const projectsArray = projects?.projects; 
-      console.log('The projects data begins here:', projectsArray); 
-      setProjects(projectsArray); 
+      // const projectsArray = projects?.projects; 
+      // console.log('The projects data begins here:', projectsArray); 
+      setProjects(projects?.projects); 
     }
   }; 
 
   const renderMetrics = () => {
-    // if (!selectedProjectId) {
-    //   return (
-    //     <Box display="flex" justifyContent="center" p={2}>
-    //       <NoProjectSelected />
-    //     </Box>
-    //   )
-    // }
+    if (!selectedProjectId) {
+      return (
+        <Box display="flex" justifyContent="center" p={2}>
+          <NoProjectSelected />
+        </Box>
+      )
+    }
 
     if (loading) {
       return (
@@ -134,14 +194,13 @@ export default function Dashboard() {
   };
 
   const renderRegularQueries = () => {
-    // if (!selectedProjectId) {
-    //   return (
-    //     <Box display="flex" justifyContent="center" p={2}>
-    //       <NoProjectSelected />
-    //     </Box>
-    //   )
-    // }
-
+    if (!selectedProjectId) {
+      return (
+        <Box display="flex" justifyContent="center" p={2}>
+          <NoProjectSelected />
+        </Box>
+      )
+    }
 
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">Error loading regular queries</Alert>;
@@ -150,7 +209,6 @@ export default function Dashboard() {
     return (
       <Box className="slow-queries-container">
       <Box className="scrollable-container">
-
         {regularQueries.metrics.map((query) => (
           <Box key={query.id} className="query-item">
             <Typography className="query-operation">
@@ -176,15 +234,13 @@ export default function Dashboard() {
   };
 
   const renderSlowQueries = () => {
-    // if (!selectedProjectId) {
-    //   return (
-    //     <Box display="flex" justifyContent="center" p={2}>
-    //       <NoProjectSelected />
-    //     </Box>
-    //   )
-    // }
-
-
+    if (!selectedProjectId) {
+      return (
+        <Box display="flex" justifyContent="center" p={2}>
+          <NoProjectSelected />
+        </Box>
+      )
+    }
 
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">Error loading slow queries</Alert>;
@@ -219,15 +275,13 @@ export default function Dashboard() {
   };
 
   const renderLogs = () => {
-    // if (!selectedProjectId) {
-    //   return (
-    //     <Box display="flex" justifyContent="center" p={2}>
-    //       <NoProjectSelected />
-    //     </Box>
-    //   )
-    // }
-
-
+    if (!selectedProjectId) {
+      return (
+        <Box display="flex" justifyContent="center" p={2}>
+          <NoProjectSelected />
+        </Box>
+      )
+    }
 
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">Error loading logs</Alert>;
@@ -339,9 +393,7 @@ export default function Dashboard() {
         <List>
           {navItems.map(({ text, icon, link }) => (
             <ListItem key={text} disablePadding>
-              {/* console.log("Navigating to:", {link}); */}
               <ListItemButton component={Link} to={link}>
-              {/* <ListItemButton onClick={() => handleNavigation(`${link}`)}> */}
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -358,26 +410,63 @@ export default function Dashboard() {
         </Typography>
         <Select
         //  defaultValue=""
-         value={selectedProjectId ?? ''}
+         value={selectedProjectId}
          onChange={(e) => setSelectedProjectId(e.target.value)}
+        // onChange={(e) => {
+        //   if (e.target.value !== 'create-new') {
+        //     setSelectedProjectId(e.target.value);
+        //   }
+        // }}
          onOpen={renderProjects}
          onClose={() => setOpen(false)}
          displayEmpty
          className="dropdown"
         >
         <MenuItem className="dropdown-item" value="" disabled>
-         Projects
+         Select a Project
         </MenuItem>
         {projectsData.map((project) => (
-          <MenuItem className="dropdown-item" key={project.id} value={project.name}>
+          <MenuItem className="dropdown-item" key={project.id} value={project.id}>
             {project.name}
           </MenuItem>
         ))}
-        <MenuItem className="dropdown-item-create">
+        <MenuItem className="dropdown-item-create" 
+        // value="create-new" 
+        onClick={() => setDialogOpen(true)}>
          + Create New Project
         </MenuItem>
         </Select>
         </div>
+
+
+
+
+
+        <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <DialogTitle>Create New Project</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Project Name"
+            fullWidth
+            value={newProjectName}
+            onChange={(e) => setNewProjectName(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={handleCreateProject} color="primary" variant="contained">
+            Create Project
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+
+
+
 
         <Typography variant="h5" className="section-title">
           Key Metrics
