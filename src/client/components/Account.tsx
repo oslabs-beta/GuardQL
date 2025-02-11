@@ -51,43 +51,43 @@
 //     { text: 'Account', icon: <AccountCircleIcon sx={{ color: '#FFFFFF' }} />, link: '/account' },
 //   ];
 
-    return (
-        <Box className="root">
-        <CssBaseline />
-        <AppBar className="app-bar" position="fixed">
-          <Toolbar>
-            <Typography className="header-title" variant="h6">
-              GuardQL Dashboard
-            </Typography>
-          </Toolbar>
-        </AppBar>
+    // return (
+    //     <Box className="root">
+    //     <CssBaseline />
+    //     <AppBar className="app-bar" position="fixed">
+    //       <Toolbar>
+    //         <Typography className="header-title" variant="h6">
+    //           GuardQL Dashboard
+    //         </Typography>
+    //       </Toolbar>
+    //     </AppBar>
 
-        <Drawer
-          className="drawer"
-          variant="permanent"
-          anchor="left"
-        >
-          <div className="drawer-header">
-            <img
-              src={logo}
-              alt="GuardQL Logo"
-              className="drawer-logo"
-            />
-          </div>
-          <Divider />
-          <List>
-            {navItems.map(({ text, icon, link }) => (
-              <ListItem key={text} disablePadding>
-                {/* console.log("Navigating to:", {link}); */}
-                <ListItemButton component={Link} to={link}>
-                {/* <ListItemButton onClick={() => handleNavigation(`${link}`)}> */}
-                  <ListItemIcon>{icon}</ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
-        </Box>
-    );
-};
+    //     <Drawer
+    //       className="drawer"
+    //       variant="permanent"
+    //       anchor="left"
+    //     >
+    //       <div className="drawer-header">
+    //         <img
+    //           src={logo}
+    //           alt="GuardQL Logo"
+    //           className="drawer-logo"
+    //         />
+    //       </div>
+    //       <Divider />
+    //       <List>
+    //         {navItems.map(({ text, icon, link }) => (
+    //           <ListItem key={text} disablePadding>
+    //             {/* console.log("Navigating to:", {link}); */}
+    //             <ListItemButton component={Link} to={link}>
+    //             {/* <ListItemButton onClick={() => handleNavigation(`${link}`)}> */}
+    //               <ListItemIcon>{icon}</ListItemIcon>
+    //               <ListItemText primary={text} />
+    //             </ListItemButton>
+    //           </ListItem>
+    //         ))}
+    //       </List>
+    //     </Drawer>
+    //     </Box>
+    // );
+// };

@@ -1,6 +1,6 @@
 # This is the BACKEND Docker file
 # Step 1: Build the app
-FROM node:18
+FROM node:20
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
