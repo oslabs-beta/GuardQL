@@ -17,86 +17,72 @@ type FormField = {
 }
 
 function ForgotPassword(){
-    const navigate = useNavigate();
-    const{ register, handleSubmit, formState: { errors }, reset} = useForm<FormField>();
+  const navigate = useNavigate();
+  const { register, handleSubmit, formState: { errors }, reset} = useForm<FormField>();
 
-    const onSubmit: SubmitHandler<FormField> = (data)=>{
-        console.log(data);
-        navigate('/ConfirmEmail')
-        reset();
-    }
+  const onSubmit: SubmitHandler<FormField> = (data)=>{
+    console.log(data);
+    navigate('/ConfirmEmail')
+    reset();
+  }
 
-    return (
-
+  return (
     <div className={styles.background}>
-    <div className={styles.container}>
-    
-
-      <div className={styles.rightContainer}>
-
-        <div className={styles.loginFormContainer}>
-        <Typography
-          component='h3'
-          variant='h4'>
-            Please Submit
-        </Typography>
-      <form onSubmit={handleSubmit(onSubmit)}>
-
-        <TextField className='text-field'
-        {...register('email',{
-          required: 'Email is required',
-          minLength: {
-            value: 6,
-            message: ' provide a valid email'
-          }
-        })}
-        error={!!errors.email}
-        helperText={errors.email?.message}
-        type='text'
-        variant='standard'
-        fullWidth
-        placeholder='Email'
-        sx={{
-          '& .MuiInputBase-root': {
-            color: 'white',
-          },
-          '& .MuiInput-underline:before': {
-            borderBottomColor: 'white', // Underline color
-          },
-          '& .MuiInput-underline:hover:before': {
-            borderBottomColor: 'white',
-          },
-          marginBottom: '15px',
-        }}
-        />
-
-
-      <Button
-      type='submit'
-      variant='contained'
-      className='submitButton'
-      fullWidth
-      sx={{
-        backgroundColor: 'hotpink',
-        '&:hover': {
-          backgroundColor: 'deeppink',
-        },
-        marginTop: '15px',
-      }}
-      >
-        Enter
-      </Button>
-
-     <p> An email shall be sent to reset password</p>
-
-      </form>
-      </div>
-      </div>
+      <div className={styles.container}>
+        <div className={styles.rightContainer}>
+          <div className={styles.loginFormContainer}>
+            <Typography component='h3' variant='h4'>Please Submit</Typography>
+            <form onSubmit={handleSubmit(onSubmit)}>
+            <TextField className='text-field'
+              {...register('email',{
+                required: 'Email is required',
+                minLength: {
+                  value: 6,
+                  message: ' provide a valid email'
+                }
+              })}
+              error={!!errors.email}
+              helperText={errors.email?.message}
+              type='text'
+              variant='standard'
+              fullWidth
+              placeholder='Email'
+              sx={{
+                '& .MuiInputBase-root': {
+                  color: 'white',
+                },
+                '& .MuiInput-underline:before': {
+                  borderBottomColor: 'white', // Underline color
+                },
+                '& .MuiInput-underline:hover:before': {
+                  borderBottomColor: 'white',
+                },
+                marginBottom: '15px',
+              }}
+            />
+            <Button
+              type='submit'
+              variant='contained'
+              className='submitButton'
+              fullWidth
+              sx={{
+                backgroundColor: 'hotpink',
+                '&:hover': {
+                  backgroundColor: 'deeppink',
+                },
+                marginTop: '15px',
+              }}
+            >
+            Enter
+            </Button>
+            <p> An email shall be sent to reset password</p>
+            </form>
+          </div>
+        </div>
       </div>
       <Footer />
     </div>
   )
-
 }
 export default ForgotPassword;
 

@@ -7,8 +7,8 @@ const DisplayError = () => {
 
   return (
     <div>
-    <h2>I'm display an error here</h2>
-    <h3>I'm also displaying another error</h3>
+      <h2>I'm display an error here</h2>
+      <h3>I'm also displaying another error</h3>
     </div>
   )
 }
