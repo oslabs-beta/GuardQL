@@ -55,6 +55,13 @@ export interface UserProjectData {
   name: string; 
 }
 
+export interface getUserProjectResponse {
+  code: string; 
+  success: boolean; 
+  message: string; 
+  projects: UserProjectData[]; 
+}
+
 export interface QueryResponse<T> {
   loading: boolean;
   error?: any;

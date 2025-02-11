@@ -7,14 +7,14 @@ import Cindy from '../assets/profilepic-cindy.jpeg';
 import Sabrina from '../assets/profilepic-sabrina.jpeg';
 import Sienna from '../assets/profilepic-sienna.jpeg';
 import Mike from '../assets/profilepic-mike.jpeg';
-// import Nico from '../assets/profilepic-nico.jpeg';
+import Nico from '../assets/profilepic-nico.jpeg';
 import dashboard from '../assets/dashboard.png';
 import Footer from './Footer';
 import '../styles/footer.module.css';
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import BugReportIcon from '@mui/icons-material/BugReport';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
-import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
+import SettingsInputHdmiIcon from '@mui/icons-material/SettingsInputHdmi';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
@@ -26,7 +26,7 @@ const App: React.FC = () => {
   const teamMembers = [
     { name: "Sienna Shepherd", image: Sienna, linkedin: "https://www.linkedin.com/in/sienna-shepherd/", github: "https://github.com/codecaptaincode", bio: "Sienna is a detail-oriented software engineer passionate about solving complex problems and bringing ideas to life through code. Specializing in full-stack development, she builds intuitive, user-friendly applications that make a meaningful impact. When she’s not coding, you’ll likely find her discovering new music, getting lost in a good book or video game, and exploring NYC’s hidden gems." },
     { name: "Sabrina Ira", image: Sabrina, linkedin: "https://www.linkedin.com/in/sabrinaira", github: "https://github.com/sabrinaira", bio: "Sabrina is a passionate software engineer with a unique blend of creativity and technical expertise. With a background in art, she brings a fresh perspective to full-stack development, crafting innovative and user-centric applications. Sabrina thrives on understanding the intricacies of software development, constantly honing her skills to deliver optimal solutions and push the boundaries of what technology can achieve." },
-    { name: "Nico Henry", image: "", linkedin: "", github: "", bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+    { name: "Nico Henry", image: Nico, linkedin: "https://www.linkedin.com/in/nico-henry/", github: "https://github.com/Nico21221", bio: "Hi i’m Nico Henry, a full-stack developer in New York City who’s passionate about solving problems by building dynamic web apps. I bring together my technical skills, leadership experience, and a user-first mindset to create meaningful solutions. When I’m not coding, you’ll find me lifting weights or experimenting with new recipes." },
     { name: "Mike Thurstlic", image: Mike, linkedin: "https://www.linkedin.com/in/mike-thurstlic-a2b8a82a4/", github: "https://github.com/thurstlic7", bio: "Mike Thurstlic is a frontend developer and is proud to be a member of the GuardQL team. He lives in NYC." },
     { name: "Cindy Rodríguez-Llivipuma", image: Cindy, linkedin: "https://www.linkedin.com/in/cindy-rod-lliv", github: "https://github.com/csrl23", bio: "Cindy is a full-stack engineer passionate about building tools that empower engineers to work more efficiently. I enjoy solving complex problems, optimizing workflows, and creating intuitive solutions that enhance the development experience." }
   ];
@@ -102,27 +102,39 @@ const App: React.FC = () => {
       {/* Features Section */}
       <section id="features" className="section">
         <h2>Key Features</h2>
-        {/* <br></br> */}
-        <div className="features-grid">
-          <div className="team-card">
+        <br></br>
+        <div className="team-container">
+          <div className="feature-card">
             <BugReportIcon className="feature-icon" />
-            <h3 className = "profile-h3">Error Tracking</h3>
-            <p className = "profile-title">Identify and analyze GraphQL errors.</p>
+            <h3 className = "profile-h3">GraphQL Error Logging & Debugging</h3>
+            <h4 className = "features-h4">Real-time Error Capture</h4>
+            <p className = "features-p">Logs GraphQL API errors with timestamps and detailed error messages</p>
+            <h4 className = "features-h4">Stack Trace & Code Context</h4>
+            <p className = "features-p">Displays the specific GraphQL query/mutation that caused the error</p>
           </div>
-          <div className="team-card">
+          <div className="feature-card">
             <QueryStatsIcon className="feature-icon" />
-            <h3 className = "profile-h3">Error Tracking</h3>
-            <p className = "profile-title">Identify and analyze GraphQL errors.</p>
+            <h3 className = "profile-h3">Performance Monitoring & Query Analysis</h3>
+            <h4 className = "features-h4">Slow Query Detection</h4>
+            <p className = "features-p">Flags GraphQL queries that exceed a specified execution time</p>
+            <h4 className = "features-h4">General Query Performance Tracking</h4>
+            <p className = "features-p">Logs execution times for all queries, not just slow ones, to provide a complete performance overview</p>
           </div>
-          <div className="team-card">
-            <MonitorHeartIcon className="feature-icon" />
-            <h3 className = "profile-h3">Error Tracking</h3>
-            <p className = "profile-title">Identify and analyze GraphQL errors.</p>
-          </div>
-          <div className="team-card">
+          <div className="feature-card">
             <SpaceDashboardIcon className="feature-icon" />
-            <h3 className = "profile-h3">Error Tracking</h3>
-            <p className = "profile-title">Identify and analyze GraphQL errors.</p>
+            <h3 className = "profile-h3">Intuitive Dashboard</h3>
+            <h4 className = "features-h4">Clean, User-Friendly UI</h4>
+            <p className = "features-p">Designed for quick debugging and troubleshooting</p>
+            <h4 className = "features-h4">Graphical Performance Reports</h4>
+            <p className = "features-p">Displays query performance trends over time</p>
+          </div>
+          <div className="feature-card">
+            <SettingsInputHdmiIcon className="feature-icon" />
+            <h3 className = "profile-h3">Seamless Integration & NPM Plugin</h3>
+            <h4 className = "features-h4">Easy-to-Install NPM Package</h4>
+            <p className = "features-p">A lightweight plugin that integrates into any GraphQL project with minimal setup</p>
+            <h4 className = "features-h4">Automatic Error & Performance Logging</h4>
+            <p className = "features-p">Requires little configuration to start capturing insights</p>
           </div>
         </div>
       </section>

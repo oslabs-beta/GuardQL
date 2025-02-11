@@ -26,7 +26,14 @@ import '../styles/dashboard.css';
 import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { client } from '../requests/apollo';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+
+const theme = createTheme({
+  typography: {
+    fontFamily: 'Montserrat, sans-serif',
+  },
+});
 
 interface NavItem {
   text: string;
@@ -64,6 +71,7 @@ export default function Performance() {
   ];
 
     return (
+    <ThemeProvider theme={theme}>
         <Box className="root">
         <CssBaseline />
         <AppBar className="app-bar" position="fixed">
@@ -102,5 +110,6 @@ export default function Performance() {
           </List>
         </Drawer>
         </Box>
+    </ThemeProvider>
     );
 };

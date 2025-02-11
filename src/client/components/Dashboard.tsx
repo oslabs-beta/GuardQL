@@ -6,8 +6,10 @@ import { jwtDecode } from 'jwt-decode';
 import { client, JwtPayload } from '../requests/apollo'; 
 import { getProjectMetrics, getUserProjects } from '../requests/queryHooks';
 import { GET_USER_PROJECTS, CREATE_PROJECT } from '../requests/gqlQueries';
+import { UserProjectData, getUserProjectResponse,  } from '../requests/queryTypes'; 
 
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, List, Box, 
          Drawer, CssBaseline, AppBar, Toolbar, Typography, Divider, MenuItem, Select, ListItem, 
          ListItemButton, ListItemIcon, ListItemText, CircularProgress, Alert } from "@mui/material";
@@ -15,35 +17,17 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import HomeIcon from '@mui/icons-material/Home';
+import AddIcon from '@mui/icons-material/Add';
 
 import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 import '../styles/dashboard.css';
 
-//? no longer needed material ui imports begin here ------------------->
-// import Box from '@mui/material/Box';
-// import Drawer from '@mui/material/Drawer';
-// import CssBaseline from '@mui/material/CssBaseline';
-// import AppBar from '@mui/material/AppBar';
-// import Toolbar from '@mui/material/Toolbar';
-// import Typography from '@mui/material/Typography';
-// import Divider from '@mui/material/Divider';
-// import MenuItem from "@mui/material/MenuItem";
-// import Select from "@mui/material/Select";
-// import List from '@mui/material/List';
-// import ListItem from '@mui/material/ListItem';
-// import ListItemButton from '@mui/material/ListItemButton';
-// import ListItemIcon from '@mui/material/ListItemIcon';
-// import ListItemText from '@mui/material/ListItemText';
-// import CircularProgress from '@mui/material/CircularProgress';
-// import Alert from '@mui/material/Alert';
-//? no longer needed material ui imports ends here ------------------->
-//! no longer needed begins here ------------------------------------->
-// import { SelectChangeEvent } from '@mui/material';
-// import BugReportIcon from '@mui/icons-material/BugReport';
-// import QueryStatsIcon from '@mui/icons-material/QueryStats';
-// import InfoIcon from '@mui/icons-material/Info';
-// import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-//! no longer needed ends here ------------------------------------->
+
+const theme = createTheme({
+  typography: {
+    fontFamily: 'Montserrat, sans-serif',
+  },
+});
 
 interface NavItem {
   text: string;
@@ -66,6 +50,7 @@ export default function Dashboard() {
   const [open, setOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newProjectName, setNewProjectName] = useState("");
+  const [newProjectError, setNewProjectError] = useState("");
   const [isReady, setIsReady] = useState(false);
   // const [projectId] = useState('12');
 
@@ -98,12 +83,12 @@ export default function Dashboard() {
       // If we get here, token is valid
       setIsReady(true);
     } catch (error) {
-      console.error('Token validation error:', error);
+      // console.error('Token validation error:', error);
       navigate('/login');
     }
   }, [navigate]);
 
-  console.log('This is the token before sending the request to getProjectMetrics:', token); 
+  // console.log('This is the token before sending the request to getProjectMetrics:', token); 
 
   const navItems: NavItem[] = [
     { text: 'Home', icon: <HomeIcon sx={{ color: '#FFFFFF' }} />, link: '/home' },
@@ -139,29 +124,13 @@ export default function Dashboard() {
     navigate('/login');
   };
 
-  const NoProjectSelected = () => (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      p={4}
-      sx={{
-        border: '1px dashed #ccc',
-        borderRadius: '4px',
-        backgroundColor: '#f5f5f5'
-      }}
-    >
-      <Typography variant="body1" color="text.secondary">
-        Please select a project to view metric data
-      </Typography>
-    </Box>
-  );
+  const { data, refetch } = getUserProjects(); 
 
   const handleCreateProject = async () => {
     if (!newProjectName.trim()) return;
     // console.log('This is the new project name:', newProjectName);
     try {
-      const { data } = await createProject({
+      await createProject({
         variables: {
           input: {
             name: newProjectName,
@@ -175,16 +144,39 @@ export default function Dashboard() {
       });
       // console.log('data from handleCreateProject function begins here:', data);
       setDialogOpen(false);
+      // console.log('setDialogOpen has been set ------->');
       setNewProjectName("");
+      // console.log('Going into the refetch function now ------->');
+      const refetchProjects = (await refetch() as unknown) as { data?: { getUserProjects: getUserProjectResponse } };
+      // console.log("Refetch Response:", refetchProjects);
+
+      if (refetchProjects?.data?.getUserProjects?.projects) {
+        // console.log("Refetch data being set:", refetchProjects?.data?.getUserProjects);
+        setProjects(refetchProjects.data.getUserProjects.projects); 
+      } 
     } catch (error) {
-      console.error("Error creating project:", error);
-      //! message for user to inform them that the project creation was unsuccessful 
+      // console.error("Error creating project:", error);
+      setNewProjectError('There was an error creating the project'); 
+    }
+  };
+
+  const handleOpenDropdown = async () => {
+    try {
+      const refetchProjects = (await refetch() as unknown) as { data?: { getUserProjects: getUserProjectResponse } };
+
+      if (refetchProjects?.data?.getUserProjects?.projects) {
+        setProjects(refetchProjects.data.getUserProjects.projects); 
+        // console.log('The refetched data begins here:', refetchProjects?.data?.getUserProjects?.projects)
+      } 
+    } catch (error) {
+      // console.error('There was an error retrieving the projects:', error)
+      setProjects([{ id: '0', name: 'There was an error retrieving the projects'}]); 
     }
   };
 
   const renderProjects = () => {
-    if (!isReady) return <CircularProgress />;
-    if (loading) return <CircularProgress />;
+    if (!isReady) return <CircularProgress className="circularProgress"/>;
+    if (loading) return <CircularProgress className="circularProgress"/>;
     if (error) return <Alert severity="error">Error loading projects</Alert>;
     if (!projects?.projects.length) return <Typography>No projects retrieved</Typography>;
     if (projects?.projects) {
@@ -197,20 +189,29 @@ export default function Dashboard() {
   const renderMetrics = () => {
     if (!selectedProjectId) {
       return (
-        <Box display="flex" justifyContent="center" p={2}>
-          <NoProjectSelected />
-        </Box>
+        <Box className="metrics-container">
+          <Box className="metric-box">
+            <Typography className="metric-label">Total Errors</Typography>
+            <Typography className="metric-value-undefined">Please select a project to view key metrics</Typography>
+          </Box>
+          <Box className="metric-box">
+            <Typography className="metric-label">Average Query Time</Typography>
+            <Typography className="metric-value-undefined">Please select a project to view key metrics</Typography>
+          </Box>
+          <Box className="metric-box">
+            <Typography className="metric-label">Slowest Query</Typography>
+            <Typography className="metric-value-undefined">Please select a project to view key metrics</Typography>
+          </Box>
+        </Box> 
       )
     }
-
     if (loading) {
       return (
         <Box display="flex" justifyContent="center" p={2}>
-          <CircularProgress />
+          <CircularProgress className="circularProgress"/>
         </Box>
       );
     }
-
     if (error) {
       return (
         <Alert severity="error">
@@ -218,7 +219,6 @@ export default function Dashboard() {
         </Alert>
       );
     }
-
     if (!metrics) return null;
 
     return (
@@ -242,15 +242,32 @@ export default function Dashboard() {
   const renderRegularQueries = () => {
     if (!selectedProjectId) {
       return (
-        <Box display="flex" justifyContent="center" p={2}>
-          <NoProjectSelected />
+        <Box className="slow-queries-container">
+        <Box className="scrollable-container">
+            <Box className="query-item">
+              <Typography className="query-operation">
+                Please select a project to view regular query metrics
+              </Typography>
+            </Box>
+        </Box>
         </Box>
       )
     }
-
-    if (loading) return <CircularProgress />;
+    if (loading) return <CircularProgress className="circularProgress"/>;
     if (error) return <Alert severity="error">Error loading regular queries</Alert>;
-    if (!regularQueries?.metrics.length) return <Typography>No regular queries detected</Typography>;
+    if (!regularQueries?.metrics.length) {
+      return (
+        <Box className="slow-queries-container">
+        <Box className="scrollable-container">
+            <Box className="query-item">
+              <Typography className="query-operation">
+                No regular queries found for this project
+              </Typography>
+            </Box>
+        </Box>
+        </Box>
+      )
+    }
 
     return (
       <Box className="slow-queries-container">
@@ -282,15 +299,32 @@ export default function Dashboard() {
   const renderSlowQueries = () => {
     if (!selectedProjectId) {
       return (
-        <Box display="flex" justifyContent="center" p={2}>
-          <NoProjectSelected />
+        <Box className="slow-queries-container">
+        <Box className="scrollable-container">
+            <Box className="query-item">
+              <Typography className="query-operation">
+                Please select a project to view slow query metrics
+              </Typography>
+            </Box>
+        </Box>
         </Box>
       )
     }
-
-    if (loading) return <CircularProgress />;
+    if (loading) return <CircularProgress className="circularProgress"/>;
     if (error) return <Alert severity="error">Error loading slow queries</Alert>;
-    if (!slowQueries?.metrics.length) return <Typography>No slow queries detected</Typography>;
+    if (!slowQueries?.metrics.length) {
+      return (
+        <Box className="slow-queries-container">
+        <Box className="scrollable-container">
+            <Box className="query-item">
+              <Typography className="query-operation">
+                No slow queries found for this project
+              </Typography>
+            </Box>
+        </Box>
+        </Box>
+      )
+    }
 
     return (
       <Box className="slow-queries-container">
@@ -323,15 +357,32 @@ export default function Dashboard() {
   const renderLogs = () => {
     if (!selectedProjectId) {
       return (
-        <Box display="flex" justifyContent="center" p={2}>
-          <NoProjectSelected />
+        <Box className="slow-queries-container">
+        <Box className="scrollable-container">
+            <Box className="query-item">
+              <Typography className="query-operation">
+                Please select a project to view error logs
+              </Typography>
+            </Box>
+        </Box>
         </Box>
       )
     }
-
-    if (loading) return <CircularProgress />;
+    if (loading) return <CircularProgress className="circularProgress"/>;
     if (error) return <Alert severity="error">Error loading logs</Alert>;
-    if (!errors?.metrics.length) return <Typography>No recent errors</Typography>;
+    if (!errors?.metrics.length) {
+      return (
+        <Box className="slow-queries-container">
+        <Box className="scrollable-container">
+            <Box className="query-item">
+              <Typography className="query-operation">
+                No errors found for this project
+              </Typography>
+            </Box>
+        </Box>
+        </Box>
+      )
+    }
     // console.log('Error message from data begins here:', errors.metrics[0].error_message);
     return (
       <Box className="logs-container">
@@ -397,6 +448,7 @@ export default function Dashboard() {
   // };
   //! original renderLogs function begins here --------------------------------------------->
   return (
+    <ThemeProvider theme={theme}>
     <Box className="root">
       <CssBaseline />
       <AppBar className="app-bar" position="fixed">
@@ -425,9 +477,8 @@ export default function Dashboard() {
       <Box component="main" className="main-content">
         <Toolbar />
         <div className="select-project-section">
-        <Typography variant="h6" className="section-title">Select Project:</Typography>
+        <Typography variant="h6" className="select-title">Select Project:</Typography>
         <Select
-        //  defaultValue=""
           value={selectedProjectId}
           onChange={(e) => setSelectedProjectId(e.target.value)}
         // onChange={(e) => {
@@ -435,22 +486,27 @@ export default function Dashboard() {
         //     setSelectedProjectId(e.target.value);
         //   }
         // }}
-          onOpen={renderProjects}
+          onOpen={handleOpenDropdown}
           onClose={() => setOpen(false)}
           displayEmpty
           className="dropdown"
         >
-          <MenuItem className="dropdown-item" value="" disabled>Select a Project</MenuItem>
-          {projectsData.map((project) => (
+          <MenuItem className="dropdown-item" value="" disabled>Projects</MenuItem>
+          {projectsData.map((project: Project) => (
             <MenuItem className="dropdown-item" key={project.id} value={project.id}>
               {project.name}
             </MenuItem>
           ))}
-          <MenuItem className="dropdown-item-create" onClick={() => setDialogOpen(true)}>+ Create New Project</MenuItem>
+          <MenuItem className="dropdown-item-create" onClick={() => setDialogOpen(true)}>+ Create Project</MenuItem>
         </Select>
         </div>
         {/* //? pop-up to create project begins here -------------------------------------> */}
-        <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <Dialog open={dialogOpen} className="popup" maxWidth="sm" fullWidth
+          onClose={() => {
+            setDialogOpen(false); 
+            setNewProjectName("");
+          }}
+        >
           <DialogTitle>Create New Project</DialogTitle>
           <DialogContent>
             <TextField
@@ -460,11 +516,23 @@ export default function Dashboard() {
               fullWidth
               value={newProjectName}
               onChange={(e) => setNewProjectName(e.target.value)}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '&.Mui-focused fieldset': { borderColor: '#e623c6' }, 
+                }, 
+                '& .MuiInputLabel-root.Mui-focused': { color: '#e623c6' },
+              }}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setDialogOpen(false)} color="secondary">Cancel</Button>
-            <Button onClick={handleCreateProject} color="primary" variant="contained">Create Project</Button>
+            <Button className="cancelButton" color="secondary"
+              onClick={() => {
+                setDialogOpen(false);
+                setNewProjectName("");
+              }}
+            >Cancel</Button>
+            <Button onClick={handleCreateProject} className="createButton" color="primary" variant="contained">Create Project</Button>
+            {newProjectError && (<p style={{ color: 'red', marginTop: "10px" }}>{newProjectError}</p>)}
           </DialogActions>
         </Dialog>
         {/* //? pop-up to create project ends here -------------------------------------> */}
@@ -478,5 +546,6 @@ export default function Dashboard() {
         {renderLogs()}
       </Box>
     </Box>
+    </ThemeProvider>
   );
 }

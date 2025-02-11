@@ -27,7 +27,7 @@ export const getProjectErrorMetrics = (projectId: string): QueryResponse<ErrorDa
       },
     },
   });
-  console.log('error data from projectData file begins here:', data); 
+  // console.log('error data from projectData file begins here:', data); 
   //? We return the destructured properties on the returned object 
   return {
     //? If no data is returned, we will return an empty array so 
@@ -94,7 +94,7 @@ export const getUserProjects = (): QueryResponseProjects<UserProjectData> => {
     loading,
     error,
     refetch
-  };
+  }
 };
 
 

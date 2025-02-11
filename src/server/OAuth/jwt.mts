@@ -1,7 +1,4 @@
 import jwt from 'jsonwebtoken';
-// import dotenv from 'dotenv';
-
-// dotenv.config(); 
 
 interface JwtPayloadWithUser extends jwt.JwtPayload {
   userId: string; 
@@ -9,11 +6,13 @@ interface JwtPayloadWithUser extends jwt.JwtPayload {
 }
 
 export function generateToken(userId: string, username: string): string {
-  return jwt.sign(
-    { userId, username },
-    process.env.JWT_SECRET!, 
-    { expiresIn: '1h' }
-  ); 
+  const jwtSecret = process.env.JWT_SECRET;
+
+  if (!jwtSecret) {
+    throw new Error('JWT secret is missing');
+  }
+
+  return jwt.sign({ userId, username }, jwtSecret, { expiresIn: '1h' }); 
 }
 
 export function verifyToken(token: string) {

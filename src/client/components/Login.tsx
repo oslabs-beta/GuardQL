@@ -50,9 +50,9 @@ function Login() {
       if (jwt) {
         navigate('/dashboard');
         reset();
-        console.log('The token was retrieved successfully after login:', jwt); 
+        // console.log('The token was retrieved successfully after login:', jwt); 
       } else if (!jwt) {
-        console.log('The token was not retrieved successfully after login:', jwt); 
+        // console.log('The token was not retrieved successfully after login:', jwt); 
         reset();
         navigate('/login');
       }
@@ -60,7 +60,7 @@ function Login() {
       // console.log('This is the user\'s token:', token);
       // navigate('/dashboard');
     } catch (error) {
-      console.log('useMutation not successful, error begins here:', error);
+      // console.log('useMutation not successful, error begins here:', error);
       setLoginError('Username or password incorrect');
     }
   }

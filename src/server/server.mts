@@ -57,7 +57,6 @@ const resolvers = {
   }
 };
 
-
 async function startApolloServer() {
   try {
     const server = new ApolloServer<MyContext>({
