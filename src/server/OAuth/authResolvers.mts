@@ -1,4 +1,4 @@
-import { findUserByUsername, createUser } from './userQueries.mjs'; // Importing the function to fetch users by username from userModel.ts
+import { findUserByUsername, createUser, getUserByUsername, getUserByEmail } from './userQueries.mjs'; // Importing the function to fetch users by username from userModel.ts
 import { DbConnection } from '../Metrics/types.mjs'; 
 import { generateToken } from './jwt.mjs'; 
 import jwt from 'jsonwebtoken';
@@ -34,11 +34,11 @@ const authResolvers = {
         input.password,
         user.password
       );
-      console.log('ValidPassword begins here:', validPassword);  
+    //   console.log('ValidPassword begins here:', validPassword);  
 
     // If password is incorrect, throw error
       if (!validPassword) {
-        throw new Error('Invalid password');
+        throw new Error('Invalid password or username');
       }
 
       const token = generateToken(user.id, user.username); 
@@ -51,16 +51,36 @@ const authResolvers = {
         token // frontend will store this and use it for future requests 
       }; 
     },
+
     createUser: async (_: any, { input }: { input: CreateUserInput }, { db }: { db: DbConnection }) => {
       try {
+
+        const existingUsername = await getUserByUsername(db, input.username);
+        const existingEmail = await getUserByEmail(db, input.email);
+        
+        if (existingUsername) {
+          return {
+            code: 409, 
+            success: false, 
+            message: 'Username already taken'
+          };
+        } else if (existingEmail) {
+          return {
+            code: 409, 
+            success: false, 
+            message: 'Email already in use'
+          };
+        }
+
         const user = await createUser(db, input.username, input.password, input.email); 
+
         return {
           code: 200, 
           success: true, 
-          message: 'User created successfully'
+          message: 'Account created successfully!'
         };
       } catch (error) {
-        console.log('Error creating new user:', error); 
+        // console.log('Error creating new user:', error); 
         return {
           code: 500, 
           success: false, 
@@ -69,15 +89,6 @@ const authResolvers = {
       }
     }
   },
-    //! finish resolver 
-//   Query: {
-//     getUserProjects: async (_, __, { db, userId }) => {
-//       if (!userId) {
-//         throw new Error('Please log in to view your projects'); 
-//       }
-//       return getUserProjects(db, userId); 
-//     }
-//   }
 };
 
 export default authResolvers;

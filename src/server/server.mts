@@ -30,20 +30,7 @@ const metricTypeDefs = gql(
   })
 );
 
-// combining schemas 
-// const typeDefs = `
-//   ${authTypeDefs}
-//   ${metricTypeDefs}
-// `; 
 const typeDefs = [authTypeDefs, metricTypeDefs]; 
-
-// interface JwtPayloadWithUser extends jwt.JwtPayload {
-//   userId: string; 
-//   username: string; 
-// }
-// export interface Context {
-//   db: Pool; 
-// }
 
 // combining resolvers
 const resolvers = {
@@ -56,7 +43,6 @@ const resolvers = {
     ...metricResolvers.Mutation
   }
 }; 
-
 
 async function startApolloServer() {
   try {

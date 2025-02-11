@@ -92,9 +92,15 @@ const SignUp = () => {
           },
         },
       });
-      // console.log('Registration successful:', data);
-      setCreateAccountSuccess('Account created successfully!');
-      // navigate('/login')
+
+      if (data.createUser.code === 409) {
+        setCreateAccountError(data.createUser.message);
+      } else if (data.code === 200) {
+        setCreateAccountSuccess(data.createUser.message);
+      } 
+      console.log('Registration successful:', data);
+      console.log('This is the returned code:', data.createUser.code);
+      console.log('This is the returned message:', data.createUser.message);
     } catch (error) {
       // console.error('Error during registration:', error);
       setCreateAccountError('Account creation was unsuccessful');
