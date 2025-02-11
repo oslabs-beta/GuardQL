@@ -72,18 +72,23 @@ export default {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/public/index.html',
+      template: './public/index.html',
       filename: './index.html',
+      favicon: './public/favicon.ico', 
     }),
-    new CopyPlugin({
-      patterns: [{ from: './src/public/style.css' }],
-    }),
+    // new CopyPlugin({
+    //   patterns: [{ from: './src/client/components/Home.css' }],
+    // }),
     new MiniCssExtractPlugin({
         filename: '[name].css', // Output CSS file names
         chunkFilename: '[id].css',
       }),
   ],
   devServer: {
+    // static: {
+    //     directory: path.join(__dirname, 'public'), // Ensure this points to the root-level `public/`
+    //   },
+    // historyApiFallback: true,
     // proxy: [
     //     {
     //       context: ['/'],

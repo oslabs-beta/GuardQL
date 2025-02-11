@@ -17,33 +17,27 @@ type FormField = {
 
 function ConfirmationEmail() {
 
-
   return (
     <div className={styles.background}>
-    <div className={styles.container}>
-      <div className={styles.leftContainer}>
-        <h1>An Email has been sent to your Account.</h1>
-      <img src ={logo}
-          alt='GuardQL Logo'
-          style={{ width: '300px', height: 'auto' }} />
-
-<p className="text-center text-white">
-              Click Here to {' '}
-              <Link to="/login"
+      <div className={styles.container}>
+        <div className={styles.leftContainer}>
+          <h1>An Email has been sent to your Account.</h1>
+          <img src ={logo} alt='GuardQL Logo' style={{ width: '300px', height: 'auto' }} />
+          <p className="text-center text-white">
+            Click Here to {' '}
+            <Link to="/login"
               style={{ color: '#FFC0CB', textDecoration: 'none' }}
               onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.color = '#F50057'}
               onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.color = '#FFC0CB'}
-              >
-                Log In
-              </Link>
-            </p>
-
-
+            >
+            Log In
+            </Link>
+          </p>
+        </div>
       </div>
-  </div>
-  <Footer />
-  </div>
-     )
-     }
+      <Footer />
+    </div>
+  )
+}
 
 export default ConfirmationEmail;

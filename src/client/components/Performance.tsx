@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getProjectMetrics } from './ProjectData';
+import { getProjectMetrics } from '../requests/queryHooks';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -22,10 +22,10 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Divider from '@mui/material/Divider';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
-import './Dashboard.css';
+import '../styles/dashboard.css';
 import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 import { Link, useNavigate } from 'react-router-dom';
-import { client } from '../lib/apollo'; 
+import { client } from '../requests/apollo'; 
 
 
 interface NavItem {
@@ -36,11 +36,8 @@ interface NavItem {
 
 const drawerWidth = 240;
 
-
-
 export default function Performance() {
-    // console.log("Performance component is rendering!");
-
+  // console.log("Performance component is rendering!");
   const navigate = useNavigate();
     
   const handleNavigation = (path: string) => {
@@ -57,52 +54,41 @@ export default function Performance() {
     navigate('/login');
   };
 
-    const navItems: NavItem[] = [
-        { text: 'Home', icon: <HomeIcon sx={{ color: '#FFFFFF' }} />, link: '/home' },
-        { text: 'Dashboard', icon: <DashboardIcon sx={{ color: '#FFFFFF' }} />, link: '/dashboard' },
-        { text: 'Performance', icon: <BarChartIcon sx={{ color: '#FFFFFF' }} />, link: '/performance' },
-        // { text: 'Account', icon: <AccountCircleIcon sx={{ color: '#FFFFFF' }} />, link: '/account' },
-        { text: 'Log Out', icon: <LogoutIcon sx={{ color: '#FFFFFF' }} />, link: '/logout' },
-    ];
+  const navItems: NavItem[] = [
+    { text: 'Home', icon: <HomeIcon sx={{ color: '#FFFFFF' }} />, link: '/home' },
+    { text: 'Dashboard', icon: <DashboardIcon sx={{ color: '#FFFFFF' }} />, link: '/dashboard' },
+    { text: 'Performance', icon: <BarChartIcon sx={{ color: '#FFFFFF' }} />, link: '/performance' },
+    // { text: 'Account', icon: <AccountCircleIcon sx={{ color: '#FFFFFF' }} />, link: '/account' },
+    { text: 'Log Out', icon: <LogoutIcon sx={{ color: '#FFFFFF' }} />, link: '/logout' },
+  ];
 
-    return (
-        <Box className="root">
-        <CssBaseline />
-        <AppBar className="app-bar" position="fixed">
-          <Toolbar>
-            <Typography className="header-title" variant="h6">
-              GuardQL Dashboard
-            </Typography>
-          </Toolbar>
-        </AppBar>
-  
-        <Drawer
-          className="drawer"
-          variant="permanent"
-          anchor="left"
-        >
-          <div className="drawer-header">
-            <img 
-              src={logo} 
-              alt="GuardQL Logo"
-              className="drawer-logo"
-            />
-          </div>
-          <Divider />
-          <List>
-            {navItems.map(({ text, icon, link }) => (
-              <ListItem key={text} disablePadding>
-                {/* console.log("Navigating to:", {link}); */}
-                {/* <ListItemButton component={Link} to={link}> */}
-                <ListItemButton onClick={() => handleNavigation(link)}>
-                {/* <ListItemButton onClick={() => handleNavigation(`${link}`)}> */}
-                  <ListItemIcon>{icon}</ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
-        </Box>
-    );
+  return (
+    <Box className="root">
+      <CssBaseline />
+      <AppBar className="app-bar" position="fixed">
+        <Toolbar>
+          <Typography className="header-title" variant="h6">GuardQL Dashboard</Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer className="drawer" variant="permanent" anchor="left">
+        <div className="drawer-header">
+          <img src={logo} alt="GuardQL Logo" className="drawer-logo"/>
+        </div>
+        <Divider />
+        <List>
+          {navItems.map(({ text, icon, link }) => (
+            <ListItem key={text} disablePadding>
+              {/* console.log("Navigating to:", {link}); */}
+              {/* <ListItemButton component={Link} to={link}> */}
+              <ListItemButton onClick={() => handleNavigation(link)}>
+              {/* <ListItemButton onClick={() => handleNavigation(`${link}`)}> */}
+                <ListItemIcon>{icon}</ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+    </Box>
+  );
 };

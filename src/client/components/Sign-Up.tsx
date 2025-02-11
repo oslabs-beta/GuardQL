@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/client';
 import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 import Footer from './Footer';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { CREATE_ACCOUNT } from './ProjectData';
+import { CREATE_ACCOUNT } from '../requests/gqlQueries';
 
 
 const theme = createTheme({
@@ -53,7 +53,6 @@ const SignUp = () => {
 
     let isValid = true;
 
-
     if (!email || !/\S+@\S+\.\S+/.test(email)) {
       setEmailError(true);
       setEmailErrorMessage('Please enter a valid email address');
@@ -82,7 +81,6 @@ const SignUp = () => {
     }
 
     if (!isValid) return;
-
 
     try {
       const { data } = await signup({
@@ -114,14 +112,8 @@ const SignUp = () => {
         </div>
         <div className={styles.rightContainer}>
           <Stack className={styles.signUpFormContainer}>
-            <Typography component='h3' variant='h4'>
-              Sign Up
-            </Typography>
-            <Box
-              component='form'
-              onSubmit={handleSubmit}
-              sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
-            >
+            <Typography component='h3' variant='h4'>Sign Up</Typography>
+            <Box component='form' onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <FormControl>
                 {/* Username input field */}
                 <FormLabel htmlFor='userName' sx={{ color: 'white' }}>
@@ -235,9 +227,7 @@ const SignUp = () => {
             <Box>
               <Typography>
                 Already have an account? {/* Clicking on the Sign In link */}
-                <Link
-                  to='/login'
-                  style={{ color: '#e623c6', textDecoration: 'none' }}
+                <Link to='/login' style={{ color: '#e623c6', textDecoration: 'none' }}
                   onMouseEnter={(e) =>
                     ((e.target as HTMLAnchorElement).style.color = '#e263cd')
                   }

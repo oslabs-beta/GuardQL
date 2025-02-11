@@ -1,40 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import { getProjectMetrics, getUserProjects, GET_USER_PROJECTS } from './ProjectData';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import { Link, useNavigate } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { jwtDecode } from 'jwt-decode';
+
+import { client, JwtPayload } from '../requests/apollo'; 
+import { getProjectMetrics, getUserProjects } from '../requests/queryHooks';
+import { GET_USER_PROJECTS, CREATE_PROJECT } from '../requests/gqlQueries';
+
+
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, List, Box, 
+         Drawer, CssBaseline, AppBar, Toolbar, Typography, Divider, MenuItem, Select, ListItem, 
+         ListItemButton, ListItemIcon, ListItemText, CircularProgress, Alert } from "@mui/material";
 import DashboardIcon from '@mui/icons-material/Dashboard';
-// import BugReportIcon from '@mui/icons-material/BugReport';
-// import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import LogoutIcon from '@mui/icons-material/Logout';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import HomeIcon from '@mui/icons-material/Home';
-// import InfoIcon from '@mui/icons-material/Info';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Divider from '@mui/material/Divider';
-import CircularProgress from '@mui/material/CircularProgress';
-import Alert from '@mui/material/Alert';
-import LogoutIcon from '@mui/icons-material/Logout';
-import './Dashboard.css';
+
 import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
-import { Link, useNavigate } from 'react-router-dom';
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import { CREATE_PROJECT } from './ProjectData';
-import { useMutation } from '@apollo/client';
-import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from "@mui/material";
-import { client } from '../lib/apollo'; 
-import { jwtDecode } from 'jwt-decode';
-import { JwtPayload } from '../lib/apollo'; 
+import '../styles/dashboard.css';
+
+//? no longer needed material ui imports begin here ------------------->
+// import Box from '@mui/material/Box';
+// import Drawer from '@mui/material/Drawer';
+// import CssBaseline from '@mui/material/CssBaseline';
+// import AppBar from '@mui/material/AppBar';
+// import Toolbar from '@mui/material/Toolbar';
+// import Typography from '@mui/material/Typography';
+// import Divider from '@mui/material/Divider';
+// import MenuItem from "@mui/material/MenuItem";
+// import Select from "@mui/material/Select";
+// import List from '@mui/material/List';
+// import ListItem from '@mui/material/ListItem';
+// import ListItemButton from '@mui/material/ListItemButton';
+// import ListItemIcon from '@mui/material/ListItemIcon';
+// import ListItemText from '@mui/material/ListItemText';
+// import CircularProgress from '@mui/material/CircularProgress';
+// import Alert from '@mui/material/Alert';
+//? no longer needed material ui imports ends here ------------------->
+//! no longer needed begins here ------------------------------------->
 // import { SelectChangeEvent } from '@mui/material';
-// import { useQuery } from '@apollo/client';
+// import BugReportIcon from '@mui/icons-material/BugReport';
+// import QueryStatsIcon from '@mui/icons-material/QueryStats';
+// import InfoIcon from '@mui/icons-material/Info';
+// import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+//! no longer needed ends here ------------------------------------->
 
 interface NavItem {
   text: string;
@@ -169,6 +178,7 @@ export default function Dashboard() {
       setNewProjectName("");
     } catch (error) {
       console.error("Error creating project:", error);
+      //! message for user to inform them that the project creation was unsuccessful 
     }
   };
 

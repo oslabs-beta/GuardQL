@@ -1,17 +1,17 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
-import { client } from './lib/apollo';
-import Home from './components/Home';
+import { client } from './requests/apollo';
 import Login from './components/Login';
-import Dashboard from './components/Dashboard';
-import Performance from './components/Performance';
 import SignUp from './components/Sign-Up';
-// import About from './components/About';
-// import Account from './components/Account';
+import Home from './components/Home';
 import ForgotPassword from './components/ForgotPassword';
 import ConfirmationEmail from './components/ConfirmEmail';
 import PasswordReset from './components/PasswordReset';
+import Dashboard from './components/Dashboard';
+import Performance from './components/Performance';
+// import About from './components/About';
+// import Account from './components/Account';
 
 const App = () => {
   return (
