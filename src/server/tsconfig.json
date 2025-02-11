@@ -7,5 +7,6 @@
     "composite": true,
     "outDir": "../../dist" // Outputs the compiled server files to dist/server
   },
-  "include": ["./**/*.ts", "./**/*.mts", "./**/*.graphql"]
+  "include": ["./**/*.ts", "./**/*.mts", "./**/*.graphql"],
+  "exclude": ["../../dist", "node_modules"] // Prevents output directory and dependencies from being included
 }

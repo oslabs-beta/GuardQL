@@ -1,14 +1,12 @@
 {
-    "extends": "../../tsconfig.json", 
+    "extends": "../../tsconfig.json",
     "compilerOptions": {
-      "target": "ES6",                                  
-      "module": "ESNext",     
-      "moduleResolution": "Node",     
-      "jsx": "react-jsx",   
-      "composite": true, 
-      // "allowImportingTsExtensions": true, 
-      "noEmit": false,                      
-    }, 
-    // "include" : ["../../src/**/*.ts", "../../src/**/*.tsx"]
+      "target": "ES6",
+      "module": "ESNext",
+      "moduleResolution": "Node",
+      "jsx": "react-jsx",
+      "composite": true,
+      "noEmit": false,
+    },
     "include" : ["./**/*.ts", "./**/*.tsx"]
   }

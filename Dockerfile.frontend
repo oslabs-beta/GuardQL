@@ -15,7 +15,8 @@ COPY ./src/public ./src/public
 # Build the frontend assets
 RUN npm run build:frontend
 
-# Step 2: Serve the app
+# Step 2: Serve the app using nginx
+# Nginx is a faster web server to help serve the static files more efficiently
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 EXPOSE 80

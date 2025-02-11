@@ -6,3 +6,4 @@ src/components
 .ssh/*
 *.log
 Dockerfile*
+.git
