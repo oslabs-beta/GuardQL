@@ -1,7 +1,10 @@
 import path from 'path';
+import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import dotenv from 'dotenv';
+dotenv.config()
 
 // to allow the use of __dirname
 import { fileURLToPath } from 'url';
@@ -74,7 +77,10 @@ export default {
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: './index.html',
-      favicon: './public/favicon.ico', 
+      favicon: './public/favicon.ico',
+    }),
+    new webpack.DefinePlugin({
+      'process.env.GRAPHQL_URI': JSON.stringify(process.env.GRAPHQL_URI),
     }),
     // new CopyPlugin({
     //   patterns: [{ from: './src/client/components/Home.css' }],

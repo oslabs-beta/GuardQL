@@ -87,6 +87,7 @@ export const CREATE_ACCOUNT = gql`
       code
       success
       message
+      apiKey
     }
   }
 `; 
@@ -112,6 +113,21 @@ export const CREATE_PROJECT = gql`
       code
       success
       message
+    }
+  }
+`; 
+
+export const GET_USER_DATA = gql`
+  query GetUserPData {
+    getUserData {
+      code
+      success
+      message
+      userData {
+        username
+        email
+        api_key
+      }
     }
   }
 `; 

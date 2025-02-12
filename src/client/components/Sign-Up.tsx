@@ -1,19 +1,13 @@
 import * as styles from '../styles/login-and-signup.module.css';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 import Footer from './Footer';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CREATE_ACCOUNT } from '../requests/gqlQueries';
-
-
-const theme = createTheme({
-  typography: {
-    fontFamily: 'Montserrat, sans-serif',
-  },
-});
+import ApiKeyDialog from './ApiKeyDialog';
 
 /** This is Sabrina's original Sign-Up component */
 
@@ -27,7 +21,14 @@ import {
   Typography,
   Stack,
   Divider,
+  Container, 
 } from '@mui/material';
+
+const theme = createTheme({
+  typography: {
+    fontFamily: 'Montserrat, sans-serif',
+  },
+});
 
 
 const SignUp = () => {
@@ -39,8 +40,12 @@ const SignUp = () => {
   const [nameErrorMessage, setNameErrorMessage] = useState('');
   const [ createAccountSuccess, setCreateAccountSuccess ] = useState<string | null>(null);
   const [ createAccountError, setCreateAccountError ] = useState<string | null>(null);
-  const [signup, { loading, error, data }] = useMutation(CREATE_ACCOUNT);
+  const [showApiKey, setShowApiKey] = useState(false);
+  const [apiKey, setApiKey] = useState('');
 
+  const navigate = useNavigate();
+
+  const [signup, { loading, error, data }] = useMutation(CREATE_ACCOUNT);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -92,19 +97,31 @@ const SignUp = () => {
           },
         },
       });
+      // console.log('This is the data returned from the signup:', data); 
 
       if (data.createUser.code === 409) {
         setCreateAccountError(data.createUser.message);
-      } else if (data.code === 200) {
+      } else if (data.createUser.code === 200) {
+        setApiKey(data.createUser.apiKey);
+        setShowApiKey(true);
         setCreateAccountSuccess(data.createUser.message);
-      } 
-      console.log('Registration successful:', data);
-      console.log('This is the returned code:', data.createUser.code);
-      console.log('This is the returned message:', data.createUser.message);
+
+      } else if (data.createUser.code === 500) {
+        // console.log('Account creation was unsuccessful (500)'); 
+        setCreateAccountError(data.createUser.message);
+      }
+      // console.log('Registration successful:', data);
+      // console.log('This is the returned code:', data.createUser.code);
+      // console.log('This is the returned message:', data.createUser.message);
     } catch (error) {
       // console.error('Error during registration:', error);
       setCreateAccountError('Account creation was unsuccessful');
     }
+  };
+
+  const handleApiKeyDialogClose = () => {
+    setShowApiKey(false);
+    navigate('/login');
   };
 
   return (
@@ -226,8 +243,8 @@ const SignUp = () => {
               >
                 Create Account
               </Button>
-              {createAccountError && (<p style={{ color: 'red', marginTop: "10px" }}>{createAccountError}</p>)}
-              {createAccountSuccess && (<p style={{ color: '#e623c6', marginTop: "10px" }}>{createAccountSuccess}</p>)}
+              {/* {createAccountError && (<p style={{ color: 'red', marginTop: "10px" }}>{createAccountError}</p>)}
+              {createAccountSuccess && (<p style={{ color: '#e623c6', marginTop: "10px" }}>{createAccountSuccess}</p>)} */}
             </Box>
             <Divider></Divider>
             <Box>
@@ -246,6 +263,17 @@ const SignUp = () => {
               </Typography>
             </Box>
           </Stack>
+
+
+
+          <ApiKeyDialog
+            open={showApiKey}
+            apiKey={apiKey}
+            onClose={handleApiKeyDialogClose}
+          />
+
+
+
         </div>
         </ThemeProvider>
       </div>

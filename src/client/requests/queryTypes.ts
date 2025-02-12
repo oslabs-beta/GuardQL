@@ -55,11 +55,24 @@ export interface UserProjectData {
   name: string; 
 }
 
+export interface UserData {
+  username: string; 
+  email: string;
+  api_key: string; 
+}
+
 export interface getUserProjectResponse {
   code: string; 
   success: boolean; 
   message: string; 
   projects: UserProjectData[]; 
+}
+
+export interface getUserDataResponse {
+  code: string; 
+  success: boolean; 
+  message: string; 
+  userData: UserData;
 }
 
 export interface QueryResponse<T> {
@@ -71,6 +84,18 @@ export interface QueryResponse<T> {
     success: boolean; 
     message: string; 
     metrics: T[] ;
+  }
+}
+
+export interface UserDataQueryResponse {
+  loading: boolean;
+  error?: any;
+  refetch: () => void;
+  data?: {
+    code: number; 
+    success: boolean; 
+    message: string; 
+    userData: UserData | undefined;
   }
 }
 
@@ -119,10 +144,10 @@ export interface ProjectMetricsResponse {
     message: string | undefined; 
     metrics: RegularMetricData[];
   }
-  projects: {
-    code: number | undefined; 
-    success: boolean | undefined; 
-    message: string | undefined; 
-    projects: UserProjectData[];
-  }
+  // projects: {
+  //   code: number | undefined; 
+  //   success: boolean | undefined; 
+  //   message: string | undefined; 
+  //   projects: UserProjectData[];
+  // }
 }

@@ -1,4 +1,6 @@
-import { getProjectRegularQueries, getProjectSlowQueries, getProjectErrorMetrics, createProject, getUserProjects, findProject, createQueryMetric, createSlowQuery, createError, createErrorLocation } from './databaseQueries.mjs'
+import { getProjectRegularQueries, getProjectSlowQueries, getProjectErrorMetrics, 
+         createProject, getUserProjects, findProject, createQueryMetric, createSlowQuery, 
+         createError, createErrorLocation, verifyApiKey, getApiKey, getUserData } from './databaseQueries.mjs'
 import { DbConnection, MetricInput, ProjectInput } from './types.mjs'; 
 
 const metricResolvers = {
@@ -26,6 +28,31 @@ const metricResolvers = {
         }; 
       }
     },
+
+    getUserData: async (_: any, __: any, { db, userId }: { db: DbConnection, userId: string | null }) => {
+      if (!userId) {
+        throw new Error('Please log in to view your account information'); 
+      }
+
+      try {
+        const userData = await getUserData(db, userId); 
+        // console.log('Projects from database begin here:', projects); 
+        return {
+          code: 200, 
+          success: true, 
+          message: 'User account information retrieved successfully', 
+          userData
+        }; 
+      } catch (error) {
+        console.error('This is the error for getUserData from the server:', error); 
+        return {
+          code: 500, 
+          success: false, 
+          message: 'Failed to retrieve user account information', 
+        }; 
+      }
+    },
+
     //! refactor - restructure returned data for errors with more than one error object 
     getProjectErrorMetrics: async (_: any, { projectId }: { projectId: string }, { db, userId}: { db: DbConnection, userId: string | null }) => {
       if (!userId) {
@@ -101,12 +128,28 @@ const metricResolvers = {
       }
     },
 
+    getApiKey: async (_: any, { showFull }: { showFull: boolean }, { db, userId }: { db: DbConnection, userId: string | null }) => {
+      if (!userId) {
+        throw new Error('You must be logged in to view your API key'); 
+      }
+
+      const apiKey = await getApiKey(db, userId); 
+
+      if (!apiKey) {
+        throw new Error('There was an error retrieving 3your API key'); 
+      }
+
+      // Return masked version for display
+      const maskedKey = `${apiKey.substring(0, 6)}...${apiKey.slice(-4)}`;
+
+      return {
+        maskedKey,
+        // Return full key only when explicitly requested
+        fullKey: showFull ? apiKey : null
+      };
+    },
+
     //! Add rds security to databse queries!!! 
-    // getAllMetrics: async (_: any, { projectId }: { projectId: string }, { db, userId}: { db: DbConnection, userId: string | null }) => {
-    //     if (!userId) {
-    //       throw new Error('You must be logged in to view metrics'); 
-    //     }
-    //   },
   }, 
   Mutation: {
     createQueryMetric: async (_: any, { input }: { input: MetricInput }, { db, userId }: { db: DbConnection, userId: string | null }) => {
@@ -115,11 +158,24 @@ const metricResolvers = {
       if (!userId) {
         throw new Error('You must be logged in to record metrics'); 
       }
-    //! refactor to use api keys instead of username to locate project 
+
       try {
-        const project = await findProject(db, input.username, input.projectName); 
+        const project = await findProject(db, userId, input.projectName); 
         if (!project) {
-          throw new Error('Project not found'); 
+          return {
+            code: 500, 
+            success: false, 
+            message: 'Project not found'
+          }; 
+        }
+
+        const apiKeyVerification = await verifyApiKey(db, userId);
+        if (!apiKeyVerification) {
+          return {
+            code: 500, 
+            success: false, 
+            message: 'Invalid API key'
+          }; 
         }
 
         const queryMetric = await createQueryMetric(db, project.id, input); 

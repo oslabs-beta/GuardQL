@@ -11,15 +11,15 @@ export const findUserByUsername = async (db: DbConnection, username: string) => 
 };
 
 // Function to create a new user (optional)
-export const createUser = async (db: DbConnection, username: string, password: string, email: string) => {
+export const createUser = async (db: DbConnection, username: string, password: string, email: string, apiKey: string) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   // console.log('This is the hashed password:', hashedPassword); 
   const result = await db.query(
     `INSERT INTO users 
-     (username, password, email) 
-     VALUES ($1, $2, $3) 
+     (username, password, email, api_key) 
+     VALUES ($1, $2, $3, $4) 
      RETURNING *`,
-     [username, hashedPassword, email]
+     [username, hashedPassword, email, apiKey]
   );
   return result.rows[0]; // Return the newly created user
 };

@@ -10,8 +10,9 @@ export interface DbConnection {
   }
   
   export interface MetricInput {
-    username: string;
+    // username: string;
     projectName: string;
+    // apiKey: string; 
     date: string;
     time: string;
     operation: string;

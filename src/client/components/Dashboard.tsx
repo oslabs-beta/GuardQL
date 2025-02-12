@@ -13,11 +13,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, List, Box, 
          Drawer, CssBaseline, AppBar, Toolbar, Typography, Divider, MenuItem, Select, ListItem, 
          ListItemButton, ListItemIcon, ListItemText, CircularProgress, Alert } from "@mui/material";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import HomeIcon from '@mui/icons-material/Home';
-import AddIcon from '@mui/icons-material/Add';
 
 import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 import '../styles/dashboard.css';
@@ -79,7 +79,6 @@ export default function Dashboard() {
         navigate('/login');
         return;
       }
-
       // If we get here, token is valid
       setIsReady(true);
     } catch (error) {
@@ -94,7 +93,7 @@ export default function Dashboard() {
     { text: 'Home', icon: <HomeIcon sx={{ color: '#FFFFFF' }} />, link: '/home' },
     { text: 'Dashboard', icon: <DashboardIcon sx={{ color: '#FFFFFF' }} />, link: '/dashboard' },
     { text: 'Performance', icon: <BarChartIcon sx={{ color: '#FFFFFF' }} />, link: '/performance' },
-    // { text: 'Account', icon: <AccountCircleIcon sx={{ color: '#FFFFFF' }} />, link: '/account' },
+    { text: 'Account', icon: <AccountCircleIcon sx={{ color: '#FFFFFF' }} />, link: '/account' },
     { text: 'Log Out', icon: <LogoutIcon sx={{ color: '#FFFFFF' }} />, link: '/logout' },
   ];
 
@@ -107,7 +106,7 @@ export default function Dashboard() {
     errors,
     slowQueries,
     regularQueries,
-    projects
+    // projects
   } = getProjectMetrics(selectedProjectId);
 
   const handleNavigation = (path: string) => {
@@ -174,17 +173,17 @@ export default function Dashboard() {
     }
   };
 
-  const renderProjects = () => {
-    if (!isReady) return <CircularProgress className="circularProgress"/>;
-    if (loading) return <CircularProgress className="circularProgress"/>;
-    if (error) return <Alert severity="error">Error loading projects</Alert>;
-    if (!projects?.projects.length) return <Typography>No projects retrieved</Typography>;
-    if (projects?.projects) {
-      // const projectsArray = projects?.projects;
-      // console.log('The projects data begins here:', projectsArray);
-      setProjects(projects?.projects);
-    }
-  };
+  // const renderProjects = () => {
+  //   if (!isReady) return <CircularProgress className="circularProgress"/>;
+  //   if (loading) return <CircularProgress className="circularProgress"/>;
+  //   if (error) return <Alert severity="error">Error loading projects</Alert>;
+  //   if (!projects?.projects.length) return <Typography>No projects retrieved</Typography>;
+  //   if (projects?.projects) {
+  //     // const projectsArray = projects?.projects;
+  //     // console.log('The projects data begins here:', projectsArray);
+  //     setProjects(projects?.projects);
+  //   }
+  // };
 
   const renderMetrics = () => {
     if (!selectedProjectId) {

@@ -1,6 +1,7 @@
 import { findUserByUsername, createUser, getUserByUsername, getUserByEmail } from './userQueries.mjs'; // Importing the function to fetch users by username from userModel.ts
 import { DbConnection } from '../Metrics/types.mjs'; 
 import { generateToken } from './jwt.mjs'; 
+import { generateApiKey } from './apiKey.mjs'; 
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
@@ -71,20 +72,21 @@ const authResolvers = {
             message: 'Email already in use'
           };
         }
-
-        const user = await createUser(db, input.username, input.password, input.email); 
-
+        const apiKey = generateApiKey(); 
+        const user = await createUser(db, input.username, input.password, input.email, apiKey); 
+        // console.log('This is the returned result from creating a user:', user); 
         return {
           code: 200, 
           success: true, 
-          message: 'Account created successfully!'
+          message: 'Account created successfully!',
+          apiKey: user.api_key, 
         };
       } catch (error) {
         // console.log('Error creating new user:', error); 
         return {
           code: 500, 
           success: false, 
-          message: 'Failed to create new user'
+          message: `Failed to create new user: ${error}`
         }; 
       }
     }

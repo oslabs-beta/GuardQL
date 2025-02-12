@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client';
 import { GET_PROJECT_ERRORS, GET_PROJECT_SLOW_QUERIES, 
-         GET_PROJECT_REGULAR_QUERIES, GET_USER_PROJECTS } from './gqlQueries';
-import { ErrorLocation, ErrorDetails, ErrorData, SlowMetricData, 
-         RegularMetricData, UserProjectData, QueryResponse, 
+         GET_PROJECT_REGULAR_QUERIES, GET_USER_PROJECTS, GET_USER_DATA } from './gqlQueries';
+import { ErrorLocation, ErrorDetails, ErrorData, SlowMetricData, UserData,
+         RegularMetricData, UserProjectData, QueryResponse, UserDataQueryResponse,
          QueryResponseProjects, ProjectMetrics, ProjectMetricsResponse } from './queryTypes'; 
    
 
@@ -97,6 +97,28 @@ export const getUserProjects = (): QueryResponseProjects<UserProjectData> => {
   }
 };
 
+export const getUserData = (): UserDataQueryResponse => {
+  const { data, loading, error, refetch } = useQuery(GET_USER_DATA, {
+    context: {
+      headers: {
+        Authorization: token ? `Bearer ${token}`: '', 
+      },
+    },
+    // Add these options to help manage the request timing
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'cache-first',
+    // Only start the query when we have a token
+    skip: !token,
+  });
+  // console.log('User project data from projectData file begins here:', data); 
+  // console.log('User project error from projectData file begins here:', error); 
+  return {
+    data: data?.getUserData,
+    loading,
+    error,
+    refetch
+  }
+};
 
 // Utility functions
 const calculateAverageQueryTime = (queries: (SlowMetricData | RegularMetricData)[]): number => {
@@ -130,11 +152,11 @@ export const getProjectMetrics = (projectId: string): ProjectMetricsResponse => 
     data: regularQueries, 
   } = getProjectRegularQueries(projectId);
 
-  const { 
-    loading: projectsLoading, 
-    error: projectsError, 
-    data: projects, 
-  } = getUserProjects();
+  // const { 
+  //   loading: projectsLoading, 
+  //   error: projectsError, 
+  //   data: projects, 
+  // } = getUserProjects();
 
   const calculateMetrics = (): ProjectMetrics | null => {
     if (!errors?.metrics || !slowQueries?.metrics || !regularQueries?.metrics) return null;
@@ -161,8 +183,10 @@ export const getProjectMetrics = (projectId: string): ProjectMetricsResponse => 
 
   return {
     metrics: calculateMetrics(),
-    loading: errorsLoading || slowQueriesLoading || regularQueriesLoading || projectsLoading,
-    error: errorsError || slowQueriesError || regularQueriesError || projectsError,
+    // loading: errorsLoading || slowQueriesLoading || regularQueriesLoading || projectsLoading,
+    // error: errorsError || slowQueriesError || regularQueriesError || projectsError,
+    loading: errorsLoading || slowQueriesLoading || regularQueriesLoading,
+    error: errorsError || slowQueriesError || regularQueriesError,
     errors: {
       code: errors?.code,
       success: errors?.success,
@@ -181,12 +205,12 @@ export const getProjectMetrics = (projectId: string): ProjectMetricsResponse => 
       message: regularQueries?.message, 
       metrics: regularQueries?.metrics || [],
     }, 
-    projects: {
-      code: projects?.code,
-      success: projects?.success,
-      message: projects?.message, 
-      projects: projects?.projects || [],
-    }
+    // projects: {
+    //   code: projects?.code,
+    //   success: projects?.success,
+    //   message: projects?.message, 
+    //   projects: projects?.projects || [],
+    // }
   };
 };
 

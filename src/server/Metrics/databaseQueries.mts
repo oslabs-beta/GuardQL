@@ -9,6 +9,27 @@ export const getUserProjects = async (db: DbConnection, userId: string) => {
   return projects.rows;  
 }
 
+export const getUserData = async (db: DbConnection, userId: string) => {
+  const userData = await db.query(
+    `SELECT username, email, api_key
+     FROM users
+     WHERE id = $1`, 
+    [userId]
+  );
+  return userData.rows[0];  
+}
+
+//! verify that the change from looking for project with the username to looking with the userId is functioning
+export const findProject = async (db: DbConnection, userId: string, projectName: string) => {
+  const project = await db.query(
+    `SELECT projects.*
+     FROM projects
+     JOIN users ON projects.user_id = users.id
+     WHERE users.id = $1 AND projects.name = $2`, 
+     [userId, projectName]
+  ); 
+  return project.rows[0]; 
+}
 
 export const getProjectErrorMetrics = async (db: DbConnection, projectId: string) => {
   const errorMetrics = await db.query(
@@ -52,17 +73,6 @@ export const getProjectRegularQueries = async (db: DbConnection, projectId: stri
     [projectId]
   ); 
   return metrics.rows; 
-}
-
-export const findProject = async (db: DbConnection, username: string, projectName: string) => {
-  const project = await db.query(
-    `SELECT projects.*
-     FROM projects
-     JOIN users ON projects.user_id = users.id
-     WHERE users.username = $1 AND projects.name = $2`, 
-     [username, projectName]
-  ); 
-  return project.rows[0]; 
 }
 
 
@@ -126,4 +136,28 @@ export const createProject = async (db: DbConnection, projectName: string, userI
     [userId, projectName]
   ); 
   return project.rows[0]; 
+}
+
+export const verifyApiKey = async (db: DbConnection, apiKey: string | undefined) => {
+  if (!apiKey) {
+    return null; 
+  }
+
+  const result = await db.query(
+    `SELECT id, username
+     FROM user
+     WHERE api_key = $1`, 
+    [apiKey] 
+  ); 
+  return result.rows[0] || null; 
+}
+
+export const getApiKey = async (db: DbConnection, userId: string | undefined) => {
+  const apiKey = await db.query(
+    `SELECT api_key 
+     FROM users 
+     WHERE id = $1`, 
+    [userId]
+  ); 
+  return apiKey.rows[0].api_key; 
 }

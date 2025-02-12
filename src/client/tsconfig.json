@@ -6,7 +6,9 @@
       "moduleResolution": "Node",
       "jsx": "react-jsx",
       "composite": true,
+      // "allowImportingTsExtensions": true,
       "noEmit": false,
     },
+    // "include" : ["../../src/**/*.ts", "../../src/**/*.tsx"]
     "include" : ["./**/*.ts", "./**/*.tsx"]
   }

@@ -1,25 +1,31 @@
 import React from "react";
 import { Link, animateScroll as scroll } from "react-scroll";
-import "../styles/home.css";
-import navLogo from '../assets/GuardQL_Text_Only-white.png';
-import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
-import Cindy from '../assets/profilepic-cindy.jpeg';
-import Sabrina from '../assets/profilepic-sabrina.jpeg';
-import Sienna from '../assets/profilepic-sienna.jpeg';
-import Mike from '../assets/profilepic-mike.jpeg';
-import Nico from '../assets/profilepic-nico.jpeg';
-import dashboard from '../assets/dashboard.png';
-import Footer from './Footer';
-import '../styles/footer.module.css';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+
+import { JwtPayload } from '../requests/apollo'; 
+
+
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import BugReportIcon from '@mui/icons-material/BugReport';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import SettingsInputHdmiIcon from '@mui/icons-material/SettingsInputHdmi';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
-import { JwtPayload } from '../requests/apollo'; 
+import { ArrowRight, GitBranch, AlertCircle, BarChart3, Server, Code2 } from 'lucide-react';
 
+import navLogo from '../assets/GuardQL_Text_Only-white.png';
+import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
+import dashboard from '../assets/dashboard.png';
+import Cindy from '../assets/profilepic-cindy.jpeg';
+import Sabrina from '../assets/profilepic-sabrina.jpeg';
+import Sienna from '../assets/profilepic-sienna.jpeg';
+import Mike from '../assets/profilepic-mike.jpeg';
+import Nico from '../assets/profilepic-nico.jpeg';
+
+import Footer from './Footer';
+import '../styles/footer.module.css';
+import "../styles/home.css";
+import PluginFlow from './PluginFlow'; 
 
 const App: React.FC = () => {
 
@@ -73,6 +79,7 @@ const App: React.FC = () => {
           <li><Link to="features" smooth={true} duration={500}>Features</Link></li>
           <li><Link to="how-it-works" smooth={true} duration={500}>How It Works</Link></li>
           <li><Link to="team" smooth={true} duration={500}>Team</Link></li>
+          <li><a href="https://github.com/oslabs-beta/GuardQL">GitHub</a></li>
           <li><a href="#" className="dashboard-btn" onClick={handleNavClick}>Dashboard</a></li>
         </ul>
       </nav>
@@ -90,7 +97,7 @@ const App: React.FC = () => {
 
       {/* About Section */}
       <section id="about" className="section">
-        <h2>About GuardQL</h2>
+        <h2 className="homepage-h2">About GuardQL</h2>
         <br></br>
         <img src={dashboard} alt="Dashboard Image" className="dashboard-image" style={{height:550, width:800}} />
         <br></br>
@@ -101,7 +108,7 @@ const App: React.FC = () => {
 
       {/* Features Section */}
       <section id="features" className="section">
-        <h2>Key Features</h2>
+        <h2 className="homepage-h2">Key Features</h2>
         <br></br>
         <div className="team-container">
           <div className="feature-card">
@@ -141,22 +148,14 @@ const App: React.FC = () => {
 
       {/* How It Works Section */}
       <section id="how-it-works" className="section">
-        <h2>How It Works</h2>
+        <h2 className="homepage-h2">How It Works</h2>
         <br></br>
-        <ol className="howList">
-          <li>1. Install the GuardQL NPM package</li>
-          <li>2. Add the GuardQL plugin to your Apollo Server configuaration</li>
-          <li>3. Log in to your GuardQL dashboard</li>
-          <li>4. Select the project you added the GuardQL plugin to, or create a new project and then select it</li>
-          <li>5. Run your GraphQL operations and view performance metrics in real-time on your dashboard</li>
-          {/* <li>6. Analyze errors & performance metrics</li>
-          <li>7. Optimize queries for better efficiency</li> */}
-        </ol>
+        <PluginFlow></PluginFlow>
       </section>
 
       {/* Team Section */}
       <section id="team" className="section">
-        <h2>Meet the Team</h2>
+        <h2 className="homepage-h2">Meet the Team</h2>
         <br></br>
         <p>GuardQL was built by passionate engineers dedicated to making debugging easier for developers.</p>
         <br></br>
