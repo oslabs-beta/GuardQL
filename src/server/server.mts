@@ -13,6 +13,7 @@ import pool from './OAuth/pool.mjs';
 import { verifyToken } from './OAuth/jwt.mjs'; 
 import { MyContext } from './Metrics/types.mjs';
 import jwt from 'jsonwebtoken'; 
+import { verifyApiKey } from './Metrics/databaseQueries.mjs'; 
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -56,19 +57,25 @@ async function startApolloServer() {
         // console.log('Request headers:', req.headers); 
         const token = req.headers.authorization?.replace('Bearer ', '');
         // console.log('Extracted token:', token); 
-         let userId: string | null = null; 
+        const apiKeyHeader = req.headers['api-key']; 
+        const apiKey = Array.isArray(apiKeyHeader) ? apiKeyHeader[0] : apiKeyHeader;
+        
+        let userId: string | null = null; 
 
         if (token) {
           try {
             const decoded = verifyToken(token); 
-            console.log('Decoded token begins here:', decoded); 
+            // console.log('Decoded token begins here:', decoded); 
             // console.log('Decoded token:', decoded); 
             userId = decoded.userId; 
           } catch (error) {
             console.error('Token verification failed:', error); 
           }
-        } else {
-          console.error('No token provided in request'); 
+        } else if (apiKey) {
+          const user = await verifyApiKey(pool, apiKey); 
+          if (user) {
+            userId = user.id; 
+          }
         }
         // console.log('Final userId:', userId);
         return {

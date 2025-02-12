@@ -3,27 +3,6 @@ type Mutation {
   createUser(input: CreateUserInput!): CreateUserResponse!
 }
 
-
-# type Query {
-#   getRequestTime(input: RequestTimeInput!): getRequestTimeResponse!
-# }
-
-# input RequestTimeInput {
-#   projectId: String!
-#   operation_name: String!
-# }
-
-# type getRequestTimeResponse {
-#   requestTimeData: [RequestTime!]!
-# }
-
-# type RequestTime {
-#   request_time: Int!
-#   date: String!
-#   time: String!
-# }
-
-
 input LoginInput {
   username: String!
   password: String!
@@ -44,6 +23,7 @@ type CreateUserResponse {
   code: Int!
   success: Boolean!
   message: String!
+  apiKey: String
 }
 
 type User {

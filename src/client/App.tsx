@@ -11,7 +11,7 @@ import PasswordReset from './components/PasswordReset';
 import Dashboard from './components/Dashboard';
 import Performance from './components/Performance';
 // import About from './components/About';
-// import Account from './components/Account';
+import Account from './components/Account';
 
 const App = () => {
   return (
@@ -23,7 +23,7 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />} /> 
           <Route path="/performance" element={<Performance />} />
           {/* <Route path="/about" element={<About />}/> */}
-          {/* <Route path="/account" element={<Account />} /> */}
+          <Route path="/account" element={<Account />} />
           <Route path="/login" element={<Login />}/>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />

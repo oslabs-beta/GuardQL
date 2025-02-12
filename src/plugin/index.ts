@@ -1,16 +1,19 @@
 // apollo interfaces and types for type checking our plugin 
 import { ApolloServerPlugin, GraphQLRequestListener, GraphQLRequestContext, BaseContext } from "@apollo/server";
 
+import { ApolloClient, InMemoryCache, createHttpLink, gql } from '@apollo/client';
+
+
 // type for plugin configuration 
 interface pluginConfig {
-  //!use randomly generated api keys later for more security 
-  username: string; 
-    /* user inputs the name of the project to identify which project GuardQL is tracking 
-    queries for. This projectId will be used to open up a new or existing project tab in 
-    the dashboard */
-    projectName: string; 
-    // user inputs a specific threshold (ms) to identify slow queries 
-    slowQueryThreshold: number; 
+  // username: string; 
+  /* user inputs the name of the project to identify which project GuardQL is tracking 
+  queries for. This projectId will be used to open up a new or existing project tab in 
+  the dashboard */
+  projectName: string; 
+  apiKey: string; 
+  // user inputs a specific threshold (ms) to identify slow queries 
+  slowQueryThreshold: number; 
 }
 
 const guardqlPlugin = (config: pluginConfig): ApolloServerPlugin => {
@@ -18,6 +21,30 @@ const guardqlPlugin = (config: pluginConfig): ApolloServerPlugin => {
   plugin as a function that takes in the configuartions as a parameter. Since the ApolloServerPlugin 
   interface expects the plugin to be an object, we will also need to immediately return an object 
   before we declare an event method */
+
+  // we need a dedicated Apollo Client instance for the plugin
+  const pluginClient = new ApolloClient({
+    link: createHttpLink({
+      uri: 'http://localhost:4000/graphql',
+      headers: {
+        'api-key': config.apiKey
+      }
+    }),
+    cache: new InMemoryCache()
+  });
+
+  // Define the mutation document 
+  const STORE_METRIC_MUTATION = gql`
+    mutation StoringQueryMetric($input: CreateQueryMetricInput!) {
+      createQueryMetric(input: $input) {
+        code
+        success
+        message
+      }
+    }
+  `;
+
+
   return {
     /* requestDidStart is a GraphQL server lifecycle event that fires whenever Apollo Server 
     begins fulfilling a GraphQL request */
@@ -40,16 +67,29 @@ const guardqlPlugin = (config: pluginConfig): ApolloServerPlugin => {
           
           // capture the time and date the response is sent to create a timestamp for the GraphQL request
           const requestDate = new Date(); 
-          const requestYear = requestDate.getFullYear(); 
-          const requestMonth = requestDate.getMonth() + 1; 
-          const requestDay = requestDate.getDate(); 
-          const requestHour = requestDate.getHours(); 
-          const requestMinute = requestDate.getMinutes(); 
-          const requestSeconds = requestDate.getSeconds(); 
+
+          const formattedDate = requestDate.toLocaleDateString('en-US', {
+            month: '2-digit',
+            day: '2-digit',
+            year: 'numeric'
+          });
+
+          const formattedTime = requestDate.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+          });
+
+          // const requestYear = requestDate.getFullYear(); 
+          // const requestMonth = requestDate.getMonth() + 1; 
+          // const requestDay = requestDate.getDate(); 
+          // const requestHour = requestDate.getHours(); 
+          // const requestMinute = requestDate.getMinutes(); 
+          // const requestSeconds = requestDate.getSeconds(); 
 
           // format the date and time into separate strings 
-          const formattedDate = `${requestMonth}-${requestDay}-${requestYear}`; 
-          const formattedTime = `${requestHour}:${requestMinute}:${requestSeconds}`; 
+          // const formattedDate = `${requestMonth}-${requestDay}-${requestYear}`; 
+          // const formattedTime = `${requestHour}:${requestMinute}:${requestSeconds}`; 
 
           // store errors here if they exist
           let errorsArray; 
@@ -82,24 +122,12 @@ const guardqlPlugin = (config: pluginConfig): ApolloServerPlugin => {
           }; 
 
           //^ sending query metric data to server 
-          await fetch('http://localhost:4000/graphql', {
-            method: 'POST', 
-            headers: {
-              'Content-Type': 'application/json', 
-            }, 
-            body: JSON.stringify({
-              query: `
-                mutation StoringQueryMetric ($input: CreateQueryMetricInput!) {
-                  createQueryMetric(input: $input) {
-                    code 
-                    success
-                    message
-                  }
-                }
-              `, 
+          try {
+            const result = await pluginClient.mutate({
+              mutation: STORE_METRIC_MUTATION, 
               variables: {
                 input: {
-                  username: config.username,  
+                  // username: config.username,  
                   projectName: config.projectName, 
                   date: formattedDate, 
                   time: formattedTime, 
@@ -111,9 +139,51 @@ const guardqlPlugin = (config: pluginConfig): ApolloServerPlugin => {
                   threshold_exceeded_by: thresholdExceededBy, // for slow queries
                   errors: errorsArray, // for queries that encountered errors 
                 }
-              }
-            })
-          }); 
+              },
+              fetchPolicy: 'network-only'
+            });
+
+            if (!result.data?.createQueryMetric.success) {
+              console.error('Failed to store metric:', result.data?.createQueryMetric.message);
+            }
+          } catch (error) {
+            console.error('Error storing metric:', error);
+          }
+
+
+          // //^ sending query metric data to server 
+          // await fetch('http://localhost:4000/graphql', {
+          //   method: 'POST', 
+          //   headers: {
+          //     'Content-Type': 'application/json', 
+          //   }, 
+          //   body: JSON.stringify({
+          //     query: `
+          //       mutation StoringQueryMetric ($input: CreateQueryMetricInput!) {
+          //         createQueryMetric(input: $input) {
+          //           code 
+          //           success
+          //           message
+          //         }
+          //       }
+          //     `, 
+          //     variables: {
+          //       input: {
+          //         username: config.username,  
+          //         projectName: config.projectName, 
+          //         date: formattedDate, 
+          //         time: formattedTime, 
+          //         operation: operation?.operation, 
+          //         operation_name: request.operationName, 
+          //         query: request.query, 
+          //         request_time: requestTime, 
+          //         query_threshold: config.slowQueryThreshold, 
+          //         threshold_exceeded_by: thresholdExceededBy, // for slow queries
+          //         errors: errorsArray, // for queries that encountered errors 
+          //       }
+          //     }
+          //   })
+          // }); 
         }
       });
     }

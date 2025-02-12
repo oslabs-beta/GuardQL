@@ -14,6 +14,39 @@ type Query {
   getProjectErrorMetrics(projectId: String!): GetProjectErrorMetricsResponse!
   "An array of all the projects for a specific user"
   getUserProjects: GetUserProjectsResponse!
+  "The user's API key"
+  getApiKey(showFull: Boolean!): getApiKeyResponse!
+  "The user's account information"
+  getUserData: getUserDataResponse!
+}
+
+"Return type to send user account information to the dashboard"
+type getUserDataResponse {
+  "status of the query"
+  code: Int!
+  "indicates whether the query was successful"
+  success: Boolean!
+  "message to confirm query outcome"
+  message: String!
+  "regular query metrics belonging to the project"
+  userData: UserData
+}
+
+type UserData {
+  "the user's username"
+  username: String!
+  "the user's email"
+  email: String!
+  "the user's API key"
+  api_key: String!
+}
+
+"Return type to send the API key to the dashboard"
+type getApiKeyResponse {
+  "a masked API key to display on the dashboard"
+  maskedKey: String!
+  "the unmasked API key to copy to the clipboard"
+  fullKey: String
 }
 
 "Return type to send all regular query metrics for a specific project to the dashboard"
@@ -89,10 +122,12 @@ type GetUserProjectsResponse {
 
 "Input to create a new query metric"
 input CreateQueryMetricInput {
-  "to identify which user the project belongs to"
-  username: String!
+  # "to identify which user the project belongs to"
+  # username: String!
   "projectName to identify the project the query metric belongs to"
   projectName: String!
+  # "api key to verify user"
+  # apiKey: String!
   "date to identify when the query ocurred"
   date: String!
   "time to identify when the query occurred"
