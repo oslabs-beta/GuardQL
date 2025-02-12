@@ -141,7 +141,8 @@ For major changes, please open an issue first to discuss what you’d like to ch
 - **Sabrina Ira** - [@sabrinaira](https://github.com/sabrinaira)
 - **Mike Thurstlic** - [@thurstlic7](https://github.com/thurstlic7) -->
 
-<!-- ## Contact Us: --->
+## Contact Us 
+LinkedIn link
 
 ## License
 Distributed under the [MIT](LICENSE.txt) License.
