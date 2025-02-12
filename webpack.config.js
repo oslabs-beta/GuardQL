@@ -3,6 +3,7 @@ import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import Dotenv from 'dotenv-webpack';
 import dotenv from 'dotenv';
 dotenv.config()
 
@@ -79,8 +80,9 @@ export default {
       filename: './index.html',
       favicon: './public/favicon.ico',
     }),
+    new Dotenv(), // This will load your .env file into Webpack
     new webpack.DefinePlugin({
-      'process.env.GRAPHQL_URI': JSON.stringify(process.env.GRAPHQL_URI),
+      'process.env.BACKEND_URL': JSON.stringify(process.env.BACKEND_URL || 'http://localhost:4000/graphql'),
     }),
     // new CopyPlugin({
     //   patterns: [{ from: './src/client/components/Home.css' }],

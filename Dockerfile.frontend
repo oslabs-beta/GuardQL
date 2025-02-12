@@ -5,6 +5,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 # Copy frontend source files
+COPY .env ./
 COPY ./src/client ./src/client
 COPY ./public ./public
 COPY ./webpack.config.js ./webpack.config.js

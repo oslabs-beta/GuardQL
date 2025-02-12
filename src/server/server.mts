@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import { ApolloServer } from '@apollo/server';
@@ -17,6 +18,9 @@ import { verifyToken } from './OAuth/jwt.mjs';
 import { MyContext } from './Metrics/types.mjs';
 import jwt from 'jsonwebtoken';
 import { verifyApiKey } from './Metrics/databaseQueries.mjs';
+
+// Load environment variables
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -113,9 +117,11 @@ const resolvers = {
 // Create an Express app to handle middleware
 const app = express();
 
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:8081';
+
 // Set up CORS middleware
 app.use(cors({
-  origin: 'http://localhost:8081', // Your frontend URL
+  origin: FRONTEND_URL, // Dynamically accept the frontend URL
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
 

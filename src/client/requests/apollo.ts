@@ -2,14 +2,13 @@ import { ApolloClient, InMemoryCache, ApolloLink, HttpLink } from '@apollo/clien
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 
-
 export interface JwtPayload {
   exp: number;
   [key: string]: any;
 }
 
 const httpLink = new HttpLink({
-  uri: process.env.GRAPHQL_URI || 'http://localhost:4000/graphql'
+  uri: process.env.BACKEND_URL || 'http://localhost:4000/graphql'
 })
 
 const authLink = new ApolloLink((operation, forward) => {
