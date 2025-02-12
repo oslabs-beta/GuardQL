@@ -114,7 +114,7 @@ If you’d like to contribute:
     - `git checkout -b feature-branch-name`
 3. Commit your changes
     - `git add .`
-    - `git commit -m "Added new feature XYZ`
+    - `git commit -m "Added new feature XYZ"`
 4. Push to your branch
     - `git push origin feature-branch-name`
 5. Create a pull request
