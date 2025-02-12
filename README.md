@@ -108,7 +108,7 @@ With GuardQL, developers gain real-time visibility into their GraphQL queries, m
             })
         ]
     });
-```
+    ```
 
 #### 5️⃣ Run Your Application
 * Start your server and begin making GraphQL requests as usual.
