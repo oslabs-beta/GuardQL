@@ -7,6 +7,8 @@ services:
     build:
       context: . # Root directory
       dockerfile: Dockerfile.frontend
+      args:
+        platform: amd64
     image: guardql-frontend:latest # name of the frontend docker image
     ports:
       - "8081:80" # frontend port
@@ -17,6 +19,8 @@ services:
     build:
       context: . # Root directory
       dockerfile: Dockerfile.backend
+      args:
+        platform: amd64
     image: guardql-backend:latest # name of the backend docker image
     ports:
       - "4000:4000" # apollo server port

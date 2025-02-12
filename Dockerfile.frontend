@@ -1,16 +1,14 @@
 # This is the FRONTEND Docker file
 # Step 1: Build the app
-FROM node:20 AS builder
+FROM node:20-slim AS builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 # Copy frontend source files
 COPY ./src/client ./src/client
+COPY ./public ./public
 COPY ./webpack.config.js ./webpack.config.js
 COPY ./tsconfig.json ./tsconfig.json
-
-# Copy the public folder (for index.html and favicon.ico)
-COPY ./public ./public
 
 # Build the frontend assets
 RUN npm run build:frontend
