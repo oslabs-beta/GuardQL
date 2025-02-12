@@ -77,6 +77,7 @@ Seamless GraphQL Integration via NPM Plugin
 1️⃣ Sign Up & Get Your API Key
 * Create an account to gain access to the GuardQL Dashboard.
 * Upon signup, you'll receive a unique API key, which is required for configuring the plugin. 
+![signup]()
 
 2️⃣ Create & Select a Project
 * Inside the dashboard, create a new project using the project dropdown.
