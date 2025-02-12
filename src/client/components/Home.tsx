@@ -75,10 +75,10 @@ const App: React.FC = () => {
           <img src={navLogo} alt="GuardQL Logo" className="nav-logo" style={{height:50, width:200}} />
         </h1>
         <ul>
-          <li><Link to="about" smooth={true} duration={500}>About</Link></li>
-          <li><Link to="features" smooth={true} duration={500}>Features</Link></li>
-          <li><Link to="how-it-works" smooth={true} duration={500}>How It Works</Link></li>
-          <li><Link to="team" smooth={true} duration={500}>Team</Link></li>
+          <li><Link to="about" smooth={true} duration={500} offset={-80}>About</Link></li>
+          <li><Link to="features" smooth={true} duration={500} offset={-80}>Features</Link></li>
+          <li><Link to="how-it-works" smooth={true} duration={500} offset={-80}>How It Works</Link></li>
+          <li><Link to="team" smooth={true} duration={500} offset={-80}>Team</Link></li>
           <li><a href="https://github.com/oslabs-beta/GuardQL">GitHub</a></li>
           <li><a href="#" className="dashboard-btn" onClick={handleNavClick}>Dashboard</a></li>
         </ul>
@@ -99,10 +99,13 @@ const App: React.FC = () => {
       <section id="about" className="section">
         <h2 className="homepage-h2">About GuardQL</h2>
         <br></br>
-        <img src={dashboard} alt="Dashboard Image" className="dashboard-image" style={{height:550, width:800}} />
+          <video autoPlay loop muted playsInline className="demo-video">
+            <source src="https://i.imgur.com/pO9IHyC.mp4" type="video/mp4"/>
+              Your browser does not support the video tag.
+          </video>
         <br></br>
         <br></br>
-        <p className="about-p">GuardQL is a powerful debugging and performance monitoring tool designed to help developers optimize their GraphQL queries.
+        <p className="about-p">GuardQL is a powerful debugging and performance monitoring tool designed to help developers optimize their GraphQL queries during development.
         With real-time insights, error tracking, and slow query analysis, GuardQL empowers developers to maintain high-performing applications.</p>
       </section>
 
@@ -132,8 +135,12 @@ const App: React.FC = () => {
             <h3 className = "profile-h3">Intuitive Dashboard</h3>
             <h4 className = "features-h4">Clean, User-Friendly UI</h4>
             <p className = "features-p">Designed for quick debugging and troubleshooting</p>
-            <h4 className = "features-h4">Graphical Performance Reports</h4>
-            <p className = "features-p">Displays query performance trends over time</p>
+            {/* <h4 className = "features-h4">Graphical Performance Reports</h4>
+            <p className = "features-p">Displays query performance trends over time</p> */}
+            <h4 className="features-h4">Centralized Monitoring</h4>
+            <p className="features-p">Access all your system information in one place</p>
+            <h4 className="features-h4">Easy Navigation</h4>
+            <p className="features-p">Quickly find and access the tools you need</p>
           </div>
           <div className="feature-card">
             <SettingsInputHdmiIcon className="feature-icon" />
