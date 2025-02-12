@@ -77,11 +77,12 @@ Seamless GraphQL Integration via NPM Plugin
 1️⃣ Sign Up & Get Your API Key
 * Create an account to gain access to the GuardQL Dashboard.
 * Upon signup, you'll receive a unique API key, which is required for configuring the plugin. 
-![signup]()
+![signup](assets/signup.gif)
 
 2️⃣ Create & Select a Project
 * Inside the dashboard, create a new project using the project dropdown.
 * Select your project to start tracking GraphQL request performance and error logs.
+![projects](assets/add-projects.gif)
 
 3️⃣ Install the GuardQL NPM Package
 * Add GuardQL to your application by running:
@@ -110,9 +111,12 @@ If you’d like to contribute:
 
 1. Fork this repository
 2. Create a feature branch 
-    `git checkout -b`
+    `git checkout -b feature-branch-name`
 3. Commit your changes
+    `git add .`
+    `git commit -m "Added new feature XYZ`
 4. Push to your branch
+    `git push origin feature-branch-name`
 5. Create a pull request
 
 For major changes, please open an issue first to discuss what you’d like to change.
