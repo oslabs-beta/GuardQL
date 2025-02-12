@@ -111,12 +111,12 @@ If you’d like to contribute:
 
 1. Fork this repository
 2. Create a feature branch 
-    `git checkout -b feature-branch-name`
+    - `git checkout -b feature-branch-name`
 3. Commit your changes
-    `git add .`
-    `git commit -m "Added new feature XYZ`
+    - `git add .`
+    - `git commit -m "Added new feature XYZ`
 4. Push to your branch
-    `git push origin feature-branch-name`
+    - `git push origin feature-branch-name`
 5. Create a pull request
 
 For major changes, please open an issue first to discuss what you’d like to change.
