@@ -93,6 +93,20 @@ With GuardQL, developers gain real-time visibility into their GraphQL queries, m
     * Your project name
     * The API key from your dashboard
     * Any query execution time thresholds for slow query detection
+    ```import { ApolloServer } from '@apollo/server';
+       import { guardqlPlugin } from 'guardql';
+        
+        const server = new ApolloServer({
+        typeDefs,
+        resolvers,
+        plugins: [
+            guardqlPlugin({
+                apiKey: 'your-api-key',
+                projectName: 'your-project-name',
+                slowQueryThreshold: 1000 // in milliseconds
+            })
+        ]
+    });```
 
 #### 5️⃣ Run Your Application
 * Start your server and begin making GraphQL requests as usual.
