@@ -6,12 +6,12 @@ const PluginFlow = () => {
     {
       icon: <UserPlus size={32} />,
       title: "1. Create Account",
-      description: "Create an account to access the GuardQL dashboard. You'll receive an API key upon signup for plugin configuration."
+      description: "Create an account to access the GuardQL dashboard. You'll receive an API key upon signup which you will use later on for the plugin configuration in your Apollo Server."
     },
     {
       icon: <LayoutDashboard size={32} />,
       title: "2. Create Project",
-      description: "Once logged in, create a new project via the projects dropdown. Select your project to view GraphQL request insights."
+      description: "Once logged in, create a new project via the projects dropdown. Once created, your project will appear in the dropdown. Select the project to later view it's GraphQL request insights."
     },
     {
       icon: <Package size={32} />,
@@ -21,7 +21,7 @@ const PluginFlow = () => {
     {
       icon: <Code2 size={32} />,
       title: "4. Configure Plugin",
-      description: "Add GuardQL plugin to Apollo Server with your project name, API key, and query threshold settings."
+      description: "Add the GuardQL plugin to your app's Apollo Server, along with your project name, API key, and query threshold in milliseconds."
     },
     {
       icon: <Play size={32} />,
@@ -31,7 +31,7 @@ const PluginFlow = () => {
     {
       icon: <BarChart3 size={32} />,
       title: "6. Monitor Metrics",
-      description: "View your performance metrics in real-time on your GuardQL dashboard!"
+      description: "Refresh to view your project's performance metrics in your GuardQL dashboard!"
     }
   ];
 
