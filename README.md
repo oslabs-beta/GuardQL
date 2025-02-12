@@ -97,15 +97,15 @@ With GuardQL, developers gain real-time visibility into their GraphQL queries, m
        import { ApolloServer } from '@apollo/server';
        import { guardqlPlugin } from 'guardql';
         
-        const server = new ApolloServer({
-        typeDefs,
-        resolvers,
-        plugins: [
-            guardqlPlugin({
-                apiKey: 'your-api-key',
-                projectName: 'your-project-name',
-                slowQueryThreshold: 1000 // in milliseconds
-            })
+       const server = new ApolloServer({
+         typeDefs,
+         resolvers,
+         plugins: [
+           guardqlPlugin({
+             apiKey: 'your-api-key',
+             projectName: 'your-project-name',
+             slowQueryThreshold: 1000 // in milliseconds
+           })
         ]
     });
     ```
