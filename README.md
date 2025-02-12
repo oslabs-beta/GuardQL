@@ -56,48 +56,48 @@ With GuardQL, developers gain real-time visibility into their GraphQL queries, m
 
 ## Features
 
-Real-time GraphQL Error Tracking & Debugging
+#### 🚨 Real-time GraphQL Error Tracking & Debugging
 * Instant Error Logging: Captures GraphQL API errors as they occur, complete with timestamps and detailed error messages.
 * Query & Mutation Context: Provides full visibility into which GraphQL query or mutation caused the error, along with stack trace details.
 
-Performance Monitoring & Query Optimization
+#### 🎯 Performance Monitoring & Query Optimization
 * Slow Query Identification: Automatically flags GraphQL queries that take longer than a set threshold, helping pinpoint performance bottlenecks.
 * Comprehensive Query Performance Tracking: Logs execution times for all queries, not just slow ones, offering a complete overview of GraphQL performance.
 
-Intuitive & Insightful Dashboard
+#### 📊 Intuitive & Insightful Dashboard
 * User-Friendly Interface: Built for fast debugging and troubleshooting with a clean, easy-to-navigate UI.
 * Visual Performance Analytics: Displays query execution trends and error frequency over time through graphical reports.
 
-Seamless GraphQL Integration via NPM Plugin
+#### 🚀 Seamless GraphQL Integration via NPM Plugin
 * Effortless Setup: A lightweight NPM package that integrates smoothly into any GraphQL project with minimal configuration.
 * Automated Logging: Instantly starts tracking errors and performance metrics without requiring additional setup.
 
 ## Initial Set-up and Installation
 
-1️⃣ Sign Up & Get Your API Key
+#### 1️⃣ Sign Up & Get Your API Key
 * Create an account to gain access to the GuardQL Dashboard.
 * Upon signup, you'll receive a unique API key, which is required for configuring the plugin. 
 ![signup](assets/signup.gif)
 
-2️⃣ Create & Select a Project
+#### 2️⃣ Create & Select a Project
 * Inside the dashboard, create a new project using the project dropdown.
 * Select your project to start tracking GraphQL request performance and error logs.
 ![projects](assets/add-projects.gif)
 
-3️⃣ Install the GuardQL NPM Package
+#### 3️⃣ Install the GuardQL NPM Package
 * Add GuardQL to your application by running:
     `npm install guardql`
 
-4️⃣ Configure the Plugin in Apollo Server
+#### 4️⃣ Configure the Plugin in Apollo Server
 * Integrate GuardQL into your Apollo Server setup by adding the plugin and providing:
     * Your project name
     * The API key from your dashboard
     * Any query execution time thresholds for slow query detection
 
-5️⃣ Run Your Application
+#### 5️⃣ Run Your Application
 * Start your server and begin making GraphQL requests as usual.
 
-6️⃣ Monitor Your API in Real-Time
+#### 6️⃣ Monitor Your API in Real-Time
 * Access the GuardQL Dashboard to track:
     * Query execution times
     * GraphQL errors with stack traces
