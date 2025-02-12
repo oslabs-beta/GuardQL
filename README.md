@@ -14,15 +14,15 @@ screenshots, more details about product, acknowledgements, instructions
 <details>
   <summary>Table of Contents</summary>
   
-  - [Technologies](##-technologies)
-  - [Introduction](##-introduction)
-  - [Features](##-features)
-  - [Initial Set-up and Installation](##-initial-set-up--installation)
-  - [Contributing](##-contributing)
-  - [GuardQL Team](##-guardql-team)
-  - [Contact Us](##-contact-us)
-  - [License](##-license)
-  - [Acknowledgements](##-acknowledgements)
+  - [Technologies](#technologies)
+  - [Introduction](#introduction)
+  - [Features](#features)
+  - [Initial Set-up and Installation](#initial-set-up--installation)
+  - [Contributing](#contributing)
+  - [GuardQL Team](#guardql-team)
+  - [Contact Us](#contact-us)
+  - [License](#license)
+  - [Acknowledgements](#acknowledgements)
 
 </details>
 
