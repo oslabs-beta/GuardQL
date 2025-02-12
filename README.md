@@ -26,7 +26,7 @@ screenshots, more details about product, acknowledgements, instructions
 
 </details>
 
-## Technologies:
+## Technologies
 <!-- Backend -->
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
@@ -43,7 +43,7 @@ screenshots, more details about product, acknowledgements, instructions
 ![React Hook Form](https://img.shields.io/badge/React%20Hook%20Form-%23EC5990.svg?style=for-the-badge&logo=reacthookform&logoColor=white)
 ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
 
-## Introduction: 
+## Introduction 
 
 Debugging GraphQL APIs can be difficult, especially when trying to pinpoint errors in slow or inefficient queries. GuardQL streamlines this process by providing a comprehensive debugging and performance monitoring tool that:
 
@@ -54,7 +54,7 @@ Debugging GraphQL APIs can be difficult, especially when trying to pinpoint erro
 
 With GuardQL, developers gain real-time visibility into their GraphQL queries, making it easier to diagnose issues and optimize performance.
 
-## Features:
+## Features
 
 Real-time GraphQL Error Tracking & Debugging
 * Instant Error Logging: Captures GraphQL API errors as they occur, complete with timestamps and detailed error messages.
@@ -72,7 +72,7 @@ Seamless GraphQL Integration via NPM Plugin
 * Effortless Setup: A lightweight NPM package that integrates smoothly into any GraphQL project with minimal configuration.
 * Automated Logging: Instantly starts tracking errors and performance metrics without requiring additional setup.
 
-## Initial Set-up and Installation:
+## Initial Set-up and Installation
 
 1️⃣ Sign Up & Get Your API Key
 * Create an account to gain access to the GuardQL Dashboard.
@@ -101,7 +101,7 @@ Seamless GraphQL Integration via NPM Plugin
     * GraphQL errors with stack traces
     * Performance trends and slow query alerts
 
-## Contributions:
+## Contributions
 
 We welcome contributions!
 
@@ -109,13 +109,14 @@ If you’d like to contribute:
 
 1. Fork this repository
 2. Create a feature branch 
+    `git checkout -b`
 3. Commit your changes
 4. Push to your branch
 5. Create a pull request
 
 For major changes, please open an issue first to discuss what you’d like to change.
 
-## GuardQL Team:
+## GuardQL Team
 ---
 <!-- Nico Henry -->
 ![Static Badge](https://img.shields.io/badge/Henry%20%E2%86%92-none?style=flat-square&logoColor=white&logoSize=auto&label=Nico&labelColor=%23E623C6&color=%238A1877) [![Static Badge](https://img.shields.io/badge/%40Nico21221-Dark%20Charcoal?style=flat-square&logo=Github&logoColor=white&logoSize=auto&color=%23333333)](https://github.com/Nico21221) [![LinkedIn](https://img.shields.io/badge/linkedin/in/nico_henry-%230077B5.svg?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/nico-henry/)
@@ -135,10 +136,18 @@ For major changes, please open an issue first to discuss what you’d like to ch
 - **Sabrina Ira** - [@sabrinaira](https://github.com/sabrinaira)
 - **Mike Thurstlic** - [@thurstlic7](https://github.com/thurstlic7) -->
 
-<!-- ### Contact Us: --->
+<!-- ## Contact Us: --->
 
-## License: This project is licensed under the [MIT](LICENSE.txt) License.
+## License
+Distributed under the [MIT](LICENSE.txt) License.
 
-<!-- ### Acknowledgements:--- -->
----
+## Acknowledgements
+
+We would like to thank the following resources that helped make GuardQL possible:
+
+- **[Material-UI](https://mui.com/)** - Used for designing UI components
+- **[Canva](https://www.canva.com/)** - Used to help create logo
+
+Special thanks to the entire GuardQL team for their hard work and dedication into making GuardQL a reality! ✨
+
 #### Return to [top](#guardql)
