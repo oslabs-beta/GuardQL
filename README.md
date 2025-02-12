@@ -47,10 +47,10 @@ screenshots, more details about product, acknowledgements, instructions
 
 Debugging GraphQL APIs can be difficult, especially when trying to pinpoint errors in slow or inefficient queries. GuardQL streamlines this process by providing a comprehensive debugging and performance monitoring tool that:
 
-✅ Captures GraphQL API errors in real-time with detailed logs
-✅ Monitors query execution times to detect inefficiencies
-✅ Offers an intuitive dashboard for visualizing key performance metrics
-✅ Enables users to create and manage multiple projects with a dropdown selection
+- ✅ Captures GraphQL API errors in real-time with detailed logs
+- ✅ Monitors query execution times to detect inefficiencies
+- ✅ Offers an intuitive dashboard for visualizing key performance metrics
+- ✅ Enables users to create and manage multiple projects with a dropdown selection
 
 With GuardQL, developers gain real-time visibility into their GraphQL queries, making it easier to diagnose issues and optimize performance.
 
