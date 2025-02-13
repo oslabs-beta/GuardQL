@@ -4,11 +4,19 @@
   "description": "",
   "main": "src/client/components/index.jsx",
   "type": "module",
+  "jest": {
+    "transform": {
+      "^.+\\.m?[tj]sx?$": ["ts-jest", { "useESM": true }]
+    }
+  },
   "scripts": {
     "start:server": "nodemon --exec tsx src/server/server.mts",
     "start:client": "webpack serve --mode development --open",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test:plugin": "node --loader ts-node/esm src/test-env/test-server.mts",
+    "test:client": "jest --config jest.config.js",
+    "test:server": "jest --config jest.server.config.js",
+    "test": "jest --config jest.config.js && jest --config jest.server.config.js",
+    "test:client:watch": "jest --config jest.config.js --watch",
+    "test:server:watch": "jest --config jest.server.config.js --watch",
     "dev": "concurrently \"npm run start:server\" \"npm run start:client\"",
     "build": "npm run build:frontend && npm run build:backend",
     "build:frontend": "webpack --mode production",
@@ -58,7 +66,11 @@
     "@babel/plugin-transform-typescript": "^7.26.5",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.26.3",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/bcrypt": "^5.0.2",
+    "@types/jest": "^29.5.14",
     "@types/cors": "^2.8.17",
     "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "^22.10.6",
@@ -75,6 +87,9 @@
     "dotenv-webpack": "^8.1.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.6.3",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "mini-css-extract-plugin": "^2.9.2",
     "nodemon": "^3.1.9",
     "path": "^0.12.7",

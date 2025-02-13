@@ -141,7 +141,7 @@ input CreateQueryMetricInput {
   "amount of time exceeded from threshold"
   threshold_exceeded_by: Float
   "array of errors that occurred during the operation"
-  errors: [ErrorDetailsInput]
+  errors: [ErrorDetailsInput!]
 }
 
 "Properties in each error object within the errors array"
@@ -150,6 +150,18 @@ input ErrorDetailsInput {
   message: String!
   "array of locations where the error is located"
   locations: [ErrorLocationInput!]!
+  "array of error path"
+  path: [String!]!
+  "object containing the code and stacktrace of the error"
+  extensions: ExtensionsInput!
+}
+
+"properties withing the extension object"
+input ExtensionsInput {
+  "error code string"
+  code: String!
+  "array of strings containing the error and stacktrace"
+  stacktrace: [String!]!
 }
 
 "Properties in each location object within the locations array"
