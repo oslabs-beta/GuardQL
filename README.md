@@ -68,7 +68,6 @@ With GuardQL, developers gain real-time visibility into their GraphQL queries, m
 
 #### 📊 Intuitive & Insightful Dashboard
 * User-Friendly Interface: Built for fast debugging and troubleshooting with a clean, easy-to-navigate UI.
-* Visual Performance Analytics: Displays query execution trends and error frequency over time through graphical reports.
 
 #### 🚀 Seamless GraphQL Integration via NPM Plugin
 * Effortless Setup: A lightweight NPM package that integrates smoothly into any GraphQL project with minimal configuration.
