@@ -144,10 +144,11 @@ export const verifyApiKey = async (db: DbConnection, apiKey: string | undefined)
   }
 
   const result = await db.query(
-    `SELECT id, username
-     FROM user
-     WHERE api_key = $1`, 
-    [apiKey] 
+    `SELECT DISTINCT ON (id) id, username 
+     FROM users 
+     WHERE api_key = $1
+     LIMIT 1`,
+    [apiKey]
   ); 
   return result.rows[0] || null; 
 }

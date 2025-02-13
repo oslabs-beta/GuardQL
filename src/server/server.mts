@@ -69,12 +69,17 @@ async function startApolloServer() {
             // console.log('Decoded token:', decoded); 
             userId = decoded.userId; 
           } catch (error) {
-            console.error('Token verification failed:', error); 
+            // console.error('Token verification failed:', error); 
           }
         } else if (apiKey) {
+          // console.log('The api key begins here:', apiKey); 
           const user = await verifyApiKey(pool, apiKey); 
           if (user) {
+            // console.log('The user from verifying the api key begins here:', user); 
             userId = user.id; 
+            // console.log('This is the userId after extracting it from the api key:', userId);
+          } else if (!user) {
+            // console.log('The falsy user from verifying the api key begins here:', user); 
           }
         }
         // console.log('Final userId:', userId);

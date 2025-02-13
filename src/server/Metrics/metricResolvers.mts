@@ -153,10 +153,10 @@ const metricResolvers = {
   }, 
   Mutation: {
     createQueryMetric: async (_: any, { input }: { input: MetricInput }, { db, userId }: { db: DbConnection, userId: string | null }) => {
-    //   console.log('User input begins here:', input); 
-    //   console.log('UserId begins here:', userId); 
+      // console.log('User input from the createQueryMettric resolver begins here:', input); 
+      // console.log('UserId from the createQueryMettric resolver begins here:', userId); 
       if (!userId) {
-        throw new Error('You must be logged in to record metrics'); 
+        throw new Error('You must provide an API key to record metrics'); 
       }
 
       try {
@@ -169,14 +169,15 @@ const metricResolvers = {
           }; 
         }
 
-        const apiKeyVerification = await verifyApiKey(db, userId);
-        if (!apiKeyVerification) {
-          return {
-            code: 500, 
-            success: false, 
-            message: 'Invalid API key'
-          }; 
-        }
+        // const apiKeyVerification = await verifyApiKey(db, userId);
+        // console.log('This is the result from the verifyApiKey function:', apiKeyVerification); 
+        // if (!apiKeyVerification) {
+        //   return {
+        //     code: 500, 
+        //     success: false, 
+        //     message: 'Invalid API key'
+        //   }; 
+        // }
 
         const queryMetric = await createQueryMetric(db, project.id, input); 
 
