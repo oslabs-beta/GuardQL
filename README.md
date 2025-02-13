@@ -160,6 +160,7 @@ For major changes, please open an issue first to discuss what you’d like to ch
 - **Mike Thurstlic** - [@thurstlic7](https://github.com/thurstlic7) -->
 
 ## Contact Us 
+
 LinkedIn link
 
 ## License
