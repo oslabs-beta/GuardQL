@@ -19,7 +19,6 @@ export const getUserData = async (db: DbConnection, userId: string) => {
   return userData.rows[0];  
 }
 
-//! verify that the change from looking for project with the username to looking with the userId is functioning
 export const findProject = async (db: DbConnection, userId: string, projectName: string) => {
   const project = await db.query(
     `SELECT projects.*

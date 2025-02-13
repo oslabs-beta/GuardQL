@@ -2,7 +2,6 @@ import { findUserByUsername, createUser, getUserByUsername, getUserByEmail } fro
 import { DbConnection } from '../Metrics/types.mjs'; 
 import { generateToken } from './jwt.mjs'; 
 import { generateApiKey } from './apiKey.mjs'; 
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 

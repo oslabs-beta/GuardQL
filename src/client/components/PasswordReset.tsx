@@ -3,6 +3,7 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button, TextField } from '@mui/material'
 import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SignUp from './Sign-Up'
 import * as styles from '../styles/login-and-signup.module.css'
 import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png'
@@ -14,6 +15,12 @@ type FormField = {
   newPassword: string;
   confirmPassword: string;
 }
+
+const theme = createTheme({
+  typography: {
+    fontFamily: 'Montserrat, sans-serif',
+  },
+});
 
 function PasswordReset() {
   const navigate = useNavigate();
@@ -28,6 +35,12 @@ function PasswordReset() {
   return (
     <div className={styles.background}>
       <div className={styles.container}>
+        <ThemeProvider theme={theme}>
+        <div className={styles.leftContainer}>
+            <h1>Uncover, Analyze, and Optimize Your GraphQL Performance</h1>
+            <br></br>
+            <Link to={'/home'}><img src ={logo} alt='GuardQL Logo' style={{ width: '400px', height: 'auto' }} /></Link>
+          </div>
         <div className={styles.rightContainer}>
           <div className={styles.loginFormContainer}>
             <Typography component='h3' variant='h4'>Create Password</Typography>
@@ -88,9 +101,9 @@ function PasswordReset() {
               />
               <Button type='submit' variant='contained' className='submitButton' fullWidth
                 sx={{
-                  backgroundColor: 'hotpink',
+                  backgroundColor: '#e623c6',
                   '&:hover': {
-                    backgroundColor: 'deeppink',
+                    backgroundColor: '#e263cd',
                   },
                   marginTop: '15px',
                 }}
@@ -100,6 +113,7 @@ function PasswordReset() {
             </form>
           </div>
         </div>
+        </ThemeProvider>
       </div>
       <Footer />
     </div>

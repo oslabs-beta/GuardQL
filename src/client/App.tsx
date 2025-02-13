@@ -10,7 +10,6 @@ import ConfirmationEmail from './components/ConfirmEmail';
 import PasswordReset from './components/PasswordReset';
 import Dashboard from './components/Dashboard';
 import Performance from './components/Performance';
-// import About from './components/About';
 import Account from './components/Account';
 
 const App = () => {
@@ -22,7 +21,6 @@ const App = () => {
           <Route path="/home" element={<Home />}/> 
           <Route path="/dashboard" element={<Dashboard />} /> 
           <Route path="/performance" element={<Performance />} />
-          {/* <Route path="/about" element={<About />}/> */}
           <Route path="/account" element={<Account />} />
           <Route path="/login" element={<Login />}/>
           <Route path="/signup" element={<SignUp />} />

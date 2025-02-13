@@ -4,23 +4,17 @@ import cors from 'cors';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { startStandaloneServer } from '@apollo/server/standalone';
-import { readFileSync } from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { readFileSync } from 'fs';
+import pool from './OAuth/pool.mjs';
 import authResolvers from './OAuth/authResolvers.mjs';
 import metricResolvers from './Metrics/metricResolvers.mjs';
 import { gql } from 'graphql-tag';
-// import { Context } from './backendOauth/pool.mjs';
-import { Pool } from 'pg';
-import pool from './OAuth/pool.mjs';
 import { verifyToken } from './OAuth/jwt.mjs';
 import { MyContext } from './Metrics/types.mjs';
-import jwt from 'jsonwebtoken';
 import { verifyApiKey } from './Metrics/databaseQueries.mjs';
-
-// Load environment variables
-dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -141,7 +135,7 @@ async function startApolloServer() {
     await server.start(); // Start Apollo Server
 
     // Use Apollo Server middleware for GraphQL endpoint
-    app.use('/', expressMiddleware(server, {
+    app.use('/graphql', expressMiddleware(server, {
       context: async ({ req }) => {
         // Handle your context setup, token extraction, etc.
         const token = req.headers.authorization?.replace('Bearer ', '');
@@ -173,7 +167,7 @@ async function startApolloServer() {
 
     // Start Express server
     app.listen(4000, () => {
-      console.log('🚀 Server is running at http://localhost:4000');
+      console.log('🚀 Server is running at http://localhost:4000/graphql');
     });
   } catch (error) {
     console.error('🚀 Error starting Apollo Server:', error);

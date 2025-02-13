@@ -122,12 +122,8 @@ type GetUserProjectsResponse {
 
 "Input to create a new query metric"
 input CreateQueryMetricInput {
-  # "to identify which user the project belongs to"
-  # username: String!
   "projectName to identify the project the query metric belongs to"
   projectName: String!
-  # "api key to verify user"
-  # apiKey: String!
   "date to identify when the query ocurred"
   date: String!
   "time to identify when the query occurred"
@@ -139,11 +135,11 @@ input CreateQueryMetricInput {
   "user's GraphQL query"
   query: String! 
   "time it took for request to be executed"
-  request_time: Int!
+  request_time: Float!
   "user inputted threshold for query time"
-  query_threshold: Int!
+  query_threshold: Float!
   "amount of time exceeded from threshold"
-  threshold_exceeded_by: Int
+  threshold_exceeded_by: Float
   "array of errors that occurred during the operation"
   errors: [ErrorDetailsInput]
 }
@@ -191,11 +187,11 @@ type Metric {
   "user's GraphQL query"
   query: String! 
   "time it took for request to be executed"
-  request_time: Int!
+  request_time: Float!
   "user inputted threshold for query time"
-  query_threshold: Int!
+  query_threshold: Float!
   "amount of time exceeded from threshold"
-  threshold_exceeded_by: Int
+  threshold_exceeded_by: Float
   "array of errors that occurred during the operation"
   errors: [ErrorDetails]
 }
@@ -217,9 +213,9 @@ type ReturnedErrorMetric {
   "user's GraphQL query"
   query: String! 
   "time it took for request to be executed"
-  request_time: Int!
+  request_time: Float!
   "user inputted threshold for query time"
-  query_threshold: Int!
+  query_threshold: Float!
   "error ID"
   error_id: String!
   "error message"
@@ -247,11 +243,11 @@ type ReturnedSlowQuery {
   "user's GraphQL query"
   query: String! 
   "time it took for request to be executed"
-  request_time: Int!
+  request_time: Float!
   "user inputted threshold for query time"
-  query_threshold: Int!
+  query_threshold: Float!
   "amount of time exceeded from threshold"
-  threshold_exceeded_by: Int!
+  threshold_exceeded_by: Float!
 }
 
 "Returned regular query metric structure for the dashboard's regular queries display"
@@ -271,9 +267,9 @@ type ReturnedRegularQuery {
   "user's GraphQL query"
   query: String! 
   "time it took for request to be executed"
-  request_time: Int!
+  request_time: Float!
   "user inputted threshold for query time"
-  query_threshold: Int!
+  query_threshold: Float!
 }
 
 "Properties in each error object within the errors array"

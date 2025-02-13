@@ -36,6 +36,3 @@ input LoginInput {
   password: String!
 }
 
-# type Query {
-#   getAllUsers: [User!]!
-# }

@@ -7,7 +7,6 @@ import { client, JwtPayload } from '../requests/apollo';
 import { GET_USER_DATA } from '../requests/gqlQueries';
 import { getUserData } from '../requests/queryHooks';
 import { getUserDataResponse } from '../requests/queryTypes';
-// import { getProjectMetrics } from '../lib/queryHooks';
 
 
 import { Snackbar, ThemeProvider, createTheme, Paper, IconButton, Tooltip, Container, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, List, Box,
@@ -27,11 +26,9 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import EditIcon from '@mui/icons-material/Edit';
 
-
 import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 import '../styles/dashboard.css';
 
-// import {   } from '@mui/material/styles';
 
 const theme = createTheme({
     typography: {
@@ -48,7 +45,6 @@ interface NavItem {
 const drawerWidth = 240;
 
 export default function Account() {
-//   const [showRegenerateDialog, setShowRegenerateDialog] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showApiKey, setShowApiKey] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -61,7 +57,6 @@ export default function Account() {
   const token = localStorage.getItem('jwt');
 
   useEffect(() => {
-    // const token = localStorage.getItem('jwt');
     if (!token) {
       navigate('/login');
       return;
@@ -106,7 +101,6 @@ export default function Account() {
     { text: 'Log Out', icon: <LogoutIcon sx={{ color: '#FFFFFF' }} />, link: '/logout' },
   ];
 
-//   const { data, refetch } = getUserData();
 
   const { data, loading, error } = useQuery(GET_USER_DATA, {
     context: {
@@ -139,38 +133,7 @@ export default function Account() {
   }
 
   const userData = data?.getUserData?.userData;
-
-//   let userData = {
-//     username: "exampleUser",
-//     email: "user@example.com",
-//     apiKey: "guardql_sk_abc123xyz789",
-//   };
-
-//   const getUserInfo = async () => {
-    //  try {
-    //     const refetchUserData = ( refetch() as unknown) as { data?: { getUserData: getUserDataResponse } };
-    //     console.log('data from account.tsx begins here:', data);
-    //     console.log('refetchUserData from account.tsx begins here:', refetchUserData);
-    //     if (refetchUserData?.data?.getUserData?.userData) {
-    //       const data = refetchUserData.data.getUserData.userData;
-    //       userData['username'] = data.username;
-    //       userData['email'] = data.email;
-    //       userData['apiKey'] = data.api_key;
-    //       console.log('The refetched data begins here:', refetchUserData?.data?.getUserData?.userData)
-    //     }
-    //   } catch (error) {
-    //     // console.log('useMutation not successful, error begins here:', error);
-    //     console.error('There was an error retrieving your account information');
-    //     userData['username'] = 'There was an error retrieving your username';
-    //     userData['email'] = 'There was an error retrieving your email';
-    //     userData['apiKey'] = 'There was an error retrieving your API key';
-    //   }
-    // }
-
-//   getUserInfo();
-
   const maskedApiKey = "guardql_sk_abc...xyz";
-
 
   const handleCopyClick = async () => {
     try {
@@ -200,7 +163,6 @@ export default function Account() {
         <List>
           {navItems.map(({ text, icon, link }) => (
             <ListItem key={text} disablePadding>
-              {/* <ListItemButton component={Link} to={link}> */}
               <ListItemButton onClick={() => handleNavigation(link)}>
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={text} />

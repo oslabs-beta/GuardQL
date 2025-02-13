@@ -10,7 +10,6 @@ import { ErrorLocation, ErrorDetails, ErrorData, SlowMetricData, UserData,
 const token = localStorage.getItem('jwt'); 
 // console.log('This is the current token after logging in:', token); 
 
-
 //? Individual data fetching hooks
 //? Hook to get all the error metrics of a specific project to display on the dashboard
 export const getProjectErrorMetrics = (projectId: string): QueryResponse<ErrorData> => {
@@ -120,6 +119,7 @@ export const getUserData = (): UserDataQueryResponse => {
   }
 };
 
+
 // Utility functions
 const calculateAverageQueryTime = (queries: (SlowMetricData | RegularMetricData)[]): number => {
   if (!queries.length) return 0;
@@ -152,12 +152,6 @@ export const getProjectMetrics = (projectId: string): ProjectMetricsResponse => 
     data: regularQueries, 
   } = getProjectRegularQueries(projectId);
 
-  // const { 
-  //   loading: projectsLoading, 
-  //   error: projectsError, 
-  //   data: projects, 
-  // } = getUserProjects();
-
   const calculateMetrics = (): ProjectMetrics | null => {
     if (!errors?.metrics || !slowQueries?.metrics || !regularQueries?.metrics) return null;
 
@@ -183,8 +177,6 @@ export const getProjectMetrics = (projectId: string): ProjectMetricsResponse => 
 
   return {
     metrics: calculateMetrics(),
-    // loading: errorsLoading || slowQueriesLoading || regularQueriesLoading || projectsLoading,
-    // error: errorsError || slowQueriesError || regularQueriesError || projectsError,
     loading: errorsLoading || slowQueriesLoading || regularQueriesLoading,
     error: errorsError || slowQueriesError || regularQueriesError,
     errors: {
@@ -205,17 +197,5 @@ export const getProjectMetrics = (projectId: string): ProjectMetricsResponse => 
       message: regularQueries?.message, 
       metrics: regularQueries?.metrics || [],
     }, 
-    // projects: {
-    //   code: projects?.code,
-    //   success: projects?.success,
-    //   message: projects?.message, 
-    //   projects: projects?.projects || [],
-    // }
   };
 };
-
-// export const queries = {
-//   GET_PROJECT_ERRORS,
-//   GET_PROJECT_SLOW_QUERIES,
-//   GET_PROJECT_REGULAR_QUERIES
-// };
