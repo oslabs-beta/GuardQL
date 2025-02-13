@@ -121,7 +121,7 @@ const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:8081';
 
 // Set up CORS middleware
 app.use(cors({
-  origin: FRONTEND_URL, // Dynamically accept the frontend URL
+  origin: 'http://localhost:8081', // Dynamically accept the frontend URL
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
 
@@ -135,41 +135,41 @@ const server = new ApolloServer<MyContext>({
   resolvers,
 });
 
-// Start Apollo Server and integrate with Express
+// Start Apollo Server after CORS middleware
 async function startApolloServer() {
   try {
     await server.start(); // Start Apollo Server
 
-  // Use Apollo Server middleware for GraphQL endpoint
-  app.use('/graphql', expressMiddleware(server, {
-    context: async ({ req }) => {
-      // Handle your context setup, token extraction, etc.
-      const token = req.headers.authorization?.replace('Bearer ', '');
-      const apiKeyHeader = req.headers['api-key'];
-      const apiKey = Array.isArray(apiKeyHeader) ? apiKeyHeader[0] : apiKeyHeader;
+    // Use Apollo Server middleware for GraphQL endpoint
+    app.use('/graphql', expressMiddleware(server, {
+      context: async ({ req }) => {
+        // Handle your context setup, token extraction, etc.
+        const token = req.headers.authorization?.replace('Bearer ', '');
+        const apiKeyHeader = req.headers['api-key'];
+        const apiKey = Array.isArray(apiKeyHeader) ? apiKeyHeader[0] : apiKeyHeader;
 
-      let userId: string | null = null;
+        let userId: string | null = null;
 
-      if (token) {
-        try {
-          const decoded = verifyToken(token);
-          userId = decoded.userId;
-        } catch (error) {
-          console.error('Token verification failed:', error);
+        if (token) {
+          try {
+            const decoded = verifyToken(token);
+            userId = decoded.userId;
+          } catch (error) {
+            console.error('Token verification failed:', error);
+          }
+        } else if (apiKey) {
+          const user = await verifyApiKey(pool, apiKey);
+          if (user) {
+            userId = user.id;
+          }
         }
-      } else if (apiKey) {
-        const user = await verifyApiKey(pool, apiKey);
-        if (user) {
-          userId = user.id;
-        }
+
+        return {
+          db: pool,
+          userId,  // userId will be null if no token or invalid token
+        };
       }
-
-      return {
-        db: pool,
-        userId, // userId will be null if no token or invalid token
-      };
-    }
-  }));
+    }));
 
     // Start Express server
     app.listen(4000, () => {
