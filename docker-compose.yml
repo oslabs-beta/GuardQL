@@ -2,6 +2,7 @@
 # Run `docker compose build` to trigger the dockerfile build
 # Once successful, create the containers using `docker compose up`
 # To turn off and remove containers, use `docker compose down`
+# UPDATE: This file is no longer needed since I had to manually use docker run commands for both local machine and virtual instance
 services:
   frontend:
     build:
@@ -11,7 +12,7 @@ services:
         platform: amd64
     image: guardql-frontend:latest # name of the frontend docker image
     ports:
-      - "8081:80" # frontend port
+      - '8081:80' # frontend port
     env_file:
       - .env
 
@@ -23,7 +24,7 @@ services:
         platform: amd64
     image: guardql-backend:latest # name of the backend docker image
     ports:
-      - "4000:4000" # apollo server port
+      - '4000:4000' # apollo server port
     environment:
       JWT_SECRET: ${JWT_SECRET}
       DATABASE_URL: ${DATABASE_URL}

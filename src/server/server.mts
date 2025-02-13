@@ -117,7 +117,7 @@ const resolvers = {
 // Create an Express app to handle middleware
 const app = express();
 
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:8081';
+const allowedOrigins = process.env.FRONTEND_URL || 'http://localhost:8081';
 
 // Set up CORS middleware
 app.use(cors({
@@ -141,7 +141,7 @@ async function startApolloServer() {
     await server.start(); // Start Apollo Server
 
     // Use Apollo Server middleware for GraphQL endpoint
-    app.use('/graphql', expressMiddleware(server, {
+    app.use('/', expressMiddleware(server, {
       context: async ({ req }) => {
         // Handle your context setup, token extraction, etc.
         const token = req.headers.authorization?.replace('Bearer ', '');
@@ -173,7 +173,7 @@ async function startApolloServer() {
 
     // Start Express server
     app.listen(4000, () => {
-      console.log('🚀 Server is running at http://localhost:4000/graphql');
+      console.log('🚀 Server is running at http://localhost:4000');
     });
   } catch (error) {
     console.error('🚀 Error starting Apollo Server:', error);
