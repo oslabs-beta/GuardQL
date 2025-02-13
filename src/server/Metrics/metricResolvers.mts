@@ -1,6 +1,6 @@
 import { getProjectRegularQueries, getProjectSlowQueries, getProjectErrorMetrics, 
          createProject, getUserProjects, findProject, createQueryMetric, createSlowQuery, 
-         createError, createErrorLocation, verifyApiKey, getApiKey, getUserData } from './databaseQueries.mjs'
+         createError, createErrorLocation, getApiKey, getUserData } from './databaseQueries.mjs'
 import { DbConnection, MetricInput, ProjectInput } from './types.mjs'; 
 
 const metricResolvers = {
@@ -44,7 +44,7 @@ const metricResolvers = {
           userData
         }; 
       } catch (error) {
-        console.error('This is the error for getUserData from the server:', error); 
+        // console.error('This is the error for getUserData from the server:', error); 
         return {
           code: 500, 
           success: false, 
@@ -169,16 +169,6 @@ const metricResolvers = {
           }; 
         }
 
-        // const apiKeyVerification = await verifyApiKey(db, userId);
-        // console.log('This is the result from the verifyApiKey function:', apiKeyVerification); 
-        // if (!apiKeyVerification) {
-        //   return {
-        //     code: 500, 
-        //     success: false, 
-        //     message: 'Invalid API key'
-        //   }; 
-        // }
-
         const queryMetric = await createQueryMetric(db, project.id, input); 
 
         if (input.threshold_exceeded_by !== undefined) {
@@ -224,7 +214,7 @@ const metricResolvers = {
           message: 'Project created successfully'
         }; 
       } catch (error) {
-        console.log('Error storing query metric:', error); 
+        // console.log('Error storing query metric:', error); 
         return {
           code: 500, 
           success: false, 

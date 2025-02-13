@@ -144,10 +144,4 @@ export interface ProjectMetricsResponse {
     message: string | undefined; 
     metrics: RegularMetricData[];
   }
-  // projects: {
-  //   code: number | undefined; 
-  //   success: boolean | undefined; 
-  //   message: string | undefined; 
-  //   projects: UserProjectData[];
-  // }
 }

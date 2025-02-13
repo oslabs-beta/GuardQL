@@ -1,17 +1,6 @@
 import React, { useState } from 'react';
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  Typography,
-  Box,
-  IconButton,
-  Alert,
-  Paper,
-  Tooltip
-} from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, 
+         Box, IconButton, Alert, Paper, Tooltip } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -49,9 +38,6 @@ const ApiKeyDialog = ({ open, apiKey, onClose }: ApiKeyDialogProps) => {
         Your account has been created successfully!
       </DialogTitle>
       <DialogContent>
-        {/* <Typography variant="body1" gutterBottom>
-
-        </Typography> */}
         <Alert severity="warning" sx={{ mb: 2 }}>
           Make sure to copy your API key now. You won't be able to see it again!
         </Alert>

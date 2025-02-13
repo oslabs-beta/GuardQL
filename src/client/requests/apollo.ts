@@ -24,28 +24,6 @@ const authLink = new ApolloLink((operation, forward) => {
   }
   
   return forward(operation);
-  // if (operation.operationName === 'LoginUser') {
-  //   // console.log('Login request is being sent'); 
-  //   return forward(operation); 
-  // }
-
-  // if (jwt) {
-  //   try {
-  //     const decodedToken = jwtDecode<JwtPayload>(jwt); 
-  //     const currentTime = Math.floor(Date.now() / 1000); 
-
-  //     // const navigate = useNavigate();
-
-  //     if (decodedToken.exp < currentTime) {
-  //       localStorage.removeItem('jwt'); 
-  //       window.location.href = '/login'; 
-  //       // navigate('/login');
-  //     }
-  //   } catch (error) {
-  //     console.error('Token validation error:', error); 
-  //   }
-  // }
-  //   return forward(operation); 
 }); 
 
 const tokenExpirationLink = new ApolloLink((operation, forward) => {
@@ -70,7 +48,6 @@ const tokenExpirationLink = new ApolloLink((operation, forward) => {
 
 
 export const client = new ApolloClient({
-  // uri: 'http://localhost:4000/graphql', 
   cache: new InMemoryCache(), 
   link: ApolloLink.from([tokenExpirationLink, authLink, httpLink])
 });

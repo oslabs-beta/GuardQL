@@ -3,8 +3,9 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button, TextField } from '@mui/material'
 import Typography from '@mui/material/Typography';  
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import * as styles from '../styles/login-and-signup.module.css'
-import logo from '../assets/GuardQL_Logo_R_-_Title2-w_2048px.png'
+import logo from '../assets/GuardQL_Logo_R3_Title2_512px.png';
 import Footer from './Footer'
 
 /** This is where the user will be redirected to if they forgot their password.
@@ -15,6 +16,12 @@ import Footer from './Footer'
 type FormField = {
   email: string;
 }
+
+const theme = createTheme({
+  typography: {
+    fontFamily: 'Montserrat, sans-serif',
+  },
+});
 
 function ForgotPassword(){
   const navigate = useNavigate();
@@ -29,8 +36,14 @@ function ForgotPassword(){
   return (
     <div className={styles.background}>
       <div className={styles.container}>
-        <div className={styles.rightContainer}>
-          <div className={styles.loginFormContainer}>
+        <ThemeProvider theme={theme}>
+          <div className={styles.leftContainer}>
+            <h1>Uncover, Analyze, and Optimize Your GraphQL Performance</h1>
+            <br></br>
+            <Link to={'/home'}><img src ={logo} alt='GuardQL Logo' style={{ width: '400px', height: 'auto' }} /></Link>
+          </div>
+          <div className={styles.rightContainer}>
+            <div className={styles.loginFormContainer}>
             <Typography component='h3' variant='h4'>Please Submit</Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
             <TextField className='text-field'
@@ -66,19 +79,22 @@ function ForgotPassword(){
               className='submitButton'
               fullWidth
               sx={{
-                backgroundColor: 'hotpink',
+                backgroundColor: '#e623c6',
                 '&:hover': {
-                  backgroundColor: 'deeppink',
+                  backgroundColor: '#e263cd',
                 },
                 marginTop: '15px',
               }}
             >
             Enter
             </Button>
-            <p> An email shall be sent to reset password</p>
+            <br></br>
+            <br></br>
+            <p> An email will be sent to reset your password</p>
             </form>
+            </div>
           </div>
-        </div>
+        </ThemeProvider>
       </div>
       <Footer />
     </div>

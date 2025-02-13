@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import pool from './pool.mjs';
 import { DbConnection } from '../Metrics/types.mjs'; 
 
 // Function to get user by username
