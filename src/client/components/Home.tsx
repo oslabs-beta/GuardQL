@@ -22,6 +22,7 @@ import Sienna from '../assets/profilepic-sienna.jpeg';
 import Mike from '../assets/profilepic-mike.jpeg';
 import Nico from '../assets/profilepic-nico.jpeg';
 
+// import Hero from './HeroSection'
 import Footer from './Footer';
 import '../styles/footer.module.css';
 import "../styles/home.css";
@@ -94,7 +95,10 @@ const App: React.FC = () => {
         <br></br>
         <button className="get-started-btn"><a className="get-started-btn-a" href="#" onClick={handleNavClick}>Get Started</a></button>
       </section>
-
+      {/* <Hero 
+        logo={logo} 
+        handleNavClick={handleNavClick}
+      /> */}
       {/* About Section */}
       <section id="about" className="section">
         <h2 className="homepage-h2">About GuardQL</h2>
