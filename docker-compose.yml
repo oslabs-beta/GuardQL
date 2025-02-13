@@ -2,7 +2,6 @@
 # Run `docker compose build` to trigger the dockerfile build
 # Once successful, create the containers using `docker compose up`
 # To turn off and remove containers, use `docker compose down`
-# UPDATE: This file is no longer needed since I had to manually use docker run commands for both local machine and virtual instance
 services:
   frontend:
     build:
