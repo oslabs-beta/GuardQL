@@ -115,7 +115,8 @@ const allowedOrigins = process.env.FRONTEND_URL || 'http://localhost:8081';
 
 // Set up CORS middleware
 app.use(cors({
-  origin: 'http://localhost:8081', // Dynamically accept the frontend URL
+  origin: process.env.FRONTEND_URL, // Dynamically accept the frontend URL
+  methods: ['GET', 'POST', 'OPTIONS'], // Allow specific HTTP methods
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
 
