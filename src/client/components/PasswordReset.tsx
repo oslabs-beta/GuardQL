@@ -24,7 +24,7 @@ const theme = createTheme({
 
 function PasswordReset() {
   const navigate = useNavigate();
-  const{ register, handleSubmit, formState: { errors }, reset} = useForm<FormField>();
+  const { register, handleSubmit, formState: { errors }, reset} = useForm<FormField>();
 
   const onSubmit: SubmitHandler<FormField> = (data)=>{
     console.log(data);

@@ -44,7 +44,7 @@ const resolvers = {
   }
 }; 
 
-async function startApolloServer() {
+export async function startApolloServer() {
   try {
     const server = new ApolloServer<MyContext>({
       typeDefs,
@@ -89,6 +89,7 @@ async function startApolloServer() {
       }, 
     }); 
     console.log(`🚀 Server is running at ${url}`);
+    return server; 
   } catch (error) {
     console.error('🚀 Error starting up the server:', error);
   }
