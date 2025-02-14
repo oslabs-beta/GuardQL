@@ -160,7 +160,7 @@ For major changes, please open an issue first to discuss what you’d like to ch
 
 ## Contact Us 
 
-
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-GuardQL-blue?style=flat&logo=linkedin)](https://www.linkedin.com/company/guardql/)
 
 ## License
 Distributed under the [MIT](LICENSE.txt) License.
