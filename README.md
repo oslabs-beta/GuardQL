@@ -96,13 +96,13 @@ With GuardQL, developers gain visibility into their GraphQL queries, making it e
     * Any query execution time thresholds for slow query detection
     ```
        import { ApolloServer } from '@apollo/server';
-       import { guardql/Plugin } from 'guardql';
+       import { guardqlPlugin } from 'guardql-plugin';
         
        const server = new ApolloServer({
          typeDefs,
          resolvers,
          plugins: [
-           guardql/Plugin({
+           guardqlPlugin({
              apiKey: 'your-api-key',
              projectName: 'your-project-name',
              slowQueryThreshold: 1000 // in milliseconds
@@ -160,7 +160,7 @@ For major changes, please open an issue first to discuss what you’d like to ch
 
 ## Contact Us 
 
-LinkedIn link
+
 
 ## License
 Distributed under the [MIT](LICENSE.txt) License.
