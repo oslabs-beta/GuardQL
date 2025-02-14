@@ -10,7 +10,7 @@ export interface JwtPayload {
 const backendUrl = process.env.BACKEND_URL || 'http://localhost:4000/graphql';
 
 const httpLink = new HttpLink({
-  uri: process.env.BACKEND_URL,
+  uri: 'http://localhost:4000/graphql',
   credentials: 'include'
 })
 

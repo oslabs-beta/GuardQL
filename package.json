@@ -10,20 +10,24 @@
     }
   },
   "scripts": {
-    "start:server": "nodemon --exec tsx src/server/server.mts",
+    "start:server": "nodemon --exec tsx packages/dashboard/src/server/server.mts",
     "start:client": "webpack serve --mode development --open",
+    "test": "jest --config jest.config.js && jest --config jest.server.config.js",
     "test:client": "jest --config jest.config.js",
     "test:server": "jest --config jest.server.config.js",
-    "test": "jest --config jest.config.js && jest --config jest.server.config.js",
     "test:client:watch": "jest --config jest.config.js --watch",
     "test:server:watch": "jest --config jest.server.config.js --watch",
+    "test:plugin": "cd packages/guardql-plugin && npm run test",
+    "test:all": "npm run test && npm run test:plugin",
+    "build:plugin": "cd packages/guardql-plugin && npm run build",
+    "publish:plugin": "cd packages/guardql-plugin && npm publish",
     "dev": "concurrently \"npm run start:server\" \"npm run start:client\"",
     "build": "npm run build:frontend && npm run build:backend",
     "build:frontend": "webpack --mode production",
     "build:backend": "tsc --project ./src/server/tsconfig.json"
   },
   "keywords": [],
-  "author": "",
+  "author": "GuardQL",
   "license": "ISC",
   "dependencies": {
     "@apollo/client": "^3.12.8",

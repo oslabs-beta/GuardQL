@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
     "strict": true,
     "removeComments": true,
     "sourceMap": true,
@@ -10,7 +10,8 @@
   },
   "exclude": ["node_modules", "dist", "jest.setup.mts"],
   "references": [
-    { "path": "./src/client" },
-    { "path": "./src/server" },
+    { "path": "./packages/dashboard/src/client" },
+    { "path": "./packages/dashboard/src/server" },
+    { "path": "./packages/guardql-plugin" },
   ]
 }
