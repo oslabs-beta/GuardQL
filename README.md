@@ -87,7 +87,7 @@ With GuardQL, developers gain visibility into their GraphQL queries, making it e
 
 #### 3️⃣ Install the GuardQL NPM Package
 * Add GuardQL to your application by running:
-    `npm install guardql`
+    `npm install guardql-plugin`
 
 #### 4️⃣ Configure the Plugin in Apollo Server
 * Integrate GuardQL into your Apollo Server setup by adding the plugin and providing:
@@ -96,7 +96,7 @@ With GuardQL, developers gain visibility into their GraphQL queries, making it e
     * Any query execution time thresholds for slow query detection
     ```
        import { ApolloServer } from '@apollo/server';
-       import { guardqlPlugin } from 'guardql';
+       import { guardqlPlugin } from 'guardql-plugin';
 
        const server = new ApolloServer({
          typeDefs,
@@ -161,7 +161,8 @@ For major changes, please open an issue first to discuss what you’d like to ch
 - **Sabrina Ira** - [@sabrinaira](https://github.com/sabrinaira)
 - **Mike Thurstlic** - [@thurstlic7](https://github.com/thurstlic7) -->
 
-
+<!-- Alternative linkedin badge -->
+<!-- [![LinkedIn](https://img.shields.io/badge/LinkedIn-GuardQL-blue?style=flat&logo=linkedin)](https://www.linkedin.com/company/guardql/) -->
 
 ## License
 Distributed under the [MIT](LICENSE.txt) License.
