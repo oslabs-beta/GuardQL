@@ -78,12 +78,12 @@ With GuardQL, developers gain visibility into their GraphQL queries, making it e
 #### 1️⃣ Sign Up & Get Your API Key
 * Create an account to gain access to the GuardQL Dashboard.
 * Upon signup, you'll receive a unique API key, which is required for configuring the plugin.
-![signup](src/client/assets/signup.gif)
+![signup](packages/dashboard/src/client/assets/signup.gif)
 
 #### 2️⃣ Create & Select a Project
 * Inside the dashboard, create a new project using the project dropdown.
 * Select your project to start tracking GraphQL request performance and error logs.
-![projects](src/client/assets/dashboard.gif)
+![projects](packages/dashboard/src/client/assets/dashboard.gif)
 
 #### 3️⃣ Install the GuardQL NPM Package
 * Add GuardQL to your application by running:
