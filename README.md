@@ -13,7 +13,7 @@ screenshots, more details about product, acknowledgements, instructions
 -->
 <details>
   <summary>Table of Contents</summary>
-  
+
   - [Technologies](#technologies)
   - [Introduction](#introduction)
   - [Features](#features)
@@ -43,7 +43,7 @@ screenshots, more details about product, acknowledgements, instructions
 ![React Hook Form](https://img.shields.io/badge/React%20Hook%20Form-%23EC5990.svg?style=for-the-badge&logo=reacthookform&logoColor=white)
 ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
 
-## Introduction 
+## Introduction
 
 Debugging GraphQL APIs can be difficult, especially when trying to pinpoint errors in slow or inefficient queries. GuardQL streamlines this process by providing a comprehensive debugging and performance monitoring tool designed for pre-production environments. It seamlessly integrates into GraphQL APIs to provide insights and optimization tools.
 
@@ -77,8 +77,8 @@ With GuardQL, developers gain visibility into their GraphQL queries, making it e
 
 #### 1️⃣ Sign Up & Get Your API Key
 * Create an account to gain access to the GuardQL Dashboard.
-* Upon signup, you'll receive a unique API key, which is required for configuring the plugin. 
-![signup](src/client/assets/signup.gif) 
+* Upon signup, you'll receive a unique API key, which is required for configuring the plugin.
+![signup](src/client/assets/signup.gif)
 
 #### 2️⃣ Create & Select a Project
 * Inside the dashboard, create a new project using the project dropdown.
@@ -97,7 +97,7 @@ With GuardQL, developers gain visibility into their GraphQL queries, making it e
     ```
        import { ApolloServer } from '@apollo/server';
        import { guardqlPlugin } from 'guardql';
-        
+
        const server = new ApolloServer({
          typeDefs,
          resolvers,
@@ -124,10 +124,10 @@ With GuardQL, developers gain visibility into their GraphQL queries, making it e
 
 We welcome contributions!
 
-If you’d like to contribute: 
+If you’d like to contribute:
 
 1. Fork this repository
-2. Create a feature branch 
+2. Create a feature branch
     - `git checkout -b feature-branch-name`
 3. Commit your changes
     - `git add .`
@@ -138,8 +138,11 @@ If you’d like to contribute:
 
 For major changes, please open an issue first to discuss what you’d like to change.
 
-## GuardQL Team
----
+## Contact Us
+[![Static Badge](https://img.shields.io/badge/GuardQL%20%7C%20LinkedIn-none?style=for-the-badge&color=%230A66C2)
+](https://linkedin.com/company/guardql)
+
+### GuardQL Team
 <!-- Nico Henry -->
 ![Static Badge](https://img.shields.io/badge/Henry%20%E2%86%92-none?style=flat-square&logoColor=white&logoSize=auto&label=Nico&labelColor=%23E623C6&color=%238A1877) [![Static Badge](https://img.shields.io/badge/%40Nico21221-Dark%20Charcoal?style=flat-square&logo=Github&logoColor=white&logoSize=auto&color=%23333333)](https://github.com/Nico21221) [![LinkedIn](https://img.shields.io/badge/linkedin/in/nico_henry-%230077B5.svg?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/nico-henry/)
 <!-- Cindy Rodriguez-Llivipuma -->
@@ -158,9 +161,7 @@ For major changes, please open an issue first to discuss what you’d like to ch
 - **Sabrina Ira** - [@sabrinaira](https://github.com/sabrinaira)
 - **Mike Thurstlic** - [@thurstlic7](https://github.com/thurstlic7) -->
 
-## Contact Us 
 
-LinkedIn link
 
 ## License
 Distributed under the [MIT](LICENSE.txt) License.
