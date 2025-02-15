@@ -111,11 +111,14 @@ const resolvers = {
 // Create an Express app to handle middleware
 const app = express();
 
-const allowedOrigins = process.env.FRONTEND_URL || 'http://localhost:8081';
+/**
+ * For DEPLOYMENT: process.env.FRONTEND_URL
+ * For LOCALHOST: 'http://localhost:8081'
+ */
 
 // Set up CORS middleware
 app.use(cors({
-  origin: 'http://localhost:8081', // Dynamically accept the frontend URL
+  origin: 'http://localhost:8081', // Change between the environment variable or local host
   methods: ['GET', 'POST', 'OPTIONS'], // Allow specific HTTP methods
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));

@@ -24,7 +24,7 @@
     "dev": "concurrently \"npm run start:server\" \"npm run start:client\"",
     "build": "npm run build:frontend && npm run build:backend",
     "build:frontend": "webpack --mode production",
-    "build:backend": "tsc --project ./src/server/tsconfig.json"
+    "build:backend": "tsc --project ./packages/dashboard/src/server/tsconfig.json"
   },
   "keywords": [],
   "author": "GuardQL",

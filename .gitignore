@@ -3,8 +3,10 @@ node_modules
 .DS_Store
 dist
 src/components
+.ssh
 .ssh/*
 src/server/dist
+.vscode
 
 # logs
 npm-debug.log*

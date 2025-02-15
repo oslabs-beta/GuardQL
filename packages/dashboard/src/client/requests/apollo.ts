@@ -7,10 +7,13 @@ export interface JwtPayload {
   [key: string]: any;
 }
 
-const backendUrl = process.env.BACKEND_URL || 'http://localhost:4000/graphql';
+/**
+ * For DEPLOYMENT: process.env.BACKEND_URL
+ * For LOCALHOST: 'http://localhost:4000/graphql'
+*/
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4000/graphql',
+  uri: 'http://localhost:4000/graphql', // Change between the environment variable or local host
   credentials: 'include'
 })
 
