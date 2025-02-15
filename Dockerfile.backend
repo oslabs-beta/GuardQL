@@ -1,0 +1,36 @@
+# This is the BACKEND Docker file
+# Step 1: Build the app
+FROM node:20-slim AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+
+# Step 2: Copy backend source files
+COPY ./src/server ./src/server
+COPY ./tsconfig.json ./tsconfig.json
+RUN npm run build:backend
+
+# # Copy .graphql files to their respective folder in dist/server
+# COPY ./src/server/OAuth/*.graphql ./dist/server/OAuth/
+# COPY ./src/server/Metrics/*.graphql ./dist/server/Metrics/
+# # Added this to help reduce the file size of the image
+# RUN npm install --only=production && npm cache clean --force
+
+# Stage 2: Production environment
+FROM node:20-slim
+WORKDIR /app
+
+# Copy only the production dependencies
+COPY package*.json ./
+RUN npm install --production && npm cache clean --force
+
+# Copy the build artifacts from the builder stage
+COPY --from=builder /app/dist /app/dist
+
+# Copy .graphql files to the dist folder in a single step
+# COPY ./src/server/**/*.graphql ./dist/server/
+COPY ./src/server/OAuth/*.graphql ./dist/server/OAuth/
+COPY ./src/server/Metrics/*.graphql ./dist/server/Metrics/
+
+EXPOSE 4000
+CMD ["node", "dist/server/server.mjs"]
