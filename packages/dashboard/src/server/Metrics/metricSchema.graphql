@@ -1,0 +1,301 @@
+type Mutation {
+  "Creates a new query metric"
+  createQueryMetric(input: CreateQueryMetricInput!): CreateQueryMetricResponse!
+  "Creates a new project"
+  createProject(input: CreateProjectInput!): CreateProjectResponse!
+}
+
+type Query {
+  "An array of all the regular query metric objects for a specific project"
+  getProjectRegularQueries(projectId: String!): getProjectRegularQueriesResponse!
+  "An array of all the slow query metric objects for a specific project"
+  getProjectSlowQueries(projectId: String!): GetProjectSlowQueriesResponse!
+  "An array of all the error objects for a specific project"
+  getProjectErrorMetrics(projectId: String!): GetProjectErrorMetricsResponse!
+  "An array of all the projects for a specific user"
+  getUserProjects: GetUserProjectsResponse!
+  "The user's API key"
+  getApiKey(showFull: Boolean!): getApiKeyResponse!
+  "The user's account information"
+  getUserData: getUserDataResponse!
+}
+
+"Return type to send user account information to the dashboard"
+type getUserDataResponse {
+  "status of the query"
+  code: Int!
+  "indicates whether the query was successful"
+  success: Boolean!
+  "message to confirm query outcome"
+  message: String!
+  "regular query metrics belonging to the project"
+  userData: UserData
+}
+
+type UserData {
+  "the user's username"
+  username: String!
+  "the user's email"
+  email: String!
+  "the user's API key"
+  api_key: String!
+}
+
+"Return type to send the API key to the dashboard"
+type getApiKeyResponse {
+  "a masked API key to display on the dashboard"
+  maskedKey: String!
+  "the unmasked API key to copy to the clipboard"
+  fullKey: String
+}
+
+"Return type to send all regular query metrics for a specific project to the dashboard"
+type getProjectRegularQueriesResponse {
+  "status of the query"
+  code: Int!
+  "indicates whether the query was successful"
+  success: Boolean!
+  "message to confirm query outcome"
+  message: String!
+  "regular query metrics belonging to the project"
+  metrics: [ReturnedRegularQuery!]!
+}
+
+"Return type to send all slow query metrics for a specific project to the dashboard"
+type GetProjectSlowQueriesResponse {
+  "status of the query"
+  code: Int!
+  "indicates whether the query was successful"
+  success: Boolean!
+  "message to confirm query outcome"
+  message: String!
+  "slow query metrics belonging to the project"
+  metrics: [ReturnedSlowQuery!]!
+}
+
+"Return type to send all error metrics for a specific project to the dashboard"
+type GetProjectErrorMetricsResponse {
+  "status of the query"
+  code: Int!
+  "indicates whether the query was successful"
+  success: Boolean!
+  "message to confirm query outcome"
+  message: String!
+  "error metrics belonging to the project"
+  metrics: [ReturnedErrorMetric!]!
+}
+
+"Input required for a user to create a project"
+input CreateProjectInput {
+  name: String!
+}
+
+"Return type for when a user creates a project"
+type CreateProjectResponse {
+  "status of the mutation"
+  code: Int!
+  "indicates whether the mutation was successful"
+  success: Boolean!
+  "message to confirm mutation outcome"
+  message: String!
+}
+
+"A project belonging to a user"
+type Project {
+  "project ID"
+  id: ID!
+  "project name"
+  name: String!
+}
+
+"Return type to send all projects belonging to a specific user to the dashboard"
+type GetUserProjectsResponse {
+  "status of the query"
+  code: Int!
+  "indicates whether the query was successful"
+  success: Boolean!
+  "message to confirm query outcome"
+  message: String!
+  "projects belonging to the user"
+  projects: [Project!]!
+}
+
+"Input to create a new query metric"
+input CreateQueryMetricInput {
+  "projectName to identify the project the query metric belongs to"
+  projectName: String!
+  "date to identify when the query ocurred"
+  date: String!
+  "time to identify when the query occurred"
+  time: String!
+  "to identify the query's operation type"
+  operation: String!
+  "name of operation to identify which specific operation the query metric belongs to"
+  operation_name: String!
+  "user's GraphQL query"
+  query: String! 
+  "time it took for request to be executed"
+  request_time: Float!
+  "user inputted threshold for query time"
+  query_threshold: Float!
+  "amount of time exceeded from threshold"
+  threshold_exceeded_by: Float
+  "array of errors that occurred during the operation"
+  errors: [ErrorDetailsInput!]
+}
+
+"Properties in each error object within the errors array"
+input ErrorDetailsInput {
+  "error message to identify what the error is"
+  message: String!
+  "array of locations where the error is located"
+  locations: [ErrorLocationInput!]!
+  "array of error path"
+  path: [String!]!
+  "object containing the code and stacktrace of the error"
+  extensions: ExtensionsInput!
+}
+
+"properties withing the extension object"
+input ExtensionsInput {
+  "error code string"
+  code: String!
+  "array of strings containing the error and stacktrace"
+  stacktrace: [String!]!
+}
+
+"Properties in each location object within the locations array"
+input ErrorLocationInput {
+  "line where error is located"
+  line: Int!
+  "column where error is located"
+  column: Int!
+}
+
+"A return type for a newly created query metric"
+type CreateQueryMetricResponse {
+  "status of the mutation"
+  code: Int!
+  "indicates whether the mutation was successful"
+  success: Boolean!
+  "message to confirm mutation outcome"
+  message: String!
+}
+
+"A metric belonging to a query"
+type Metric {
+  "ID assigned by SQL database"
+  id: ID!
+  "projectName to identify the project the query metric belongs to"
+  projectName: String!
+  "date to identify when the query ocurred"
+  date: String!
+  "time to identify when the query occurred"
+  time: String!
+  "to identify the query's operation type"
+  operation: String!
+  "name of operation to identify which specific operation the query metric belongs to"
+  operation_name: String!
+  "user's GraphQL query"
+  query: String! 
+  "time it took for request to be executed"
+  request_time: Float!
+  "user inputted threshold for query time"
+  query_threshold: Float!
+  "amount of time exceeded from threshold"
+  threshold_exceeded_by: Float
+  "array of errors that occurred during the operation"
+  errors: [ErrorDetails]
+}
+
+"Returned error metric structure for the dashboard's errors display"
+type ReturnedErrorMetric {
+  "ID assigned by SQL database"
+  id: ID!
+  "project ID"
+  project_id: String!
+  "date to identify when the query ocurred"
+  date: String!
+  "time to identify when the query occurred"
+  time: String!
+  "to identify the query's operation type"
+  operation: String!
+  "name of operation to identify which specific operation the query metric belongs to"
+  operation_name: String!
+  "user's GraphQL query"
+  query: String! 
+  "time it took for request to be executed"
+  request_time: Float!
+  "user inputted threshold for query time"
+  query_threshold: Float!
+  "error ID"
+  error_id: String!
+  "error message"
+  error_message: String!
+  "error location line"
+  line: Int!
+  "error location column"
+  column: Int!
+}
+
+"Returned slow query metric structure for the dashboard's slow queries display"
+type ReturnedSlowQuery {
+  "ID assigned by SQL database"
+  id: ID!
+  "project ID"
+  project_id: String!
+  "date to identify when the query ocurred"
+  date: String!
+  "time to identify when the query occurred"
+  time: String!
+  "to identify the query's operation type"
+  operation: String!
+  "name of operation to identify which specific operation the query metric belongs to"
+  operation_name: String!
+  "user's GraphQL query"
+  query: String! 
+  "time it took for request to be executed"
+  request_time: Float!
+  "user inputted threshold for query time"
+  query_threshold: Float!
+  "amount of time exceeded from threshold"
+  threshold_exceeded_by: Float!
+}
+
+"Returned regular query metric structure for the dashboard's regular queries display"
+type ReturnedRegularQuery {
+  "ID assigned by SQL database"
+  id: ID!
+  "project ID"
+  project_id: String!
+  "date to identify when the query ocurred"
+  date: String!
+  "time to identify when the query occurred"
+  time: String!
+  "to identify the query's operation type"
+  operation: String!
+  "name of operation to identify which specific operation the query metric belongs to"
+  operation_name: String!
+  "user's GraphQL query"
+  query: String! 
+  "time it took for request to be executed"
+  request_time: Float!
+  "user inputted threshold for query time"
+  query_threshold: Float!
+}
+
+"Properties in each error object within the errors array"
+type ErrorDetails {
+  "error message to identify what the error is"
+  message: String!
+  "array of locations where the error is located"
+  locations: [ErrorLocation!]!
+}
+
+"Properties in each location object within the locations array"
+type ErrorLocation {
+  "line where error is located"
+  line: Int!
+  "column where error is located"
+  column: Int!
+}
