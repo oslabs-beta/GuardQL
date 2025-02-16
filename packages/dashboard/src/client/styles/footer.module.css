@@ -1,0 +1,35 @@
+.topBorder {
+  border-top: 0.5px solid #D923CD;
+  background: #222;
+  /* padding-top: 1rem; */
+  padding: 1rem 1rem;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  color: white; 
+  /* background: #222; */
+}
+
+.footer p {
+text-align: center;
+margin-top: 0px;
+}
+
+.footer a {
+  text-decoration: none;
+  color: #8787f5;
+  transition: 0.3s;
+}
+
+.footer a:hover {
+  color: #ceceff;
+  transition: 0.3s;
+}
+
+.footer p span {
+  color: #D923CD;
+}

@@ -1,0 +1,55 @@
+{
+  "name": "guardql-plugin",
+  "version": "1.0.0",
+  "description": "A GraphQL monitoring plugin for tracking query performance and errors",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "prepare": "npm run build",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write \"src/**/*.ts\""
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "graphql",
+    "apollo",
+    "monitoring",
+    "performance",
+    "analytics",
+    "metrics",
+    "plugin"
+  ],
+  "author": "GuardQL",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oslabs-beta/GuardQL/", 
+    "directory": "packages/guardql-plugin"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.12.11"
+  },
+  "peerDependencies": {
+    "@apollo/server": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.13.1",
+    "@typescript-eslint/eslint-plugin": "^8.24.0",
+    "@typescript-eslint/parser": "^8.24.0",
+    "eslint": "^9.20.1",
+    "jest": "^29.7.0",
+    "prettier": "^3.5.0",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.7.3"
+  }
+}

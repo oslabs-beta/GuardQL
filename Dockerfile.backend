@@ -1,0 +1,28 @@
+# Step 1: Build the app
+FROM node:20-slim AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+
+# Step 2: Copy backend source files
+COPY ./packages/dashboard/src/server ./packages/dashboard/src/server
+COPY ./tsconfig.json ./tsconfig.json
+RUN npm run build:backend
+
+# Stage 2: Production environment
+FROM node:20-slim
+WORKDIR /app
+
+# Copy only the production dependencies
+COPY package*.json ./
+RUN npm install --production && npm cache clean --force
+
+# Copy the build artifacts from the builder stage
+COPY --from=builder /app/dist /app/dist
+
+# Copy .graphql files to the dist folder in a single step
+COPY ./packages/dashboard/src/server/OAuth/*.graphql ./dist/packages/dashboard/src/server/OAuth/
+COPY ./packages/dashboard/src/server/Metrics/*.graphql ./dist/packages/dashboard/src/server/Metrics/
+
+EXPOSE 4000
+CMD ["node", "dist/packages/dashboard/src/server/server.mjs"]

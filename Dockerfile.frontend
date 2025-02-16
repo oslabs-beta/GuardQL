@@ -1,0 +1,22 @@
+# This is the FRONTEND Docker file
+# Step 1: Build the app
+FROM node:20-slim AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+# Copy frontend source files
+COPY .env ./
+COPY ./packages/dashboard/src/client ./packages/dashboard/src/client
+COPY ./public ./public
+COPY ./webpack.config.js ./webpack.config.js
+COPY ./tsconfig.json ./tsconfig.json
+
+# Build the frontend assets
+RUN npm run build:frontend
+
+# Step 2: Serve the app using nginx
+# Nginx is a faster web server to help serve the static files more efficiently
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,18 +1,17 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src",
-    "jsx": "react-jsx",
-    "target": "ES6",
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    "rootDir": ".",
     "strict": true,
     "removeComments": true,
     "sourceMap": true,
     "esModuleInterop": true,
     "noImplicitAny": true,
   },
-"include": ["src/**/*.ts", "src/**/*.tsx"],
-"exclude": ["node_modules", "dist"],
+  "exclude": ["node_modules", "dist", "jest.setup.mts"],
+  "references": [
+    { "path": "./packages/dashboard/src/client" },
+    { "path": "./packages/dashboard/src/server" },
+    { "path": "./packages/guardql-plugin" },
+  ]
 }
-

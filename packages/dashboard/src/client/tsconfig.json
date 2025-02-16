@@ -1,0 +1,12 @@
+{
+    "extends": "../../../../tsconfig.json",
+    "compilerOptions": {
+      "target": "ES6",
+      "module": "ESNext",
+      "moduleResolution": "Node",
+      "jsx": "react-jsx",
+      "composite": true,
+      "noEmit": false,
+    },
+    "include" : ["./**/*.ts", "./**/*.tsx"]
+  }

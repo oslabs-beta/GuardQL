@@ -1,0 +1,203 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  background-color: #121212;
+}
+
+.root {
+  display: flex;
+  /* flex-direction: column; */
+  background-color: #121212;
+  color: #FFFFFF;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 24px;
+  background-color: #121212;
+  min-height: 100vh;
+}
+
+.app-bar {
+  width: calc(100% - 240px) !important;
+  margin-left: 240px !important;
+  /* width: 100% !important;
+  margin-left: 0 !important; */
+  background-color: #e623c6 !important;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.drawer-header {
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 64px;
+  background-color: #121212;
+}
+
+.drawer-logo {
+  max-width: 270px;
+  /* align-items: center; */
+  width: 100%;
+  height: auto;
+  /* display: block; */
+}
+
+.header-title {
+  font-weight: bold !important;
+  font-size: 20px !important;
+  color: #FFFFFF !important;
+  width: 100%;
+  text-align: center;
+}
+
+.drawer {
+  width: 240px;
+  flex-shrink: 0;
+}
+
+.drawer .MuiDrawer-paper {
+  width: 240px;
+  box-sizing: border-box;
+  background-color: #121212;
+  color: #FFFFFF;
+}
+
+.section-title {
+  margin-bottom: 16px !important;
+  font-weight: bold !important;
+}
+
+.metrics-container {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.metric-box {
+  flex: 1;
+  text-align: center;
+  background-color: #e623c6;
+  padding: 16px;
+  border-radius: 8px;
+  color: #FFFFFF;
+}
+
+.metric-label {
+  font-size: 16px !important;
+  margin-bottom: 8px !important;
+  font-weight: bold !important;
+}
+
+.metric-value {
+  font-size: 24px !important;
+  font-weight: bold !important;
+}
+
+.metric-value-undefined {
+  font-size: 15px !important;
+  font-weight: bold !important;
+}
+
+.graph-container {
+  height: 300px;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  margin-bottom: 32px;
+}
+
+.logs-container, .slow-queries-container {
+  background-color: #1e1e1e;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 32px;
+}
+
+.log-message, .query-operation {
+  margin-bottom: 8px !important;
+  color: #FFFFFF;
+  font-weight: bold !important;
+}
+
+.log-details, .query-details, .query-threshold, .query-timestamp, .query-text {
+  font-size: 14px !important;
+  color: #BBBBBB !important;
+  margin-bottom: 4px !important;
+}
+
+.log-divider {
+  background-color: #333333 !important;
+  margin: 16px 0 !important;
+}
+
+.query-item, .error-item {
+  padding: 16px;
+  border-radius: 4px;
+  background-color: #262626;
+  margin-bottom: 16px;
+}
+
+.query-item:last-child {
+  margin-bottom: 0;
+}
+
+.scrollable-container {
+  max-height: 300px; /* Adjust based on your UI */
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid #3e3d3d;
+  border-radius: 5px;
+  background-color: #1e1e1e;
+}
+
+.select-project-section {
+  display: flex;
+  justify-content: flex-end;
+  gap: 30px; 
+  padding: 0rem 0rem 0rem 0rem; 
+}
+
+.select-title {
+  font-size: 23px !important;
+  font-weight: bold !important;
+}
+
+.dropdown {
+  background: #e623c6; 
+  color: white !important;
+  height: 40px; 
+}
+
+.dropdown-item-create {
+  color: #e623c6 !important; 
+}
+
+.cancelButton {
+  color: red !important; 
+}
+
+.createButton {
+  color: white !important; 
+  background: #e623c6 !important; 
+}
+
+.createButton:hover {
+  background: #f870e2 !important; 
+}
+
+.circularProgress {
+  color: #f870e2 !important; 
+}
