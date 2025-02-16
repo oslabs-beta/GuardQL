@@ -5,16 +5,16 @@ A powerful Apollo Server plugin for tracking GraphQL query metrics and errors. T
 ## Installation
 
 ```bash
-npm install guardql
+npm install guardql-plugin
 # or
-yarn add guardql
+yarn add guardql-plugin
 ```
 
 ## Usage
 
 ```typescript
 import { ApolloServer } from '@apollo/server';
-import { guardqlPlugin } from 'guardql';
+import { guardqlPlugin } from 'guardql-plugin';
 
 const server = new ApolloServer({
   typeDefs,

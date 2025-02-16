@@ -133,7 +133,7 @@ export default function Account() {
   }
 
   const userData = data?.getUserData?.userData;
-  const maskedApiKey = "guardql_sk_abc...xyz";
+  // const maskedApiKey = "guardql_sk_abc...xyz";
 
   const handleCopyClick = async () => {
     try {

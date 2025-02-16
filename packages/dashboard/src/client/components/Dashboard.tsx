@@ -97,7 +97,7 @@ export default function Dashboard() {
     { text: 'Log Out', icon: <LogoutIcon sx={{ color: '#FFFFFF' }} />, link: '/logout' },
   ];
 
-  const [createProject, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_PROJECT);
+  const [createProject] = useMutation(CREATE_PROJECT);
 
   const {
     metrics,
@@ -123,7 +123,7 @@ export default function Dashboard() {
     navigate('/login');
   };
 
-  const { data, refetch } = getUserProjects(); 
+  const { refetch } = getUserProjects(); 
 
   const handleCreateProject = async () => {
     if (!newProjectName.trim()) return;
@@ -146,13 +146,13 @@ export default function Dashboard() {
       // console.log('setDialogOpen has been set ------->');
       setNewProjectName("");
       // console.log('Going into the refetch function now ------->');
-      const refetchProjects = (await refetch() as unknown) as { data?: { getUserProjects: getUserProjectResponse } };
-      // console.log("Refetch Response:", refetchProjects);
+      // const refetchProjects = (await refetch() as unknown) as { data?: { getUserProjects: getUserProjectResponse } };
+      // // console.log("Refetch Response:", refetchProjects);
 
-      if (refetchProjects?.data?.getUserProjects?.projects) {
-        // console.log("Refetch data being set:", refetchProjects?.data?.getUserProjects);
-        setProjects(refetchProjects.data.getUserProjects.projects); 
-      } 
+      // if (refetchProjects?.data?.getUserProjects?.projects) {
+      //   // console.log("Refetch data being set:", refetchProjects?.data?.getUserProjects);
+      //   setProjects(refetchProjects.data.getUserProjects.projects); 
+      // } 
     } catch (error) {
       // console.error("Error creating project:", error);
       setNewProjectError('There was an error creating the project'); 

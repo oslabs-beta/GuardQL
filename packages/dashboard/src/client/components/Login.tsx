@@ -27,7 +27,7 @@ function Login() {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors }, reset} = useForm<FormField>();
   const [ loginError, setLoginError ] = useState<string | null>(null);
-  const [login, { loading: mutationLoading, error: mutationError }] = useMutation(LOGIN);
+  const [login] = useMutation(LOGIN);
   // console.log('Data returned from loggingIn begins here:', data);
 
   const onSubmit: SubmitHandler<FormField> = async (userInput) => {

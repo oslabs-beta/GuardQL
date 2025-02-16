@@ -45,7 +45,7 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const [signup, { loading, error, data }] = useMutation(CREATE_ACCOUNT);
+  const [signup] = useMutation(CREATE_ACCOUNT);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -105,7 +105,6 @@ const SignUp = () => {
         setApiKey(data.createUser.apiKey);
         setShowApiKey(true);
         setCreateAccountSuccess(data.createUser.message);
-
       } else if (data.createUser.code === 500) {
         // console.log('Account creation was unsuccessful (500)'); 
         setCreateAccountError(data.createUser.message);
@@ -263,17 +262,11 @@ const SignUp = () => {
               </Typography>
             </Box>
           </Stack>
-
-
-
           <ApiKeyDialog
             open={showApiKey}
             apiKey={apiKey}
             onClose={handleApiKeyDialogClose}
           />
-
-
-
         </div>
         </ThemeProvider>
       </div>
