@@ -2,20 +2,10 @@
   <img src="https://imgur.com/iNek9oJ.png" width="50%" alt="GuardQL_Logo">
 </p>
 
-<p align="center">
-<a href="https://guardql.com/">
-<img src="https://img.shields.io/badge/Offcial%20Website-none?style=plastic&label=GuardQL&labelColor=%238A1877&color=%23E623C6
-" alt="GuardQL-Website"></a>
-<!-- Stars -->
-<img src="https://img.shields.io/github/stars/oslabs-beta/GuardQL?style=plastic&labelColor=%231F1B2D&color=%23F2F2F2
-">
-<!-- Watchers -->
-<img src="https://img.shields.io/github/watchers/oslabs-beta/GuardQL?style=plastic&labelColor=%231F1B2D&color=%23F2F2F2
-">
-<!-- Forks -->
-<!-- <img src="https://img.shields.io/github/forks/oslabs-beta/GuardQL?style=plastic&labelColor=%231F1B2D&color=%23F2F2F2
-"> -->
-</p>
+[![GuardQL Website](https://img.shields.io/badge/Offcial%20Website-none?style=plastic&label=GuardQL&labelColor=%238A1877&color=%23E623C6)](https://guardql.com/)
+[![GitHub Stars](https://img.shields.io/github/stars/oslabs-beta/GuardQL?style=plastic&labelColor=%231F1B2D&color=%23F2F2F2)](https://github.com/oslabs-beta/GuardQL/stargazers)
+[![GitHub Watchers](https://img.shields.io/github/watchers/oslabs-beta/GuardQL?style=plastic&labelColor=%231F1B2D&color=%23F2F2F2)](https://github.com/oslabs-beta/GuardQL/watchers)
+[![GitHub Forks](https://img.shields.io/github/forks/oslabs-beta/GuardQL?style=plastic&labelColor=%231F1B2D&color=%23F2F2F2)](https://github.com/oslabs-beta/GuardQL/network/members)
 
 # GuardQL
 
