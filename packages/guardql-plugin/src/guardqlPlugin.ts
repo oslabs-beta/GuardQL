@@ -10,7 +10,8 @@ const guardqlPlugin = (config: pluginConfig): ApolloServerPlugin => {
   interface expects the plugin to be an object, we will also need to immediately return an object
   before we declare an event method */
 
-  const metricsUrl = process.env.BACKEND_URL;
+
+  const metricsUrl = process.env.BACKEND_URL ?? "";
 
   // Function to check if this is an introspection query
   const isIntrospectionQuery = (operationName?: string | null, query?: string | null): boolean => {
