@@ -1,11 +1,7 @@
-src/
-test/
-coverage/
-.github/
+src/__tests__
 .gitignore
 .prettierrc
 .eslintrc
 tsconfig.json
 jest.config.js
 *.test.ts
-*.spec.ts
