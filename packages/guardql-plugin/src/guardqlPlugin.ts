@@ -1,8 +1,6 @@
 // apollo server interfaces and types for type checking our plugin
 import { ApolloServerPlugin, GraphQLRequestListener, GraphQLRequestContext, BaseContext } from "@apollo/server";
 import { pluginConfig } from './types';
-import dotenv from 'dotenv';
-dotenv.config();
 
 const guardqlPlugin = (config: pluginConfig): ApolloServerPlugin => {
   /* since the user will need to set configurations for the plugin, we will need to define the
@@ -10,8 +8,7 @@ const guardqlPlugin = (config: pluginConfig): ApolloServerPlugin => {
   interface expects the plugin to be an object, we will also need to immediately return an object
   before we declare an event method */
 
-
-  const metricsUrl = process.env.BACKEND_URL ?? "";
+  const metricsUrl = 'https://guardql-backend-latest.onrender.com/graphql';
 
   // Function to check if this is an introspection query
   const isIntrospectionQuery = (operationName?: string | null, query?: string | null): boolean => {
