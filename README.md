@@ -2,6 +2,26 @@
   <img src="https://imgur.com/iNek9oJ.png" width="50%" alt="GuardQL_Logo">
 </p>
 
+<!-- [![Static Badge](https://img.shields.io/badge/Offcial%20Website-none?style=for-the-badge&label=GuardQL&labelColor=%238A1877&color=%23E623C6)
+](https://guardql.com/) -->
+<p align="center">
+<a href="https://guardql.com/">
+<img src="https://img.shields.io/badge/Offcial%20Website-none?style=for-the-badge&label=GuardQL&labelColor=%238A1877&color=%23E623C6
+" alt="GuardQL-Website"></a>
+</p>
+
+<p align="center">
+<!-- Stars -->
+<img src="https://img.shields.io/github/stars/oslabs-beta/GuardQL?style=plastic&labelColor=%231F1B2D&color=%23F2F2F2
+">
+<!-- Watchers -->
+<img src="https://img.shields.io/github/watchers/oslabs-beta/GuardQL?style=plastic&labelColor=%231F1B2D&color=%23F2F2F2
+">
+<!-- Forks -->
+<!-- <img src="https://img.shields.io/github/forks/oslabs-beta/GuardQL?style=plastic&labelColor=%231F1B2D&color=%23F2F2F2
+"> -->
+</p>
+
 # GuardQL
 
 ### Uncover, Analyze, and Optimize Your GraphQL Performance
@@ -136,7 +156,7 @@ If you’d like to contribute:
     - `git push origin feature-branch-name`
 5. Create a pull request
 
-For major changes, please open an issue first to discuss what you’d like to change.
+**For major changes, please open an issue first to discuss what you’d like to change.**
 
 ## Contact Us
 [![Static Badge](https://img.shields.io/badge/GuardQL%20%7C%20LinkedIn-none?style=for-the-badge&color=%230A66C2)

@@ -6,7 +6,7 @@ COPY package*.json ./
 RUN npm install
 # Copy frontend source files
 COPY .env ./
-COPY ./src/client ./src/client
+COPY ./packages/dashboard/src/client ./packages/dashboard/src/client
 COPY ./public ./public
 COPY ./webpack.config.js ./webpack.config.js
 COPY ./tsconfig.json ./tsconfig.json

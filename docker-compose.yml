@@ -1,3 +1,4 @@
+# UPDATE 02/14/2025 - I haven't utilized docker compose to build the images, only through `docker run` for each image.This can be changed in the future.
 # This docker compose file is necessary to run both Dockerfiles;
 # Run `docker compose build` to trigger the dockerfile build
 # Once successful, create the containers using `docker compose up`
