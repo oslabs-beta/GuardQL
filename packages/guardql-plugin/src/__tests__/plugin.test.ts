@@ -71,7 +71,7 @@ describe('GuardQL Plugin', () => {
     const [url, options] = (global.fetch as jest.Mock).mock.calls[0];
     const body = JSON.parse(options.body);
 
-    expect(url).toBe('http://localhost:4000/graphql');
+    expect(url).toBe('https://guardql-backend-latest.onrender.com/graphql');
     expect(options.headers['api-key']).toBe('testapikey');
     expect(body.variables.input).toMatchObject({
       projectName: 'testproject',
