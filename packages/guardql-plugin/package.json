@@ -1,6 +1,6 @@
 {
   "name": "guardql-plugin",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A GraphQL monitoring plugin for tracking query performance and errors",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -32,7 +32,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/oslabs-beta/GuardQL/", 
+    "url": "git+https://github.com/oslabs-beta/GuardQL.git",
     "directory": "packages/guardql-plugin"
   },
   "dependencies": {
