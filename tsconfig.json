@@ -12,6 +12,5 @@
   "references": [
     { "path": "./packages/dashboard/src/client" },
     { "path": "./packages/dashboard/src/server" },
-    { "path": "./packages/guardql-plugin" },
   ]
 }

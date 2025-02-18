@@ -3,6 +3,7 @@
 </p>
 
 [![GuardQL Website](https://img.shields.io/badge/Offcial%20Website-none?style=plastic&label=GuardQL&labelColor=%238A1877&color=%23E623C6)](https://guardql.com/)
+[![GuardQL Plugin](https://img.shields.io/badge/Plugin-none?style=plastic&label=GuardQL&labelColor=%238A1877&color=%23E623C6)](https://www.npmjs.com/package/guardql-plugin?activeTab=readme)
 [![GitHub Stars](https://img.shields.io/github/stars/oslabs-beta/GuardQL?style=plastic&labelColor=%231F1B2D&color=%23F2F2F2)](https://github.com/oslabs-beta/GuardQL/stargazers)
 [![GitHub Watchers](https://img.shields.io/github/watchers/oslabs-beta/GuardQL?style=plastic&labelColor=%231F1B2D&color=%23F2F2F2)](https://github.com/oslabs-beta/GuardQL/watchers)
 [![GitHub Forks](https://img.shields.io/github/forks/oslabs-beta/GuardQL?style=plastic&labelColor=%231F1B2D&color=%23F2F2F2)](https://github.com/oslabs-beta/GuardQL/network/members)
